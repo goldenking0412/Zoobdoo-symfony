@@ -1,0 +1,27 @@
+<div class="col">
+    <div class="open-close1 active">
+        <header class="head">
+            <span class="text">Cashflow</span>
+            <ul class="view-options">
+                <!-- <li><a href="#" class="active">Monthly</a></li>
+                <li><a href="#">Yearly</a></li> //-->
+            </ul>
+            <a href="#" class="opener">[<span class="icon"></span>]</a>
+        </header>
+        <div class="slide">
+            <div class="graph-image">
+               {#  <img src="images/graph.jpg" alt="graph"> #}
+                <canvas
+                    id="cashflows-chart"
+                    width="400" height="200"
+                    data-cash-in="{{ cash_in|json_encode }}"
+                    data-cash-out="{{ cash_out|json_encode }}"
+                    data-labels="{{ labels|json_encode }}"
+                    data-intervals="{{ intervals|json_encode }}"
+                    data-listing-url="{{ path('erp_stripe_cashflow_index') }}"
+                    >
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>

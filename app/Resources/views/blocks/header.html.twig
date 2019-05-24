@@ -1,0 +1,59 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
+<header id="header">
+    <strong class="logo-holder">
+        <a href="{{ path('erp_site_homepage') }}">
+            <span class="logo">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo">
+            </span>
+            <span class="slogan">
+                <img src="{{ asset('assets/images/slogan.svg')}}" alt="zoobdoo">
+            </span>
+        </a>
+    </strong>
+    <a href="#" class="nav-opener"></a>
+
+    <nav id="nav">
+        <ul class="menu {{ currentRoute == 'erp_site_homepage' or app.request.attributes.get('slug')  == 'faq' or currentRoute == 'erp_site_properties_page' or currentRoute == 'fos_user_security_login' ? 'home' : ''}}">
+            <li>
+                <a href="{{ path('erp_site_homepage') }}" class="{{ currentRoute == 'erp_site_homepage' ? 'active' : '' }}">HOME</a>
+            </li>
+            <li>
+                <a href="{{ path('erp_site_static_page', {'slug':'about'}) }}" class="{{ app.request.attributes.get('slug') == 'about' ? 'active' : ''}}">ABOUT</a>
+            </li>
+            <li>
+                <a href="{{ path('erp_site_static_page', {'slug':'features'}) }}" class="{{ app.request.attributes.get('slug') == 'features' ? 'active' : '' }}">FEATURES</a>
+            </li>
+            {# if app.user is not null %}
+                <li>
+                    <a href="{{ path('erp_site_properties_page') }}" class="{{ currentRoute == 'erp_site_properties_page' ? 'active': ''}}">LISTINGS</a>
+                </li>
+            {% endif #}
+            <li>
+                <a href="{{ path('erp_site_static_page', {'slug':'faq'}) }}" class="{{ app.request.attributes.get('slug') == "faq" ? 'active' : '' }}">FAQ</a>
+            </li>
+            <li>
+                <a href="{{ path('erp_site_contact_page') }}" class="{{ currentRoute == "erp_site_contact_page" ? 'active' : ''  }}">CONTACT</a>
+            </li>
+
+            {% if app.user and is_granted("ROLE_ADMIN") %}
+                <li>
+                    <a href="{{ path('sonata_admin_dashboard') }}">{{ 'admin'|trans({}, 'FOSUserBundle') }}</a>
+                </li>
+            {% elseif app.user %}
+                <li>
+                    <a href="{{ path('erp_user_profile_dashboard') }}">{{ 'profile'|trans({}, 'FOSUserBundle') }}</a>
+                </li>
+            {% endif %}
+        </ul>
+
+        {% if app.user is null or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <a href="#" data-toggle="modal" data-target="#login-modal"  class="btn btn-primary">Log In</a>
+        {% else %}
+            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary">{{ 'logout'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+    </nav>
+</header>
+
+{% block homeModal %}
+    {% include 'ErpSiteBundle:Home/blocks:homeLogin.html.twig' %}
+{% endblock %}

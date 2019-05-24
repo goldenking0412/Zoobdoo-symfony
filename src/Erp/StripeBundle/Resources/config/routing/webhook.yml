@@ -1,0 +1,3 @@
+erp_stripe_webhook_notify:
+    path: /endpoint/notify
+    defaults: { _controller: ErpStripeBundle:Webhook:notify }

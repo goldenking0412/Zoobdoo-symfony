@@ -1,0 +1,26 @@
+erp_vendor_index:
+    path:     /vendor
+    defaults:
+        _controller: ErpVendorBundle:Vendor:index
+    methods: [GET]
+
+erp_vendor_create:
+    path:     /vendor/create
+    defaults: { _controller: ErpVendorBundle:Vendor:create }
+    methods: [GET, POST]
+
+erp_vendor_edit:
+    path:     /vendor/{vendorId}/edit
+    defaults: { _controller: ErpVendorBundle:Vendor:edit }
+    methods: [GET, POST]
+    requirements:
+        vendorId: \d+
+
+erp_vendor_delete:
+    path:     /vendor/{vendorId}/delete
+    defaults: { _controller: ErpVendorBundle:Vendor:delete }
+    methods: [GET, DELETE]
+    requirements:
+        vendorId: \d+
+
+

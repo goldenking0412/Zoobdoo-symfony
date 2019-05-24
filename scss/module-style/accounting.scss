@@ -1,0 +1,98 @@
+.form-accounting {
+    background: rgba(10,10,10,.03);
+    display: inline-block;
+    padding: 10px 0 15px 0;
+    width: 100%;
+}
+
+.invoice-status {
+    background-color: #f8f9f9;
+    border-color: #e2e4e6;
+    border: 1px solid #d6dadc;
+    border-radius: 2px;
+    color: #eb5a46;
+    padding: 1px 3px;
+    font-size: 1em;
+    word-wrap: break-word;
+}
+
+.details-btn {
+    padding: 9px 12px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    font-size: 12px;
+    background-color: #fff;
+    &:hover {
+        text-decoration: none;
+    }
+    &.det-btn {
+        color: #f86623;
+        border: 1px solid #f86623;
+        float: left;
+        &:hover {
+            -webkit-box-shadow: inset 0 0 0 1px #f86623;
+            -moz-box-shadow: inset 0 0 0 1px #f86623;
+            box-shadow: inset 0 0 0 1px #f86623;
+        }
+    }
+}
+
+.refund-btn {
+    padding: 9px 12px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    font-size: 12px;
+    background-color: #fff;
+    &:hover {
+        text-decoration: none;
+    }
+    &.refunded-btn {
+        color: #b4b3ba;
+        opacity: 0.9;
+        border: 1px solid #e3e1e1;
+    }
+    &.ref-btn {
+        color: #f86623;
+        border: 1px solid #f86623;
+        float: left;
+        &:hover {
+            -webkit-box-shadow: inset 0 0 0 1px #f86623;
+            -moz-box-shadow: inset 0 0 0 1px #f86623;
+            box-shadow: inset 0 0 0 1px #f86623;
+        }
+    }
+}
+
+.refund-btn, .view-btn, .action-remittance-btn {
+    padding: 9px 12px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    font-size: 12px;
+    background-color: #fff;
+    &:hover {
+        text-decoration: none;
+    }
+    &.refunded-btn {
+        color: #b4b3ba;
+        opacity: 0.9;
+        border: 1px solid #e3e1e1;
+    }
+    &.ref-btn {
+        color: #f86623;
+        border: 1px solid #f86623;
+        &:hover {
+            -webkit-box-shadow: inset 0 0 0 1px #f86623;
+            -moz-box-shadow: inset 0 0 0 1px #f86623;
+            box-shadow: inset 0 0 0 1px #f86623;
+        }
+    }
+}

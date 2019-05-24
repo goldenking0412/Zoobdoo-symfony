@@ -1,0 +1,19 @@
+parameters:
+    erp.signature.docusign.class: Erp\SignatureBundle\Service\DocuSignService
+    erp.signature.docusign_client.class: Erp\SignatureBundle\DocuSignClient\DocuSignClient
+    erp.signature.hellosign.class: Erp\SignatureBundle\Service\HelloSignService
+
+services:
+    erp.signature.docusign.service:
+        class: %erp.signature.docusign.class%
+        arguments: [@service_container]
+
+    erp.signature.docusign.client:
+        class: %erp.signature.docusign_client.class%
+        arguments: [@service_container]
+        calls:
+            - [initConfig]
+    
+    erp.signature.hellosign.service:
+        class: %erp.signature.hellosign.class%
+        arguments: [@service_container]

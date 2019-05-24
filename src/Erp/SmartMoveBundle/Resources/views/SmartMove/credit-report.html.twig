@@ -1,0 +1,139 @@
+<h1>Credit Report</h1>
+<table border="1" cellpadding="7" width="100%" cellspacing="0">
+    <tr style="page-break-after: auto;">
+        <td>Report Date</td>
+        <td>{{ report['status']['reportDate']|date('m/d/Y') }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Applicant`s first name</td>
+        <td>{{ report['firstName'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Applicant`s last name</td>
+        <td>{{ report['lastName'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Applicant`s date of birth</td>
+        <td>{{ report['birthDate'] ? report['birthDate']|date('m/d/Y') : '' }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td {% if report['addresses']|length > 1 %}rowspan="2" {% endif %}>Applicant`s current and previous
+            addresses
+        </td>
+        <td>Current: <br/>{{ report['addresses'][0]['streetAddress'] }} {{ report['addresses'][0]['city'] }}
+            , {{ report['addresses'][0]['state'] }} {{ report['addresses'][0]['postalCode'] }}</td>
+    </tr>
+    {% if report['addresses'][1] is defined %}
+        <tr style="page-break-after: auto;">
+            <td>Current: <br/>{{ report['addresses'][1]['streetAddress'] }} {{ report['addresses'][1]['city'] }}
+                , {{ report['addresses'][1]['state'] }} {{ report['addresses'][1]['postalCode'] }}</td>
+        </tr>
+    {% endif %}
+    <tr style="page-break-after: auto;">
+        <td>Known aliases reported to the credit bureau for the applicant</td>
+        <td>{{ report['akas']|join(' ') }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Applicant`s credit score as determined by the credit bureau</td>
+        <td>
+            {% for score in report['scores'] %}
+                Score value: {{ score['scoreValue'] }}<br/>
+                Model type indicator: {{ score['modelTypeIndicator'] }}<br/>
+                <hr/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Fraud indicators initiated by the credit bureau or applicant</td>
+        <td>
+            {% for fraudIndicator in report['fraudIndicators'] %}
+                 {{ fraudIndicator['indicator'] }}<br/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Employer information for the applicant</td>
+        <td>
+            {% for employment in report['employments'] %}
+                Employer Name: {{ employment['employerName'] }}<br/>
+                Date Verified: {{ employment['dateVerified'] }}<br/>
+                <hr/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Statements implemented by the applicant</td>
+        <td>{{ report['consumerStatements']|join(' ') }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Statements implemented by the applicant</td>
+        <td>{{ report['consumerStatements']|join(' ') }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Rights Statements implemented by the applicant</td>
+        <td>{{ report['consumerRightsStatements']|join(' ') }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Names and dates of credit grantors who have pulled the applicant`s credit report</td>
+        <td>
+            {% for inquirie in report['inquiries'] %}
+                Subscriber Id: {{ inquirie['subscriberId'] }}<br/>
+                Subscriber Name: {{ inquirie['subscriberName'] }}<br/>
+                <hr/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Includes bankruptcies, judgments, and liens</td>
+        <td>{{ report['publicRecords']|join(' ') }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Names of credit grantors and the applicant`s payment history on those accounts</td>
+        <td>
+            {% for tradeline in report['tradelines'] %}
+                {% for field, value in tradeline %}
+                    {% if value and field != 'id' %}
+                        {{ field }}: {{ value }}<br/>
+                    {% endif %}
+                {% endfor %}
+                <hr/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Names of credit grantors and balances for defaulted accounts</td>
+        <td>{{ report['collections']|join(' ') }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td rowspan="9">Summary of credit report</td>
+        <td>Public Record Count: {{ report['profileSummary']['publicRecordCount'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Install Balance: {{ report['profileSummary']['installBalance'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Real Estate Balance: {{ report['profileSummary']['realEstateBalance'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Revolve Balance: {{ report['profileSummary']['revolveBalance'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Past Due Amount: {{ report['profileSummary']['pastDueAmount'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Monthly Payment: {{ report['profileSummary']['monthlyPayment'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Real Estate Payment: {{ report['profileSummary']['realEstatePayment'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Revolve Avail Percent: {{ report['profileSummary']['revolveAvailPercent'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Number Of Inquiries: {{ report['profileSummary']['numberOfInquiries'] }}</td>
+    </tr>
+    <tr style="page-break-after: auto;">
+        <td>Names of credit grantors</td>
+        <td>{{ report['subscribers']|join(' ') }}</td>
+    </tr>
+</table>

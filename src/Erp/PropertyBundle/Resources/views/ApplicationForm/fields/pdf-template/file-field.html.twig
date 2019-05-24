@@ -1,0 +1,7 @@
+{% if formData[field.type ~ '_' ~ field.id] %}
+    <div class="field">
+        <div class="file-name"><b>{{ field.name }}</b>:</div>
+        {% set formField = formData[field.type ~ '_' ~ field.id] %}
+        <img src="{{ formField['fileBase64'] }}"/>
+    </div>
+{% endif %}

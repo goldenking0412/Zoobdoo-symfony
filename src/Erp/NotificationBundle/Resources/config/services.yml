@@ -1,0 +1,60 @@
+services:
+  # history
+  erp_notification.history_entity_manager:
+    class: Doctrine\Common\Persistence\ObjectManager
+    factory: ["@doctrine", getManagerForClass]
+    arguments:
+      - Erp\NotificationBundle\Entity\History
+
+  erp_notification.history_repository:
+    class: Erp\NotificationBundle\Repository\HistoryRepository
+    factory: ["@erp_notification.history_entity_manager", getRepository]
+    arguments:
+      - Erp\NotificationBundle\Entity\History
+
+  erp_notification.history_manager:
+    class: Erp\NotificationBundle\Services\History\HistoryManager
+    arguments:
+      - @erp_notification.history_repository
+
+  # template
+  erp_notification.template_entity_manager:
+    class: Doctrine\Common\Persistence\ObjectManager
+    factory: ["@doctrine", getManagerForClass]
+    arguments:
+      - Erp\NotificationBundle\Entity\Template
+
+  erp_notification.template_repository:
+    class: Erp\NotificationBundle\Repository\TemplateRepository
+    factory: ["@erp_notification.template_entity_manager", getRepository]
+    arguments:
+      - Erp\NotificationBundle\Entity\Template
+
+  erp_notification.template_manager:
+    class: Erp\NotificationBundle\Services\Template\TemplateManager
+    arguments:
+      - @templating
+      - @erp_notification.template_repository
+
+  # logging
+  erp_notification.logger:
+    class:     Symfony\Bridge\Monolog\Logger
+    arguments: [app]
+    calls:
+      - [pushHandler, [@erp_notification.logger_handler]]
+
+  erp_notification.logger_handler:
+    class:     Monolog\Handler\StreamHandler
+    arguments: [%kernel.logs_dir%/%kernel.environment%.notifiction_alerts.log]
+    calls:
+      - [setFormatter, [@erp_notification.logger_formatter]]
+
+  erp_notification.logger_formatter:
+        class: Monolog\Formatter\LineFormatter
+        arguments: [~, ~, true]
+
+  # rabbitmq
+  erp_notification.consumer.send_notification:
+    class: Erp\NotificationBundle\Services\RabbitMQ\SendNotificationConsumer
+    calls:
+      - [setContainer, ["@service_container"]]

@@ -1,0 +1,112 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/erpcore/js/fine-uploader/fine-uploader-new.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block paramsToJs %}
+    <input type="hidden" id="image-count" value="{{ property.getId() ? property.getImages()|length : 1 }}"/>
+    <input type="hidden" id="image-block-prefix" value="{{ form.images.vars.id }}"/>
+    {% set carouselID = 'article-photo-carousel' %}
+    <input type="hidden" id="carousel-id" value="{{ carouselID }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/fine-uploader/fine-uploader.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/upload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/file-validator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/property-edit.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+    {% include "ErpPropertyBundle:Wizard/blocks:header.html.twig" %}
+
+    <main id="main">
+        {% include "ErpPropertyBundle:Wizard/blocks:tabs.html.twig" with {'property': property, 'currentTab': 'property-images'} %}
+
+        <div class="tab-content">
+            <div class="form-area style">
+                <div class="container">
+                    {{ form_start(form, { attr: {'id' : 'property-edit-form', 'class': 'form'}, 'enctype': form_enctype(form)}) }}
+                    <input type="hidden" id="image-data-prototype" class="image-input" value="{{ form_widget(form.images.vars.prototype)|e }}"/>
+                    <div class="errors">
+                        {{ form_custom_errors.widget(form) }}
+                    </div>
+
+                    {% set propertyImages = property.getImages()|length ? property.getImages() : null %}
+                    <div class="image-holder">
+                        <div class="carousel-wrapper">
+                            <div class="carousel slide article-slide" id="article-photo-carousel">
+                                <div class="carousel-inner cont-slider" role="listbox">
+                                    {% if propertyImages %}
+                                        {% for image in propertyImages %}
+                                            <div class="item {{ loop.first ? 'active' : ''}}" data-target="#article-photo-carousel">
+                                                {% set imgSrc = (image and image.getPath() and image.getName()) ? asset(image.getPath() ~ '/' ~ image.getName()) : null %}
+                                                <img id="new-image-{{ loop.index - 1 }}" alt="" title="" src="{{ imgSrc ? imgSrc|imagine_filter('property_details_carousel_inner') : '' }}">
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="item active first-screen-img">
+                                            <img alt="" title="" src="https://placehold.it/325x300">
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <a class="left carousel-control" href="#article-photo-carousel" role="button" data-slide="prev" style="background: none !important;">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#article-photo-carousel" role="button" data-slide="next" style="background: none !important;">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"><br /></div>
+
+                        <div class="article-photo">
+                            <ol class="preview-images">
+                                {% for image in propertyImages %}
+                                    <li class="active" data-slide-to="{{ loop.index - 1 }}" data-target="#article-photo-carousel">
+                                        <a href="#" class="image-delete" data-image-attr-count="{{ loop.index - 1 }}">&times;</a>
+                                        {% set imgSrc = (image and image.getPath() and image.getName()) ? asset(image.getPath() ~ '/' ~ image.getName()) : null %}
+                                        <img id="new-image-{{ loop.index - 1 }}" alt="" src="{{ imgSrc ? imgSrc|imagine_filter('property_details_carousel_indicators') : '' }}">
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+
+                        <div class="image-add-block pull-right" style="margin-top: 10px; margin-bottom: 50px;">
+                            <a href="#" data-href="#" class="btn-add" id="add-another-image">
+                                <span class="img">+</span>
+                                <span class="text">Add Image</span>
+                            </a>
+                        </div>
+                        <div class="hide">
+                            <ul id="images-fields-list">
+                                {% for imageField in form.images %}
+                                    {% if imageField.vars.value.id %}
+                                        <li id="new-form-image-field-{{ loop.index - 1 }}">
+                                            {{ form_widget(imageField) }}
+                                            {{ form_custom_errors.widget(imageField) }}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="text-right">
+                        {{ form_widget(form.submit, {'label': 'Next', 'attr': {'class': 'btn-circle', 'style': 'margin-top: 35px;'} }) }}
+                    </div>
+                    <div class="hide">{{ form_end(form) }}</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+{% endblock %}

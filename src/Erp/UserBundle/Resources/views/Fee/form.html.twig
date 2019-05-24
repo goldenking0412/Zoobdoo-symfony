@@ -1,0 +1,19 @@
+{% set entity =  form.vars.value %}
+{% set action = entity.id ? path('erp_user_fee_update', {'user': entity.user.id}) : path('erp_user_fee_create', {'user': entity.user.id}) %}
+
+{{ form_start(form, {'action': action}) }}
+    <div class="form-group text-left">
+        <div class="col-sm-6">
+            {{ form_label(form.amount, null, {'label_attr': {'class': 'control-label required-label'}}) }}
+            {{ form_widget(form.amount, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-sm-6">
+            {{ form_label(form.type, null, {'label_attr': {'class': 'control-label required-label'}}) }}
+            {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="col-xs-12 text-center">
+        <button type="submit" class="btn-circle">Submit</button>
+    </div>
+{{ form_end(form, {'render_rest': false}) }}

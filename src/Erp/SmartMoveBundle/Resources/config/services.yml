@@ -1,0 +1,4 @@
+services:
+    erp.smartmove.smartmove_service:
+        class: Erp\SmartMoveBundle\Services\SmartMoveService
+        arguments: [@service_container]

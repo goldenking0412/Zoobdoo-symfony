@@ -1,0 +1,65 @@
+erp_property_available:
+    path:     /available
+    defaults: { _controller: ErpPropertyBundle:Property:available }
+    options:
+        expose: true
+    methods: [GET]
+
+erp_property_search:
+    path:     /search
+    defaults: { _controller: ErpPropertyBundle:Property:search }
+    options:
+        expose: true
+    methods: [GET]
+
+erp_property_get_desc:
+    path:     /{propertyId}/description
+    defaults: { _controller: ErpPropertyBundle:Property:description }
+    options:
+        expose: true
+    requirements:
+        propertyId: \d+
+    methods: [GET]
+
+erp_property_appointment_request:
+    path:     /{propertyId}/appointment/request
+    defaults: { _controller: ErpPropertyBundle:Property:appointmentRequest }
+    options:
+        expose: true
+    requirements:
+        propertyId: \d+
+    methods: [GET,POST]
+
+erp_property_invite_tenant:
+    path:     /{propertyId}/invite-tenant
+    defaults: { _controller: ErpPropertyBundle:Property:inviteTenant }
+    options:
+        expose: true
+    requirements:
+        propertyId: \d+
+    methods: [GET,POST]
+
+erp_property_page:
+    path:     /{stateCode}/{cityName}/{name}
+    defaults: { _controller: ErpPropertyBundle:Property:details }
+    options:
+        expose: true
+    methods: [GET]
+
+erp_property_refund_deposit:
+    path:     /{propertyId}/refund
+    defaults: { _controller: ErpPropertyBundle:Property:refundDeposit }
+    options:
+        expose: true
+    requirements:
+        propertyId: \d+
+    methods: [GET, POST]    
+
+erp_property_close_out:
+    path:     /{propertyId}/close-out
+    defaults: { _controller: ErpPropertyBundle:Property:closeOut }
+    options:
+        expose: true
+    requirements:
+        propertyId: \d+
+    methods: [GET, POST]        

@@ -1,0 +1,73 @@
+erp_notification_template_list:
+    path: /notification/template/list
+    defaults: { _controller: ErpNotificationBundle:Template:list }
+
+erp_notification_template_create:
+    path: /notification/template/create
+    defaults: { _controller: ErpNotificationBundle:Template:create }
+
+erp_notification_template_create_sms:
+    path: /notification/template/create/sms
+    defaults: { _controller: ErpNotificationBundle:Template:create }
+
+erp_notification_template_update:
+    path: /notification/template/update/{id}
+    defaults: { _controller: ErpNotificationBundle:Template:update }
+    requirements:
+        id: \d+
+
+erp_notification_template_remove:
+    path: /notification/template/remove/{id}
+    defaults: { _controller: ErpNotificationBundle:Template:remove }
+    requirements:
+        id: \d+
+
+erp_notification_template_print_pdf:
+    path: /notification/template/print/{id}
+    defaults: { _controller: ErpNotificationBundle:Template:printPdf }
+
+erp_notification_user_notification_create:
+    path: /notification/create
+    defaults: { _controller: ErpNotificationBundle:UserNotification:create }
+
+erp_notification_user_notification_update:
+    path: /notification/update/{id}
+    defaults: { _controller: ErpNotificationBundle:UserNotification:update }
+    requirements:
+        id: \d+
+
+erp_notification_user_notification_view:
+    path: /notification/view/{id}
+    defaults: { _controller: ErpNotificationBundle:UserNotification:viewAlert }
+    requirements:
+        id: \d+
+
+erp_notification_user_notification_choose_properties:
+    path: /notification/choose-properties
+    defaults: { _controller: ErpNotificationBundle:UserNotification:chooseProperties }
+
+erp_notification_user_notification_choose_properties_update:
+    path: /notification/choose-properties/{id}
+    defaults: { _controller: ErpNotificationBundle:UserNotification:chooseProperties }
+    requirements:
+        id: \d+
+
+erp_notification_user_notification_list:
+    path: /notification/list
+    defaults: { _controller: ErpNotificationBundle:UserNotification:list }
+
+erp_notification_user_notification_history:
+    path: /notification/history
+    defaults: { _controller: ErpNotificationBundle:UserNotification:history }
+
+erp_notification_user_eviction:
+    path: /eviction/list
+    defaults: { _controller: ErpNotificationBundle:EvictionData:index }
+
+erp_notification_user_eviction_create:
+    path: /eviction/send-eviction
+    defaults: { _controller: ErpNotificationBundle:EvictionData:sendEviction }
+
+erp_notification_user_eviction_choose_properties:
+    path: /eviction/choose-properties
+    defaults: { _controller: ErpNotificationBundle:EvictionData:new }

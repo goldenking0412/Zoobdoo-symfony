@@ -1,0 +1,55 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+{% block pageSubContent %}
+    {{ parent() }}
+    <br />
+    <br />
+    <div class="tab-content style">
+        <div id="tab1-0">
+            <div class="container">
+                {% include "ErpNotificationBundle:EvictionData:actions.html.twig" %}
+                {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+                {% if entities is not empty %}
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Property</td>
+                                <td>Tenant First Name</td>
+                                <td>Tenant Last Name</td>
+                                <td>Days After DueDate</td>
+                                <td>Other Info</td>
+                                <td>Created At</td>
+                                <td>Template</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {% for entity in entities %}
+                                <tr>
+                                    <td data-title="Id">{{entity.id}}</td>
+                                    <td data-title="Property">{{entity.properties.name}}</td>
+                                    <td data-title="Tenant First Name">{{entity.properties.tenantUser.firstName}}</td>
+                                    <td data-title="Tenant Last Name">{{entity.properties.tenantUser.lastName}}</td>
+                                    <td data-title="Days After DueDate">{{entity.days}}</td>
+                                    <td data-title="Other Info">{{entity.description|nl2br}}</td>
+                                    <td data-title="Created At">{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    <td data-title="Template">
+                                        <a class="btn red" href="{{ path('erp_notification_template_print_pdf', {'id': entity.template.id}) }}" target="_blank">
+                                            Get PDF
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                     {% else %}
+                        <br />
+                        <br />
+                        <a href="{{ path('erp_notification_user_eviction_create') }}" class="btn-add green pull-right"><span class="img">+</span> Set new Eviction Notice</a>
+                        <p>No alerts found</p>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

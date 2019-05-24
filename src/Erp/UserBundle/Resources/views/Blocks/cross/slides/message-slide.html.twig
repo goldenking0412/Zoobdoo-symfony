@@ -1,0 +1,37 @@
+<div class="message-slide right-box">
+    <header class="header">
+        <a href="#" class="message-opener">
+            <span class="img"><i class="icon icon-chat"></i></span>
+            <span class="text">Messages</span>
+            <i class="icon icon-arrow-right"></i>
+            {% if count_unread_messages(app.user) > 0 %}
+                <span class="val">{{ count_unread_messages(app.user) }}</span>
+            {% endif %}
+        </a>
+    </header>
+    {% set unreadMessages = unread_messages(app.user) %}
+
+    {% if unreadMessages|length > 0 %}
+        {% for unreadMessage in unreadMessages %}
+            <div class="message-box">
+                <div class="message">
+                    <div class="message-head">
+                        <div class="image-holder">
+                            <img src="{{ asset('assets/images/user-circle.jpg') }}" alt="user">
+                        </div>
+                        <div class="text">
+                            <span class="name">{{ unreadMessage.getFromUser().getFirstName() }} {{ unreadMessage.getFromUser().getLastName() }}</span>
+                            <span class="time">{{ unreadMessage.getCreatedDate()|date('F jS \\a\\t g:ia') }}</span>
+                        </div>
+                    </div>
+                    <p>{{ unreadMessage.getText() }}</p>
+                    <div class="text-right">
+                        <a href="{{ path('erp_user_messages', {'toUserId': unreadMessage.getFromUser().getId()}) }}" class="btn-back"><img src="{{ asset('assets/images/arrow-return.svg') }}" alt="arrow"></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        
+    {% endif %}
+</div>

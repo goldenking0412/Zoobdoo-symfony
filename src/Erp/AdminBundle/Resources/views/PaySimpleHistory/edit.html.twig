@@ -1,0 +1,96 @@
+{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"
+          href="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript"
+            src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+{% endblock %}
+
+{% set sonata_breadcrumb_last = 'Pay Simple Transactions' %}
+{% block sonata_breadcrumb %}
+    {% include 'ErpAdminBundle:blocks:sonata_breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+{% endblock notice %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% block navbar_title %}
+    Edit transaction
+{% endblock %}
+
+{% block sonata_tab_content %}
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <label class="contol-label">From Tenant</label><br/>
+                    <a href="{{ path('admin_erpuserbundle_managers_edit', {'id' : object.getProperty().getTenantUser().getId()}) }}">
+                        {{ object.getProperty().getTenantUser().getFullNameWithEmail() }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <label class="contol-label">To Manager</label><br/>
+                    <a href="{{ path('admin_erpuserbundle_managers_edit', {'id' : object.property.user.id}) }}">
+                        {{ object.property.user.getFullNameWithEmail() }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <label class="contol-label">Amount, $</label><br/>
+                    {{ object.getAmount() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <label class="contol-label">Property</label><br/>
+                    <a href="{{ path('admin_erpuserbundle_properties_edit', {'id' : object.property.id}) }}">
+                        {{ object.property.name }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <label class="contol-label">Tenant Paid Date</label><br/>
+                    {{ object.createdDate|date }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ parent() }}
+{% endblock %}
+
+{% block formactions %}
+    {{ parent() }}
+    <a class="btn btn-danger pull-lef" href="javascript:history.back();"><i class="fa fa-minus-circle"></i> Back to list</a>
+{% endblock %}

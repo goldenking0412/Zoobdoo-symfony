@@ -1,0 +1,20 @@
+<div class="manager-message-block comment-block">
+    <div class="message-block-regular">
+        <div class="col-xs-2 photo-block">
+            <div class="account-photo">
+                {% if comment.user.image %}
+                    <img src="{{ asset(comment.user.image.path ~ '/' ~ comment.user.image.name) | imagine_filter('profile_image') }}"/>
+                {% else %}
+                    <img src="/assets/images/profile/User.png">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-xs-9 text-block">
+            <div class="author-data"><span class="message-author">{{ comment.user.firstName }} {{ comment.user.lastName }}&nbsp;</span>
+                <span class="time-ago">{{ comment.createdDate|time_ago_in_words(false, true) }}</span>
+            </div>
+            <p>{{ comment.text|e }}</p>
+            <a class="reply-btn" href="" data-reply-name="{{ comment.user.firstName }} {{ comment.user.lastName }}">Reply</a>
+        </div>
+    </div>
+</div>

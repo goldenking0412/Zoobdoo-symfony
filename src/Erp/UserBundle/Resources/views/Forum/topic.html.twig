@@ -1,0 +1,75 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/forum.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="page-content">
+        <section id="manager-forum-topic" class="profile forum-page">
+            <div class="container">
+                <div class="row">
+                    <div class="title-block">
+                        <h1 class="bold-text">{{ topic.name|e }}</h1>
+                        <a href="{{ path('erp_user_profile_forum_index') }}">&#171; &nbsp;Back to Manager Forum</a>
+                    </div>
+                </div>
+
+                <div class="row forum-row">
+                    <div class="col-xs-9 forum-message-container">
+                        <div class="manager-message-block message-block-top">
+                            <div class="col-xs-3 photo-block">
+                                <div class="account-photo">
+                                {% if topic.user.image %}
+                                    <img src="{{ asset(topic.user.image.path ~ '/' ~ topic.user.image.name) | imagine_filter('profile_image') }}"/>
+                                {% else %}
+                                    <img src="/assets/images/profile/User.png">
+                                {% endif %}
+                                </div>
+                                <div class="author-data">
+                                    <span class="grey-text">by&nbsp;</span><span>{{ topic.user.firstName }} {{ topic.user.lastName }}&nbsp;</span>
+                                    <span class="grey-text message-date">{{ topic.createdDate|date('m/d/Y') }}</span> 
+                                </div>
+                            </div>
+                            <div class="col-xs-9 forum-message-text">
+                                <p>{{ topic.text|e }}</p>
+                            </div>
+                        </div>
+                        <div id="messsage-add-row" class="messsage-add-row">
+                            <div class="errors"></div>
+                            {{ render(controller('ErpUserBundle:Forum:renderCommentForm', {'forumTopic':topic})) }}
+                        </div>
+                        {% if forumCommentsPagination.items|length %}
+                            {% for comment in forumCommentsPagination.items %}
+                                {% include "ErpUserBundle:Forum:comment.html.twig" %}
+                            {% endfor %}
+                            {{ knp_pagination_render(forumCommentsPagination) }}
+                        {% else %}
+                            <div class="col-xs-12 not-comments text-center">No comments yet</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3 topic">
+                        <div class="topics-block">
+                            <h4>TOPICS</h4>
+                            {% if topForumTopics %}
+                                {% for topForumTopic in topForumTopics %}
+                                    <div class="topic-item">
+                                        <a href="{{ path('erp_user_profile_forum_topic', {'topicId':topForumTopic.id}) }}">{{ topForumTopic.name }}</a>
+                                        <span class="grey-text">by&nbsp;</span><span>{{ topForumTopic.user.firstName }} {{ topForumTopic.user.lastName }}&nbsp;</span>
+                                        <span class="grey-text message-date">{{ topForumTopic.updatedDate|date('m/d/Y') }}</span>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

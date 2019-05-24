@@ -1,0 +1,18 @@
+{{ form_start(form, {'method': 'POST', 'action': path('erp_payment_stripe_verify_account')}) }}
+<div id="error"></div>
+{{ form_row(form.city, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.line1, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.postalCode, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.state, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.businessName, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.businessTaxId, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.birthday, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.firstName, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.lastName, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.ssnLast4, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+{{ form_row(form.tosAcceptance, {'attr': {'class': 'form-control col-xs-4'}, 'label_attr': {'class': 'control-label'}}) }}
+
+<div class="button-wrap">
+    <button type="submit" class="btn-circle">Submit</button>
+</div>
+{{ form_end(form) }}

@@ -1,0 +1,347 @@
+/* Add custom styles here */
+footer .copyright-dark {
+    height: 150px;
+    padding-top: 15px;
+}
+.social-icons-container {
+    max-width: 400px;
+    float: left;
+    margin-left: 200px;
+}
+ul.social-icons {
+    display: inline;
+}
+ul.social-icons li {
+    display: inline;
+}
+.property-listing-search-bar {
+    background: rgba(10,10,10,.03);
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+.btn-replay-msg {
+    padding: 0 50px;
+    font-size: 20px;
+    line-height: 37px;
+    border: none;color: #fff;
+    background-color: #ca171b;
+    border-radius: 25px;
+}
+.panel-msg-heading {
+    border-color: #777;
+}
+.panel-msg-heading >.panel-heading {
+    background-color: #b7b7b5;
+    color: #fff;
+}
+
+.panel-msg-heading >.panel-heading a {
+    font-size:16px;
+    font-family: LatoRegular;
+    cursor: pointer;
+}
+
+.panel-msg-heading >.panel-heading a:hover{
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 1199px) {
+    .social-icons-container {
+        margin-left: 100px;
+    }
+}
+@media only screen and (max-width: 993px) {
+    footer .copyright-dark {
+        height: 140px;
+    }
+    .social-icons-container {
+        width: auto;
+        margin: 0 auto;
+        float: none;
+        display: block;
+    }
+    ul.social-icons-container {
+        display: block;
+    }
+}
+@media only screen and  (max-width: 768px) {
+    footer .copyright-dark {
+        height: 300px;
+    }
+}
+/*Slider updates*/
+.slider .slide-inner .slider-text p {
+    font-size: 48px;
+    text-shadow: 1px 2px #000;
+}
+html body .bold-text {
+    color: #000;
+    text-shadow: 1px 1px #fff;
+}
+.slider .slide-inner .slider-text .slide-text .can-text {
+    text-shadow: none;
+}
+.no-shadow {
+    text-shadow: none !important;
+}
+.bold-white {
+    color: #fff !important;
+}
+ul.slider-list li {
+    font-weight: bold;
+    color: #fff;
+}
+.about .text-col .about-text a {
+    color: #706e7b;
+    text-decoration: none;
+}
+.about .text-col .about-text a:hover {
+    text-decoration: underline;
+}
+.features {
+    display: block;
+    text-align: center;
+    padding: 25px 0;
+    background: #fff;
+}
+h3.sli {
+    font-size: 21px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.features img {
+    padding-bottom: 8px;
+    max-width: 60px;
+    max-height: 60px;
+}
+a.learnmore {
+    color: #B00F13;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+}
+a.learnmore:hover {
+    color: #000;
+}
+a.gradient-btn.btn.pmang {
+    width: 385px;
+}
+.pt25 {
+    padding-top: 25px;
+}
+.slider .slide-inner .slider-text {
+    padding: 200px 0 0 150px;
+    color: #fff;
+    overflow: hidden;
+    font-family: LatoLight;
+}
+.profile .profile-widget-row .profile-widget-item .bank-info-row {
+    margin: 0;
+}
+ul.bank-info li {
+    list-style-type: disc;
+    font-weight: bold;
+    color: #000;
+}
+ul.bank-info {
+    margin-bottom: 0;
+}
+.profile .profile-widget-row .profile-widget-item .edit-row {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.profile .profile-widget-row .profile-widget-item .bank-info-row {
+    margin: 8px 10px;
+}
+.black {
+    color: #000;
+}
+.black:hover {
+    color: #000;
+    text-decoration: none;
+}
+.custombutton {
+    margin-top: 3px !important;
+}
+#features .text-capabilities .text-block-service {
+    height: 200px;
+    padding-top: 15px;
+    padding-left: 30px;
+    font-family: NunitoRegular;
+    color: #706e7b;
+    font-size: 20px;
+}
+.col-md-5.col-xs-6.profile-widget-item.widget-last {
+    height: 300px !important;
+    margin-bottom: 10px !important;
+    width: 47%;
+    margin-right: 3%;
+}
+
+#tenants-profile.profile .tenants-pay{
+    width: 23%;
+    margin-right: 2%;
+}
+.profile-widget-custom .col-md-5.col-xs-6.profile-widget-item.widget-last:last-child{
+    margin: 0 0 0 3%;
+}
+.col-md-5.col-xs-12.profile-widget-item.screening-widget {
+    margin-bottom: 10px !important;
+}
+.col-md-3.col-xs-5.profile-widget-item.widget-first.address-widget {
+    height: 300px !important;
+}
+.col-md-3.col-xs-5.profile-widget-item.login-widget.widget-first {
+    height: 300px !important;
+}
+.modal-dialog .edit-btn:active,
+.modal-dialog .edit-btn:hover {
+    color: #fb872b;
+}
+#tenants-profile .tenants-block .tenants-block-item{
+    width: 23%;
+    margin-right: 2%;
+}
+#tenants-profile .tenants-block .tenants-block-middle{
+    width: 47%;
+    margin-right: 3%;
+}
+.profile .profile-widget-row.height_custom,
+.col-md-5.col-xs-6.profile-widget-item.widget-last.height_custom {
+    max-height: 300px!important;
+    height: auto!important;
+}
+
+/* #profile-settings .profile-widget-row, .profile .profile-widget-row. */
+@media only screen and (max-width: 667px) {
+    .profile-widget-item.widget-last {
+        /*height: 450px !important;*/
+        width: 100%;
+        margin: 0 0 10px 0!important;
+    }
+    .profile-widget-item.widget-first.address-widget {
+        height: 450px !important;
+        margin-bottom: 10px !important;
+    }
+    .profile-widget-item.login-widget.widget-first {
+        height: 450px !important;
+        margin-bottom: 10px !important;
+    }
+}
+section#rental-form {
+    background: url('/assets/images/red.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+section#rental-form h1 {
+    color: #fff;
+    text-shadow: none;
+}
+#managers-profile .form-group {
+    margin-bottom: 5px;
+}
+.profile .profile-widget-row .profile-widget-item .payment-calendar .date.date-end {
+    margin: 6px 10px 0 0;
+}
+.profile .profile-widget-row .profile-widget-item .payment-calendar .date.date-start {
+    margin: 6px 10px 0 25px;
+}
+
+@media (max-width: 993px) and (min-width: 768px){
+    .profile .profile-widget-row .profile-widget-item .payment-calendar .edit-row {
+        margin: 10px 0;
+    }
+    .profile-widget-custom .col-md-5.col-xs-6.profile-widget-item.widget-last:last-child {
+        margin: 0;
+    }
+    .profile .profile-widget-row {
+        margin: 0 5px 0px;
+    }
+    #tenants-profile.profile .tenants-pay {
+        width: 47%;
+        margin-right: 2%;
+    }
+    #tenants-profile .tenants-block .tenants-block-item {
+        width: 47%;
+        margin-right: 2%;
+    }
+    #tenants-profile .profile-widget-rows .profile-widget-item.request-item {
+        bottom: auto;
+    }
+    #tenants-profile.profile .tenants-pay{
+        height: 300px;
+        margin-bottom: 10px;
+    }
+    .profile-content-last{
+        width: 47%;
+        margin-right: 2%;
+        float: left;
+        margin-top: 0!important;
+    }
+    .profile-content-last.widget-second{
+        width: 47%!important;
+        right: auto!important;
+        margin-right: 2%;
+    }
+}
+@media (max-width: 767px) and (min-width: 590px){
+    #tenants-profile.profile .tenants-pay {
+        width: 47%;
+        margin-right: 2%;
+    }
+    #tenants-profile .tenants-block .tenants-block-item {
+        width: 47%;
+        margin-right: 2%;
+    }
+    #tenants-profile .profile-widget-rows .profile-widget-item.request-item {
+        bottom: auto;
+    }
+    #tenants-profile.profile .tenants-pay{
+        height: 300px;
+        margin-bottom: 10px;
+    }
+    .profile-content-last{
+        width: 47%;
+        margin-right: 2%;
+        float: left;
+        margin-top: 0!important;
+    }
+    .profile-content-last.widget-second{
+        width: 47%!important;
+        right: auto!important;
+        margin-right: 2%;
+    }
+    .profile .profile-widget-row {
+        height: auto;
+    }
+}
+@media (max-width: 767px) and (min-width: 590px){
+    .profile .profile-widget-row .profile-widget-item.widget-last,
+    .profile .profile-widget-row .profile-widget-item.widget-first,
+    #tenants-profile.profile .tenants-pay {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+@media (max-width: 589px){
+    #features .text-capabilities .text-block-service {
+     height: auto;
+        padding-bottom: 20px;
+    }
+    .profile .profile-widget-row {
+        margin: 0 5px 0px;
+    }
+    #managers-profile .col-md-5.col-xs-6.profile-widget-item.widget-last {
+        margin: 0 0 20px;
+        width: 100%;
+        height: 395px!important;
+    }
+    #tenants-profile .tenants-block .tenants-block-middle,
+    #tenants-profile .tenants-block .tenants-block-item,
+    #tenants-profile.profile .tenants-pay {
+        width: 100%;
+        margin-right: 0;
+    }
+}

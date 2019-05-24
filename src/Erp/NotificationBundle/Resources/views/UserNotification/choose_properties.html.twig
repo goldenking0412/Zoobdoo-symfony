@@ -1,0 +1,115 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpnotification/js/choose-properties.controller.js') }}"></script>
+{% endblock %}
+
+{% form_theme form _self %}
+
+{%- block form_widget_simple -%}
+<input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{%- endblock form_widget_simple -%}
+
+{%- block checkbox_widget -%}
+<div style="display: none">
+    <input type="checkbox" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+</div>
+{%- endblock checkbox_widget -%}
+
+{%- block choice_widget_collapsed -%}
+<input type="hidden" {{ block('widget_attributes') }} {% if value %} value="{{ value }}"{% endif %}/>
+{%- endblock choice_widget_collapsed -%}
+
+{%- block form_row -%}
+{{- form_errors(form) -}}
+{{- form_widget(form) -}}
+{%- endblock form_row -%}
+
+{% block pageContent %}
+    {{ parent() }}
+    <br />
+    <div class="form-area style">
+        <div class="container">
+            {% include "ErpNotificationBundle:UserNotification:actions.html.twig" %}
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+            <br />
+            <br />
+            <div class="field-area">
+                <div class="lable">
+                    Choose properties
+                </div>
+            </div>
+            <div class="container">
+                {{ form_start(form, {'action': action}) }}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td><input type="checkbox" name="all_elements" /></td>
+                            <td>Property</td>
+                            <td>Tenant</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% with {
+                            'properties': properties,
+                            'entity': entity,
+                          } %}
+                        {{ block('properties') }}
+                        {% endwith %}
+                        {% set missingProperties = [] %}
+                        {% for property in entity.properties if property not in properties %}
+                            {% set missingProperties = missingProperties|merge([property]) %}
+                        {% endfor %}
+                        {% with {
+                            'properties': missingProperties,
+                            'entity': entity,
+                          } %}
+                        {{ block('properties') }}
+                        {% endwith %}
+                    </tbody>
+                </table>
+                {% for notification in form.notifications %}
+                    {{ form_errors(notification) }}
+                    {{ form_widget(notification) }}
+                {% endfor %}
+                {% for alert in form.alerts %}
+                    {{ form_errors(alert) }}
+                    {{ form_widget(alert) }}
+                {% endfor %}
+                {{ form_widget(form.sendNotificationAutomatically) }}
+                {{ form_widget(form.template) }}
+                {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                {{ form_end(form) }}
+            </div>
+            <br />
+            <br />
+            <br />
+            {{ form_widget(form.submit, {'label': 'Next', 'attr': {'class': 'btn-circle'} }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block properties %}
+    {% for property in properties %}
+        <tr>
+            <td>
+                <input type="checkbox" name="idx[]" value="{{ property.id }}"
+                       {% if property in entity.properties %}
+                           checked
+                       {% endif %}
+                       />
+            </td>
+            <td>{{ property.name }}</td>
+            <td>
+                {% if property.tenantUser %}
+                    {{ property.tenantUser.fullName }}
+                {% else %}
+                    n/a
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

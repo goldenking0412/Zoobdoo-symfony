@@ -1,0 +1,68 @@
+{% extends 'SonataAdminBundle:CRUD:list.html.twig' %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+    <style>
+        div#new_export_btn .btn-group {
+            margin: 0 8px;
+        }
+    </style>
+<div class="row" id="new_export_btn">
+    <div class="sonata-ba-list col-md-10">
+        <div class="box box-secondary">
+            <div class="box-body table-responsive text-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-export"></i>
+                        Export post property XML Data
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{# admin.generateUrl('xml') #}">
+                                <i class="fa fa-refresh"></i>
+                                Sync Today All Modified post requests
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{# admin.generateUrl('xml',{'type' : '1'}) #}">
+                                <i class="fa fa-refresh"></i>
+                                Sync Today All Cancelled post requests
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-export"></i>
+                        Check post property data Feed url
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ asset('assets/xml/active-post-data.xml') }}" target="_blank">
+                                <i class="glyphicon glyphicon-download"></i>
+                                Today All Modified post requests
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ asset('assets/xml/cancelled-post-data.xml') }}" target="_blank">
+                                <i class="glyphicon glyphicon-download"></i>
+                                Today All Cancelled post requests
+                            </a>
+                        </li>
+                    </ul>
+                </div><p><b>Note:</b> Before open or save For both type feed url ( modified or cancelled posts property ) please sync xml under export post property XML Data toggle button </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock notice %}
+
+{% block navbar_title %}
+    {{ admin.label }}
+
+{% endblock %}

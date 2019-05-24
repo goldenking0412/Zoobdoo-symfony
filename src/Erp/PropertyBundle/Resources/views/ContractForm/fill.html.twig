@@ -1,0 +1,89 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{  asset('/bundles/erpcore/js/jquery.blockUI.js') }}"></script>
+    <script type="text/javascript" src="{{  asset('/bundles/erpcore/js/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{  asset('/bundles/erpcore/js/bootstrap-timepicker.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker();
+            $('.timepicker').timepicker();
+        });
+        function isNumberKey(evt){
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+{% endblock %}
+
+{% block headerBannerTitle %}
+    Online Rental Contract
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="container">
+        <div class="form-group text-right">
+            <a href="{{ path('erp_property_contract_form', {'propertyId': property.id}) }}" class="btn edit-btn">Back</a>
+        </div>
+    </div>
+
+    <!-- Application Form-->
+    <section id="rental-form" class="register-form rental-form">
+        <div class="container">
+            <div class="row">
+                <div class="title-block col-md-10 col-md-offset-1">
+                    <h1 class="bold-text">Complete Online Rental Contract</h1>
+                    <h3 class="bold-text">Property: {{ property.name }}</h3>
+                </div>
+            </div>
+
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'msg_error' : 'message_errors', 'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error' } %}
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 complete-contract">
+                    <div class="col-xs-12">
+                        <b><u>How-To sign Rental Contract online:</u></b><br/>
+                        1) Manager creates and edits Online Rental Contract using Contract Builder<br/>
+                        2) Manager previews final contract as Tenant's web-form or as PDF file<br/>
+                        3) Manager enables contract by "Enable Online Contract for this Property" checkbox<br/>
+                        4) Link to complete Online Rental Contract appears in Tenant's Documentation area<br/>
+                        5) Tenant completes contract form, signs it online and downloads as PDF file<br/>
+                        6) Tenant uploads signed PDF contract to Manager's Documentation area<br/>
+                        7) Manager reviews the contract and signs it by clicking SIGN button<br/>
+                        8) Manager uploads signed PDF contract to Tenant's Documentation area<br/><br/><br/>
+                    </div>
+                    <form action="{{ path('erp_property_contract_form_fill', {'propertyId':property.id}) }}"
+                        class="form-horizontal editor contract-ready" method="post"
+                        enctype="multipart/form-data" name="contract-form">
+                        {% if sections|length %}
+                            {% for section in sections %}
+                                {{ section|raw }}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-footer">
+                                    {% if isManager %}
+                                        <a href="{{ path('erp_property_contract_form', {'propertyId':property.id}) }}" class="cancel back-dashboard btn-circle">Back</a>
+                                    {% else %}
+                                        <a href="{{ path('erp_user_documentation') }}" class="cancel back-dashboard btn-circle">Back to Documentation</a>
+                                        <input type="submit" name="sign" value="Sign" class="btn-circle"/>
+                                        <span>&nbsp;or&nbsp;</span>
+                                    {% endif %}
+                                    <input type="submit" name="download" value="Download" class="btn-circle"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

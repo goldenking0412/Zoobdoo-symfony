@@ -1,0 +1,43 @@
+{% if app.session.flashbag.has('sonata_flash_success') %}
+    {% for flashMessage in app.session.flashbag.get('sonata_flash_success') %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {% if flashMessage %}
+                {{ flashMessage }}
+            {% else %}
+                Item has been successfully saved
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if app.session.flashbag.has('sonata_flash_error') %}
+    {% for flashMessage in app.session.flashbag.get('sonata_flash_error') %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {% if flashMessage %}
+                {{ flashMessage }}
+            {% else %}
+                An error has occurred during save operation. Please check the values and try again
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if app.session.flashbag.has('sonata_flash_ps_error') %}
+	{% for flashMessage in app.session.flashbag.get('sonata_flash_ps_error') %}
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+{% endif %}
+
+{% if app.session.flashbag.has('sonata_flash_ps_success') %}
+	{% for flashMessage in app.session.flashbag.get('sonata_flash_ps_success') %}
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+{% endif %}

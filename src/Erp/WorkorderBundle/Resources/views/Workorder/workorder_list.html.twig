@@ -1,0 +1,63 @@
+{% if (pagination|length) %}
+    {% for item in pagination %}
+        {% set priorityClasses = {
+                (constant('Erp\\WorkorderBundle\\Entity\\Workorder::PRIORITY_NORMAL')): 'no',
+                (constant('Erp\\WorkorderBundle\\Entity\\Workorder::PRIORITY_URGENT')): 'yellow',
+                (constant('Erp\\WorkorderBundle\\Entity\\Workorder::PRIORITY_EMERGENCY')): 'red'
+            }
+        %}
+        {% set statusClasses = {
+                (constant('Erp\\WorkorderBundle\\Entity\\Workorder::STATUS_COMPLETED')): 'green',
+                (constant('Erp\\WorkorderBundle\\Entity\\Workorder::STATUS_PROCESSING')): 'yellow',
+                (constant('Erp\\WorkorderBundle\\Entity\\Workorder::STATUS_CREATED')): 'blue'
+            }
+        %}
+
+        <div class="open-close1 {{ priorityClasses[item.getUrgencyAsString()] }}-border">
+            <a href="#" class="opener">
+                <span class="col">
+                    <span class="title">Initiated</span>
+                    <span class="text">{{ item.serviceDate|date('M d, Y') }}</span>
+                </span>
+                <span class="col">
+                    <span class="title">Priority</span>
+                    <span class="text {{ priorityClasses[item.getUrgencyAsString()] }}">{{ item.getUrgencyAsString() }}</span>
+                </span>
+                <span class="col">
+                    <span class="title">Severity</span>
+                    <span class="text">{{ item.getSeverityAsString() }}</span>
+                </span>
+                <span class="col">
+                    <span class="title">Contractor</span>
+                    <span class="text">
+                        {% if (contractor|length) %}
+                            {% if (item.contractor in contractor|keys) %}
+                                {{ contractor[item.contractor] }}
+                            {% else %}
+                                ---
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                </span>
+                <span class="col">
+                    <span class="title">Status</span>
+                    <span class="text {{ statusClasses[item.getStatusAsString()] }}">
+                        {{ item.getStatusAsString() }}
+                    </span>
+                </span>
+                <i class="icon icon-arrow-left"></i>
+            </a>
+            <div class="slide js-slide-hidden" style="display: none;">
+                <span class="title">Note</span>
+                <p>{{ item.description }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    {{ knp_pagination_render(pagination) }}
+{% else %}
+    <a class="opener">
+        <span class="col">
+            <span class="text">No matches.</span>
+        </span>
+    </a>
+{% endif %}

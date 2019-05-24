@@ -1,0 +1,185 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/file-validator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/account-details.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-documentation"></i> Your Profile</h1>
+            <a href="#" class="search visible-mobile"><i class="icon icon-search"></i></a>
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="tabs-area">
+            <div class="container" style="justify-content:left;">
+                <ul class="tabset style fake">
+                     <li>
+                        <a href="{{ path('erp_user_details') }}" class="{{ currentRoute == 'erp_user_details' ? 'active' : '' }}">Account Details</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('erp_user_email_options') }}" class="{{ currentRoute == 'erp_user_email_options' ? 'active' : '' }}">Email Options</a>
+                    </li>
+                     <li>
+                        <a href="{{ path('erp_user_address_details')}}"  class="{{ currentRoute == 'erp_user_address_details' ? 'active' : '' }}">Address Details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="tab-content">
+            <div class="container" >
+                <div id="tab1-0">
+                    <div class="form-area style">
+                        <div class="container">
+                            {{ form_start(form, { attr: {'class': 'form account-details', 'novalidate': 'novalidate', 'id': 'form-messages'}, 'enctype': form_enctype(form)}) }}
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-xs-12 profile-picture-upload">
+                                            <div class="upload-form">
+                                                <div class="errors">{{ form_custom_errors.widget(form.image.image) }}</div>
+                                                {{ form_label(form.image.image) }}
+                                                {{ form_widget(form.image.image) }}
+                                            </div>
+                                            {% if user.image and user.image.path %}
+                                                <div class="account-photo">
+                                                    <img src="{{ asset(user.image.path ~ '/' ~ user.image.name) | imagine_filter('profile_image') }}"/>
+                                                </div>
+                                                <a role="popup" href="{{ path('erp_user_details_delete_photo') }}" style="color: #ca171b;">X</a>
+                                            {% else %}
+                                                <div class="account-photo">
+                                                    <img src="/assets/images/profile/User.png">
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% if (user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER'))) %}
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-xs-12 profile-picture-upload">
+                                                <div class="upload-form">
+                                                    <div class="errors">{{ form_custom_errors.widget(form.logo.image) }}</div>
+                                                    {{ form_label(form.logo) }}<br />
+                                                    (to be used for invoices)
+                                                    {{ form_widget(form.logo.image) }}
+                                                </div>
+                                                {% if user.logo and user.logo.path %}
+                                                    <div class="account-photo">
+                                                        <img src="{{ asset(user.logo.path ~ '/' ~ user.logo.name) | imagine_filter('profile_image') }}"/>
+                                                    </div>
+                                                    <a role="popup" href="{{ path('erp_user_details_delete_logo') }}" style="color: #ca171b;">X</a>
+                                                {% else %}
+                                                    <div class="account-photo">
+                                                        <img src="/assets/images/profile/Logo.png" width="90">
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="field-area">
+                                        <div class="wrap">
+                                            <div class="lable">
+                                                <label for="title">
+                                                {{ form_label(form.companyName) }}
+                                                </label>
+                                            </div>
+                                            <div class="field">
+                                                {{ form_widget(form.companyName) }}
+                                                {{ form_custom_errors.widget(form.companyName) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="title">
+                                            {{ form_label(form.firstName) }}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.firstName) }}
+                                            {{ form_custom_errors.widget(form.firstName) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="title">
+                                            {{ form_label(form.lastName) }}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.lastName) }}
+                                            {{ form_custom_errors.widget(form.lastName) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="title">
+                                            {{ form_label(form.oldPassword) }}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.oldPassword) }}
+                                            {{ form_custom_errors.widget(form.oldPassword) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="title">
+                                            {{ form_label(form.plainPassword.first) }}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.plainPassword.first) }}
+                                            {{ form_custom_errors.widget(form.plainPassword.first) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="title">
+                                            {{ form_label(form.plainPassword.second) }}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.plainPassword.second) }}
+                                            {{ form_custom_errors.widget(form.plainPassword.second) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-holder">
+                                    {{ form_widget(form.save, {'attr': {'class': 'blue'}}) }}
+                                </div>
+                            {{ form_end(form) }}                  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

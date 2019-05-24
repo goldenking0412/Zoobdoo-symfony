@@ -1,0 +1,3 @@
+erp_olark_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ErpOlarkBundle:Default:index }

@@ -1,0 +1,114 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpnotification/js/add-alerts.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpnotification/js/add-notifications.controller.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#erp_notification_user_notification_sendSms').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#erp_notification_user_notification_templateSms').parent().parent().fadeIn();
+                } else {
+                    $('#erp_notification_user_notification_templateSms').parent().parent().fadeOut();
+                }
+            })
+        });
+    </script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+    <br />
+    <div class="form-area style">
+        <div class="container">
+            {% include "ErpNotificationBundle:UserNotification:actions.html.twig" %}
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+            
+            <br />
+            <br />
+            {{ form_start(form, {'attr': {'class': 'form'} }) }}
+            <div class="field-area">
+                <div class="lable">
+                    {{ form_label(form.template) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.template, {'attr': {'class': 'form-control select-control'} }) }}
+                </div>
+                {{ form_errors(form.template) }}
+            </div>
+
+            <div class="field-area two">
+                <div class="wrap">
+                    <div class="field">
+                        {{ form_label(form.sendNotificationAutomatically) }}
+                        {{ form_widget(form.sendNotificationAutomatically) }}<br />
+                        {{ form_errors(form.sendNotificationAutomatically) }}
+                    </div>
+                </div>
+                <div class="wrap">
+                    <div class="field">
+                        {{ form_label(form.sendSms) }}
+                        {{ form_widget(form.sendSms) }}<br />
+                        {{ form_errors(form.sendSms) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="field-area">
+                <div class="lable">
+                    {{ form_label(form.templateSms) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.templateSms, {'attr': {'class': 'form-control select-control'} }) }}
+                </div>
+                {{ form_errors(form.templateSms) }}
+            </div>
+
+            <div class="row">
+                <div class="container">
+                    <div class="col-md-6">
+                        <h3>Notifications</h3>
+
+                        {% for notification in form.notifications %}
+                            {{ form_errors(notification) }}
+                            {{ form_widget(notification) }}
+                        {% endfor %}
+                        <br />
+
+                        <button type="button"
+                                id="add-notification"
+                                class="btn-add btn-add-no-border"
+                                data-prototype="{{ form_widget(form.notifications.vars.prototype)|e }}"
+                                data-widget-counter="{{ form.notifications.children|length }}">
+                            <span class="img">+</span> Add
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Alerts</h3>
+
+                        {% for alert in form.alerts %}
+                            {{ form_errors(alert) }}
+                            {{ form_widget(alert) }}
+                        {% endfor %}
+                        <br />
+                        <button type="button"
+                                id="add-alert"
+                                class="btn-add btn-add-no-border"
+                                data-prototype="{{ form_widget(form.alerts.vars.prototype)|e }}"
+                                data-widget-counter="{{ form.alerts.children|length }}">
+                            <span class="img">+</span> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+
+            {{ form_widget(form.submit, {'label': 'Next', 'attr': {'class': 'btn-circle'} }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

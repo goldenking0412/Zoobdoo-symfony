@@ -1,0 +1,66 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% set cc = constant('Erp\\PaymentBundle\\Entity\\StripeCustomer::CREDIT_CARD') %}
+{% set ba = constant('Erp\\PaymentBundle\\Entity\\StripeCustomer::BANK_ACCOUNT') %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <section id="register-form-tenants" class="register-form cc-form-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="title-block">
+                    <h1 class="bold-text">{{ type == cc ? 'Credit Card' : 'Bank Account' }}</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    {% if errors %}
+                        <span class="field-validation-error">{{ errors }}</span>
+                    {% endif %}
+
+                    {% include 'ErpPaymentBundle:Stripe/Forms:' ~ type ~'.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/available-properties.controller.js') }}"></script>
+    {% if type == cc %}
+        <script src="https://js.stripe.com/v2"></script>
+        <script>Stripe.setPublishableKey('{{ stripe_public_key }}');</script>
+    {% endif %}
+{% endblock %}
+
+{% block javascript_inline %}
+   {% if type == cc %}
+       <script>
+           (function ($) {
+               var form = $('[name="{{ form.vars.name }}"]');
+
+               function stripeResponseHandler(status, response) {
+                   if (status < 200 || status >= 300) {
+                       return false;
+                   } else {
+                       $('#{{ form.token.vars.id }}').val(response['id']);
+                       form.get(0).submit();
+                   }
+               }
+
+               form.on('submit', function (e) {
+                   e.preventDefault();
+                   Stripe.card.createToken(form, stripeResponseHandler);
+
+                   return false;
+               });
+           })(jQuery);
+    </script>
+   {% endif %}
+{% endblock %}

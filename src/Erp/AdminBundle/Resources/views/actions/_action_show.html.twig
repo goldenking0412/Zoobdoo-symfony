@@ -1,0 +1,6 @@
+{% if admin.isGranted('SHOW', object) and admin.hasRoute('show') and object.isActive %}
+    <a href="{{ admin.generateObjectUrl('show', object) }}" class="btn btn-sm btn-default show-link" title="{{ 'action_show'|trans({}, 'SonataAdminBundle') }}" style="margin: 0px 2px; border-radius: 3px;">
+        <i class="fa fa-eye"></i>
+        {{ 'action_show'|trans({}, 'SonataAdminBundle') }}
+    </a>
+{% endif %}

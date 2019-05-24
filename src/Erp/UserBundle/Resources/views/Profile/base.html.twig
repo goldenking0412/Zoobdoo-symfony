@@ -1,0 +1,45 @@
+{% extends '::base-2.html.twig' %}
+
+{% set headerWhiteClass = true %}
+{% set currentRoute = app.request.attributes.get('_route') %}
+
+{% block headerBannerTitle %}
+    {% if app.user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+        Manager
+    {% endif %}
+    {% if app.user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_LANDLORD')) %}
+        Landlord
+    {% endif %}
+    {% if app.user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_TENANT')) %}
+        Tenant
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/vendor.js') }}"></script>
+
+<!-- <script type="text/javascript" src="{#{ asset('bundles/erpuser/js/profile-tenant.js') }#}"></script> //-->
+
+    {% if app.user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_TENANT')) %}
+        <script type="text/javascript" src="{{ asset('bundles/erpuser/js/profile-tenant.js') }}"></script>
+    {% else %}
+        <script type="text/javascript" src="{{ asset('bundles/erpuser/js/profile.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/erpsmartmove/js/sm-personal.form.controller.js') }}"></script>
+    {% endif %}
+
+    {% if currentRoute != 'erp_user_messages' %}
+        <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/available-properties.controller.js') }}"></script>
+    {% endif %}
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/wizard.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {% block profileMenu %}
+        {% include 'ErpUserBundle:Blocks:profile-navbar.html.twig' %}
+    {% endblock %}
+{% endblock %}
+
+{% block footerBlock %}{% endblock %}

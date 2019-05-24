@@ -1,0 +1,109 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    {% set page = pagination is defined ? pagination.currentPageNumber : 1 %}
+
+    <section id="managers-accounting" class="profile">
+        <div class="container">
+            <div class="row">
+                <div class="title-block">
+                    <h1 class="bold-text">List of Transactions</h1>
+                    <h2 class="bold-text">Property: <a href="{{ path('erp_property_listings_wizard_edit', {'propertyId': property.getId()}) }}" style="color: #ca171b;">{{ property.__toString() }}</a></h2>
+                </div>
+            </div>
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+            <div class="row profile-widget-row profile-widget-custom">
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <a class="btn" href="{{ path('erp_property_listings_all') }}">List of properties</a>
+
+                        <a class="btn red" href="{{ path('erp_property_listings_wizard_editt', {'propertyId': property.getId()}) }}">Property details</a>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-xs-6 widget-last">
+                    <div class="profile-widget-item">
+                        <div class="widget-title-row">
+                            <div class="login-block-title bold-text">List of transactions</div>
+                        </div>
+                        {{ form_start(form) }}
+                        <div class="form-group form-accounting">
+                            <div class="col-xs-12 col-md-7">
+                                {{ form_label(form.keyword) }}
+                                {{ form_widget(form.keyword, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="col-xs-12 col-md-2">
+                                {{ form_label(form.dateFrom) }}
+                                {{ form_widget(form.dateFrom, {'attr': {'class': 'form-control date'}}) }}
+                            </div>
+                            <div class="col-xs-12 col-md-2">
+                                {{ form_label(form.dateTo) }}
+                                {{ form_widget(form.dateTo, {'attr': {'class': 'form-control date'}}) }}
+                            </div>
+                            <div class="col-xs-12 col-md-1">
+                                <label for="filter">&nbsp;</label><br/>
+                                <button id="filter" name="filter" class="btn red-btn" type="submit">Find</button>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-2 col-md-2">Date</th>
+                                    <th class="col-xs-2 col-md-2">Transaction</th>
+                                    <th class="col-xs-1 col-md-1">Type</th>
+                                    <th class="col-xs-4 col-md-4">Description</th>
+                                    <th class="col-xs-1 col-md-1">Status</th>
+                                    <th class="col-xs-1 col-md-1" nowrap>Income</th>
+                                    <th class="col-xs-1 col-md-1">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if (pagination|length) %}
+                                    {% for item in pagination %}
+                                        <tr>
+                                            <td class="text-left">
+                                                {{ item.date|date('M d, Y') }}<br/>
+                                                {{ item.date|date('h:i:s') }}
+                                            </td>
+                                            <td class="text-left">
+                                                {{ item.fullName }}<br/>
+                                                {{ item.paymentMethodDescription }}
+                                            </td>
+                                            <td class="text-left" nowrap>{{ item.internalType|internal_type }}</td>
+                                            <td class="text-left">
+                                                {% if item.metadata  %}
+                                                    {% if item.metadata.description is defined %}
+                                                        <em>{{ item.metadata.description }}</em><br/>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ item.status|transaction_status }}</td>
+                                            <td class="text-left">
+                                                {{ item.amount|stripe_money }}
+                                            </td>
+                                            <td class="text-left">{{ item.balance|stripe_money }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center">No matches.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+
+                        {% if (pagination|length) %}
+                            {{ knp_pagination_render(pagination) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

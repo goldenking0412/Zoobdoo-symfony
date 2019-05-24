@@ -1,0 +1,55 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% set properties = (object.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER'))) ? object.getProperties() : [object.getTenantProperty()] %}
+
+    {% spaceless %}
+        {% if properties is not empty %}
+            <table class="table table-bordered table-striped" id="list-properties">
+                <thead>
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="sonata-ba-list-field-header-text">ID</th>
+                        <th class="sonata-ba-list-field-header-text">Name</th>
+                        <th class="sonata-ba-list-field-header-text">Address</th>
+                        <th class="sonata-ba-list-field-header-text">Tenant</th>
+                        <th class="sonata-ba-list-field-header-text">Price</th>
+                        <th class="sonata-ba-list-field-header-text">Created At</th>
+                        <th class="sonata-ba-list-field-header-text">Paid At</th>
+                        <th class="sonata-ba-list-field-header-text">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in properties %}
+                        <tr>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getId() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getName() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getFullAddress() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getTenantUser().__toString() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getPrice()|stripe_money(false) }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getCreatedDate()|date('F d, Y') }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getPaidDate()|date('F d, Y') }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                {% set adminChild = admin.getChild('sonata.page.admin.properties') %}
+                                {% set baseRouteName = (adminChild.getBaseRouteName())|replace({(admin.getBaseRouteName() ~ '_'): ''}) %}
+                                
+                                {% if adminChild.isGranted('SHOW', item) and adminChild.hasRoute('show') %}
+                                    <a href="{{ path(baseRouteName ~ '_show', {'id': item.getId()}) }}" class="btn btn-sm btn-default show-link" title="{{ 'action_show'|trans({}, 'SonataAdminBundle') }}" style="margin: 0px 2px;">
+                                        <i class="fa fa-eye"></i>
+                                        {{ 'action_show'|trans({}, 'SonataAdminBundle') }}
+                                    </a>
+                                {% endif %}
+                                
+                                {% if adminChild.isGranted('EDIT', item) and adminChild.hasRoute('edit') %}
+                                    <a href="{{ path(baseRouteName ~ '_edit', {'id': item.getId()}) }}" class="btn btn-sm btn-default edit-link" title="{{ 'action_edit'|trans({}, 'SonataAdminBundle') }}" style="margin: 0px 2px;">
+                                        <i class="fa fa-edit"></i>
+                                        {{ 'action_edit'|trans({}, 'SonataAdminBundle') }}
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}

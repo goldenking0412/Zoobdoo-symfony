@@ -1,0 +1,4 @@
+erp_property_unit_buy:
+    path:     /buy
+    defaults: { _controller: ErpPropertyBundle:Unit:buy }
+    methods: [GET,POST]

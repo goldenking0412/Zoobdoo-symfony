@@ -1,0 +1,5 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {{ object.email }} (<a href="mailto:{{ object.email }}?subject={{ object.subject }}&body={{ object.message }}{% if fees.getFees().defaultEmail is defined %}&reply-to={{ fees.getFees().defaultEmail }}{% endif %}">Reply</a>)
+{% endblock %}

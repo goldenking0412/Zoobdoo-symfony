@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% spaceless %}
+        <div id="list-property-images">
+            {% for item in object.getImages %}
+                <div>
+                    <img src="{{ asset(item.__toString())|imagine_filter('profile_image') }}" />
+                </div>
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock %}

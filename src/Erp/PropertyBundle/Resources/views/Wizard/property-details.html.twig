@@ -1,0 +1,35 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/city.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/property-details-form.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+    {#{% include "ErpPropertyBundle:Wizard/blocks:header.html.twig" %}#}
+    
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1><i class="icon icon-property"></i> Property ID {{ property.id }}  &nbsp; <i class="fa fa-angle-right"></i> &nbsp; Details </h1>
+        </div>
+    </div>
+
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+    <div class="breadcrumbs-area">
+        <div class="container no-flex">
+            <div class="pull-left"><a href="{{ path('erp_property_listings_all') }}" class="btn-back">< Back to property list</a></div>
+        </div>
+    </div>
+
+    <main id="main">
+        {% include "ErpPropertyBundle:Wizard/blocks:tabs.html.twig" with {'property': property, 'currentTab': 'property-details'} %}
+
+        <div class="tab-content">
+            {% include "ErpPropertyBundle:Wizard/blocks:property-details.html.twig"  %}
+        </div>
+    </main>
+{% endblock %}

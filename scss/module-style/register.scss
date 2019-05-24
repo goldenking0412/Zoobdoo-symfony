@@ -1,0 +1,173 @@
+/* Register */
+.register-form {
+    .profile-picture-upload {
+        position: relative;
+    }
+    .register-block {
+        background-color: transparent;
+        text-align: center;
+        padding: 30px;
+        margin-bottom: 80px;
+        font-size: 18px;
+    }
+    .title-block {
+        /* padding: 50px 0 20px; */
+        text-align: center;
+        h1 {
+            font-size: 56px;
+            padding: 0 0 30px;
+        }
+    }
+    p {
+        font-family: NunitoRegular;
+        padding: 0 20px; /* 30px; */
+    }
+    .form-horizontal {
+        margin-bottom: 300px;
+        .form-group {
+            margin: 0 50px;
+            .address-details-textarea {
+                textarea {
+                    height: auto;
+                }
+            }
+            .select-container {
+                overflow: hidden;
+                height: 40px;
+                background: url(../images/arrow-down.jpg) right no-repeat #fff;
+                width: 100%;
+                border: 1px solid #d6d6d6;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+            }
+            .required-label:after {
+                color: #c1262d;
+                margin-left: 2px;
+                content: '*';
+                display: inline-block;
+                height: 4px;
+                position: absolute;
+                width: 4px;
+            }
+            .form-control {
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+                height: 40px;
+                font-size: 16px;
+                min-width: 85px;
+                &.select-control {
+                    -webkit-border-radius: 20px;
+                    -moz-border-radius: 20px;
+                    border-radius: 20px;
+                    height: 44px;
+                    font-size: 16px;
+                    min-width: 85px;
+                    width: 97%;
+                    background-color: transparent;
+                    border: none;
+                    &:hover,
+                    &:focus {
+                        color: #454141;
+                        text-decoration: none;
+                        box-shadow: none;
+                    }
+                    .fa-chevron-down {
+                        position: absolute;
+                        font-size: 13px;
+                        right: 20px;
+                        top: 13px;
+                    }
+                }
+            }
+            .control-label {
+                padding: 25px 5px 5px 0;
+                position: relative;
+            }
+        }
+        .submit-popup-btn {
+            padding: 0 50px;
+            font-size: 20px;
+            line-height: 37px;
+            border: none;
+            color: #fff;
+            background-color: #9191aa;
+            border-radius: 25px;
+            &:hover,
+            &:active {
+                background-color: #b00f13;
+            }
+        }
+        .form-footer {
+            padding-top: 40px;
+            border-top: 1px solid #e3e1e1;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .dropdown-menu {
+            left: 10px;
+            width: 95%;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            min-width: 145px;
+            margin: 2px 20px 0 0;
+            &.state-dropdown {
+                width: 88%;
+            }
+            li {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+.register-form .form_wrap  p {
+    padding: 0 0 30px;
+    margin: 0;
+}
+.form_wrap{
+    padding-top: 35px;
+}
+.form_wrap .field-validation-error{
+    position: absolute;
+    top: 0;
+    left: 11px;
+}
+
+.terms-group {
+    .terms-link {
+        text-decoration: underline;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+    .terms-text {
+        display: none;
+        height: 300px;
+        overflow: auto;
+        margin-top: 50px;
+        border: 2px solid #d6d6d6;
+        border-radius: 5px;
+        padding: 10px 20px;
+        h2 {
+            text-align: center;
+        }
+    }
+    .terms-text.displayed {
+        display: block;
+    }
+    .checkbox {
+        margin-top: 25px;
+        input {
+            width: 17px;
+            height: 17px;
+            bottom: 2px;
+            position: absolute;
+            margin-right: 10px;
+        }
+    }
+}

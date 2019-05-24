@@ -1,0 +1,32 @@
+{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% set sonata_breadcrumb_last = object.name %}
+{% block sonata_breadcrumb %}
+    {% include 'ErpAdminBundle:blocks:sonata_breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+{% endblock notice %}
+
+{% block tab_menu_navbar_header %}
+    <div class="navbar-header">
+        <span class="navbar-brand">{{ object.name }}</span>
+    </div>
+{% endblock %}
+
+{% block sonata_header %}
+    {% block paramsToJs %}
+        <input type="hidden" name="route__erp_core_get_cities_by_state_code" value="{{ path('erp_core_get_cities_by_state_code') }}"/>
+    {% endblock %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/bundles/erpuser/js/city.controller.js') }}"></script>
+    <script src="{{ asset('/bundles/erpadmin/js/admin.controller.js') }}"></script>
+{% endblock %}

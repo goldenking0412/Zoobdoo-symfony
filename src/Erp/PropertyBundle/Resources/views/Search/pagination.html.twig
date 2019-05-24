@@ -1,0 +1,31 @@
+{% set totalPages = propertyFilter.getTotalPages() %}
+{% set currentPage = propertyFilter.getPage() %}
+
+{% if totalPages > 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3 text-center">
+                <ul class="pagination">
+                    {% for i in 1..totalPages %}
+                        {% if (loop.first and currentPage != 1) %}
+                            <li class="to-page previous" data-page-num="{{ currentPage - 1 }}">
+                                <span class="fa fa-chevron-circle-left" aria-hidden="true"></span>
+                            </li>
+                        {% endif %}
+
+                        <li class="to-page {{ currentPage == i ? 'active' : '' }}" data-page-num="{{ i }}">
+                            {{ i }}
+                        </li>
+
+                        {% if (loop.last and currentPage < totalPages) %}
+                            <li class="to-page next" data-page-num="{{ currentPage + 1 }}">
+                                <span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
+                            </li>
+                        {% endif %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}

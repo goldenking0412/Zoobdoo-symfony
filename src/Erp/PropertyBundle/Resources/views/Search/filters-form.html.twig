@@ -1,0 +1,117 @@
+<div id="property-filters-form" class="property-filters-form" xmlns="http://www.w3.org/1999/html">
+    <div class="property-filters-form-title">
+        <h4>filters</h4>
+
+        {% if propertyFilter.getState() %}
+            <div class="selected-filter">
+                <span>{{ propertyFilter.getState() }}</span>
+                <button type="button" class="close close-selected-filter" data-el-id="{{ form.state.vars.id }}">&times;</button>
+            </div>
+        {% endif %}
+
+        {% if propertyFilter.getCityId() %}
+            {% set city = propertyFilter.getCity() %}
+            <div class="selected-filter">
+                <span>{{ city ? city.getName() : propertyFilter.getCityId() }}</span>
+                <button type="button" class="close close-selected-filter" data-el-id="{{ form.cityId.vars.id }}">&times;</button>
+            </div>
+        {% endif %}
+
+        {% if propertyFilter.getAddress() %}
+            <div class="selected-filter">
+                <span>{{ propertyFilter.getAddress() }}</span>
+                <button type="button" class="close close-input-filter" data-el-id="{{ form.address.vars.id }}">&times;</button>
+            </div>
+        {% endif %}
+
+        {% if propertyFilter.getZip() %}
+            <div class="selected-filter">
+                <span>ZIP {{ propertyFilter.getZip() }}</span>
+                <button type="button" class="close close-input-filter" data-el-id="{{ form.zip.vars.id }}">&times;</button>
+            </div>
+        {% endif %}
+
+
+        {% if propertyFilter.getBathrooms() %}
+            <div class="selected-filter">
+                <span>{{ get_value_of_bath(propertyFilter.getBathrooms()) }} {% if propertyFilter.getBathrooms() == 1 %}Bath{% else %}Baths{% endif %}</span>
+                <button type="button" class="close close-selected-filter" data-el-id="{{ form.bathrooms.vars.id }}">&times;</button>
+            </div>
+        {% endif %}
+
+        {% if propertyFilter.getBedrooms() %}
+            <div class="selected-filter">
+                <span>{{ get_value_of_bed(propertyFilter.getBedrooms()) }} {% if propertyFilter.getBedrooms() == 1 %}Bed{% else %}Beds{% endif %}</span>
+                <button type="button" class="close close-selected-filter" data-el-id="{{ form.bedrooms.vars.id }}">&times;</button>
+            </div>
+        {% endif %}
+
+        {% if propertyFilter.getSquareFootage() %}
+            <div class="selected-filter">
+                <span>{{ propertyFilter.getSquareFootage() }} + Sq ft</span>
+                <button type="button" class="close close-input-filter" data-el-id="{{ form.squareFootage.vars.id }}">&times;</button>
+            </div>
+        {% endif %}
+    </div>
+
+    {{ form_start(form, { attr: {'id' : 'property-search-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+        <div class="form-group">
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.state) }}
+                <div class="select-container dropdown">
+                    {{ form_widget(form.state) }}
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.cityId) }}
+                <div class="select-container dropdown">
+                    {{ form_widget(form.cityId) }}
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.address) }}
+                {{ form_widget(form.address) }}
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.zip) }}
+                {{ form_widget(form.zip) }}
+                {{ form_custom_errors.widget(form.zip) }}
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.bathrooms) }}
+                <div class="select-container dropdown">
+                    {{ form_widget(form.bathrooms) }}
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.bedrooms) }}
+                <div class="select-container dropdown">
+                    {{ form_widget(form.bedrooms) }}
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.squareFootage) }}
+                {{ form_widget(form.squareFootage) }} <span> + Sqft</span>
+                {{ form_custom_errors.widget(form.squareFootage) }}
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_label(form.order) }}
+                <div class="select-container dropdown">
+                    {{ form_widget(form.order) }}
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-6 filter-item">
+                {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+            </div>
+            {{ form_widget(form.page) }}
+        </div>
+    </form>
+</div>

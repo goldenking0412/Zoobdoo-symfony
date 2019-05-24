@@ -1,0 +1,12 @@
+{% set options = field.data|json_decode %}
+<div class="form-fields form-group own-rent-group col-xs-12">
+    <a href="#" data-href="{{ path('erp_property_application_remove_field', {'propertyId':propertyId, 'fieldId':field.id}) }}"
+    class="close hide-field" aria-hidden="true">&times;</a>
+    {% for key, name in options %}
+        <div class="col-xs-2 radio-col">
+            <input type="radio" name="{{ field.type }}_{{ field.id }}" class="form-control radio-btn"
+                   id="{{ field.type }}_{{ field.id }}_{{ key }}">
+            <label class="control-label" for="{{ field.type }}_{{ field.id }}_{{ key }}">{{ name }}</label>
+        </div>
+    {% endfor %}
+</div>

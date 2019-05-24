@@ -1,0 +1,43 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{%- block date_widget -%}
+{% set type = 'text' %}
+{{ block('form_widget_simple') }}
+{%- endblock date_widget -%}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-service"></i> Services</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        {% include "ErpUserBundle:ServiceRequests/blocks:menu.html.twig" %}
+
+        <div class="row">
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+        </div>
+
+        <div class="tab-content">
+            <div class="container">     
+                <div id="tab1-0">
+
+                    <div class="container">
+                        <ul class="text-right">
+                            <li>
+                                <a href="{{ path('erp_workorder_create') }}" class="btn-add blue"><span class="img">+</span> Creating WorkOrder</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <br />
+                    {{ render(controller('ErpWorkorderBundle:Workorder:showWorkorder')) }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+

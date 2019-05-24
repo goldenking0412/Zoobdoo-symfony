@@ -1,0 +1,42 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% block headerBannerTitle %}
+    {{ page.headerTitle|e }}
+{% endblock %}
+
+{% set currentRequestUrl = app.request.requestUri %}
+{% set onlineTenantScreeningRouteUrl = path('erp_site_static_page', {'slug':'online-tenant-screening'}) %}
+
+{% block pageContent %}
+    <div class="page-content">
+
+        <section id="manager-features" class="features profile">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 features-tab-col">
+                        <a class="btn red tab-btn{% if currentRequestUrl == onlineTenantScreeningRouteUrl %} active{% endif %}" 
+                        href="{{ onlineTenantScreeningRouteUrl }}">Online Tenant Screening</a>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h4 class="table-title text-center">{{ page.title|e }}</h4>
+                    {{ page.content|raw }}
+                </div>
+
+                <div class="butn-row row">
+                    <div class="col-xs-12 btn-col">
+                        {% if app.request.attributes.get('slug') == 'tenant-features' %}
+                            <a role="popup" href="{{ path('erp_site_send_invite_to_manager') }}" class="gradient-btn btn">Invite a Manager</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_registration_register') }}" class="gradient-btn btn">Register</a>
+                        {% endif %}
+                        <span>or</span>
+                        <a href="{{ path('fos_user_security_login') }}" class="gradient-btn btn login-btn">Log In</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

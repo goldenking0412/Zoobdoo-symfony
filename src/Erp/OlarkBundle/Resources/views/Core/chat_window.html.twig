@@ -1,0 +1,72 @@
+<!-- begin olark code -->
+
+
+<script type="text/javascript" async>
+
+    ;
+    (function (o, l, a, r, k, y) {
+        if (o.olark)
+            return;
+        r = "script";
+        y = l.createElement(r);
+        r = l.getElementsByTagName(r)[0];
+        y.async = 1;
+        y.src = "//" + a;
+        r.parentNode.insertBefore(y, r);
+        y = o.olark = function () {
+            k.s.push(arguments);
+            k.t.push(+new Date)
+        };
+        y.extend = function (i, j) {
+            y("extend", i, j)
+        };
+        y.identify = function (i) {
+            y("identify", k.i = i)
+        };
+        y.configure = function (i, j) {
+            y("configure", i, j);
+            k.c[i] = j
+        };
+        k = y._ = {s: [], t: [+new Date], c: {}, l: a};
+    })(window, document, "static.olark.com/jsclient/loader.js");
+
+    olark.identify('{{olark_api_id}}');
+    olark.configure("features.prechat_survey", true);
+    olark.configure('system.hb_show_as_tab', true);
+    olark.configure('system.hb_primary_color', '#e63e3e');
+    olark.configure('system.hb_custom_style', {
+        general: {
+            fonts: ['LatoBold', 'serif'],
+            corners: '',
+            secondaryColor: ''
+        }
+    });
+    {% if app.user and (is_granted('ROLE_MANAGER') or is_granted('ROLE_TENANT') or is_granted('ROLE_LANDLORD')) %}
+        olark('api.visitor.updateFullName', {
+            fullName: '{{app.user.fullName}}'
+        });
+        olark('api.visitor.updateEmailAddress', {
+            emailAddress: '{{app.user.email}}'
+        });
+        olark('api.visitor.updatePhoneNumber', {
+            phoneNumber: '{{app.user.phone}}'
+        });
+        olark('api.visitor.updateCustomFields', {
+            // Replace with your own data
+            internalCustomerId: '{{app.user.id}}'
+        });
+    {% else %}
+        olark.configure('system.ask_for_name', 'required');
+        olark.configure('system.ask_for_email', 'required');
+
+    {% endif %}
+
+        olark('api.chat.onReady', function () {
+
+
+            // Your callback function
+        });
+
+</script>
+
+<!-- end olark code -->

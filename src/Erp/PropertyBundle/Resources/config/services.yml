@@ -1,0 +1,49 @@
+parameters:
+    erp_buy_unit_settings:
+        - {min: 1, max: 1, amount: 99}
+        - {min: 2, max: 29, amount: 20}
+        - {min: 30, max: 100000, amount: 15}
+
+services:
+    erp_property.event_listener.property_entity_listener:
+        class: 'Erp\PropertyBundle\EventListener\PropertyEntityListener'
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: 'Erp\PropertyBundle\Entity\Property', event: postPersist }
+            - { name: doctrine.orm.entity_listener, entity: 'Erp\PropertyBundle\Entity\Property', event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    erp_property.entity.unit_settings_manager:
+        class: Erp\PropertyBundle\Entity\UnitSettingsManager
+        arguments:
+            - '@doctrine'
+
+    erp_property.calculator.unit_price_calculator:
+        class: Erp\PropertyBundle\Calculator\UnitPriceCalculator
+        arguments:
+            - '@doctrine'
+
+    erp_property.validator.constraints.recurring_payment_class_validator:
+        class: Erp\PropertyBundle\Validator\Constraints\ScheduledRentPaymentClassValidator
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: validator.constraint_validator }
+    
+    erp_property.form.type.erp_property_scheduled_rent_payment:
+        class: Erp\PropertyBundle\Form\Type\ScheduledRentPaymentType
+        arguments:
+            - '@security.token_storage'
+            - '@erp_core.formatter.money_formatter'
+        tags:
+            - { name: form.type, alias: erp_property_scheduled_rent_payment }
+
+
+#    erp_property.form.type.erp_property_deposit_payment:
+#        class: Erp\PropertyBundle\Form\Type\DepositPaymentType
+#        arguments:
+#            - '@security.token_storage'
+#            - '@erp_core.formatter.money_formatter'
+#        tags:
+#            - { name: form.type, alias: erp_property_deposit_payment }

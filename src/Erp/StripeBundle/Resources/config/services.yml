@@ -1,0 +1,109 @@
+services:
+    erp_stripe.syncer.abstract_syncer:
+        class: Erp\StripeBundle\Syncer\AbstractSyncer
+        abstract:  true
+        calls:
+            - [setChargeSyncer, ['@erp_stripe.syncer.charge_syncer']]
+            - [setInvoiceSyncer, ['@erp_stripe.syncer.invoice_syncer']]
+
+    erp_stripe.syncer.charge_syncer:
+        class: Erp\StripeBundle\Syncer\ChargeSyncer
+        parent: erp_stripe.syncer.abstract_syncer
+
+    erp_stripe.syncer.invoice_syncer:
+        class: Erp\StripeBundle\Syncer\InvoiceSyncer
+        parent: erp_stripe.syncer.abstract_syncer
+
+    erp_stripe.syncer.refund_syncer:
+        class: Erp\StripeBundle\Syncer\RefundSyncer
+        parent: erp_stripe.syncer.abstract_syncer
+
+    erp_stripe.syncer.webhook_syncer:
+        class: Erp\StripeBundle\Syncer\WebhookSyncer
+        parent: erp_stripe.syncer.abstract_syncer
+
+    erp_stripe.event.event_guesser:
+        class: Erp\StripeBundle\Event\EventGuesser
+        arguments:
+            - '%kernel.debug%'
+
+    erp_stripe.event_listener.abstract_subscriber:
+        abstract: true
+        class:
+        arguments:
+            - '@doctrine'
+
+    erp_stripe.event_listener.charge_subscriber:
+        parent: erp_stripe.event_listener.abstract_subscriber
+        class: Erp\StripeBundle\EventListener\ChargeSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    erp_stripe.event_listener.invoice_subscriber:
+        parent: erp_stripe.event_listener.abstract_subscriber
+        class: Erp\StripeBundle\EventListener\InvoiceSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    erp_stripe.entity.api_manager:
+        class: Erp\StripeBundle\Entity\ApiManager
+        arguments:
+            - '%stripe.secret_key%'
+
+    erp_stripe.event_listener.transaction_entity_listener:
+        class: 'Erp\StripeBundle\EventListener\TransactionEntityListener'
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: 'Erp\StripeBundle\Entity\Transaction', event: postPersist }
+
+    erp_stripe.twig.stripe_extension:
+        class: Erp\StripeBundle\Twig\StripeExtension
+        arguments:
+            - '@erp_core.formatter.money_formatter'
+        tags:
+            -  { name: twig.extension }
+
+    erp_stripe.stripe.entity.user_manager:
+        class: Erp\StripeBundle\Entity\UserManager
+        arguments:
+            - '@erp_stripe.entity.api_manager'
+            - '@phy_cache'
+
+    erp_stripe.registry.form_registry:
+        class: Erp\StripeBundle\Registry\FormRegistry
+        arguments:
+            - {cc: '@erp_stripe.form.credit_card', ba: '@erp_stripe.form.stripe_plaid_bank_account'}
+
+    erp_stripe.registry.model_registry:
+        class: Erp\StripeBundle\Registry\ModelRegistry
+        arguments:
+            - {cc: 'Erp\StripeBundle\Entity\CreditCard', ba: 'Erp\StripeBundle\Entity\PlaidBankAccount'}
+            
+    erp_stripe.form.type.credit_card:
+        class: Erp\StripeBundle\Form\Type\CreditCardType
+        tags:
+            - { name: form.type, alias: erp_stripe_credit_card }
+
+    erp_stripe.form.credit_card:
+        class: Symfony\Component\Form\Form
+        factory: 'form.factory:createNamed'
+        arguments: ['erp_stripe_credit_card', 'erp_stripe_credit_card', null]
+
+    erp_stripe.form.type.plaid_bank_account:
+        class: Erp\StripeBundle\Form\Type\PlaidBankAccountType
+        tags:
+            - { name: form.type, alias: erp_stripe_plaid_bank_account }
+        arguments:
+            - '@erp_plaid.service.item'
+            - '@erp_plaid.service.processor'
+
+    erp_stripe.form.stripe_plaid_bank_account:
+        class: Symfony\Component\Form\Form
+        factory: 'form.factory:createNamed'
+        arguments: ['erp_stripe_plaid_bank_account', 'erp_stripe_plaid_bank_account', null]
+
+    erp_stripe.form.type.account_verification:
+        class: Erp\StripeBundle\Form\Type\AccountVerificationType
+        tags:
+            - { name: form.type, alias: erp_stripe_bank_account_verification }

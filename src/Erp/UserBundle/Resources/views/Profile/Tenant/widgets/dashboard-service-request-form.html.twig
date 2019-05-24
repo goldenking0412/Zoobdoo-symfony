@@ -1,0 +1,33 @@
+{{ form_start(form, { attr: {'class': 'request-form widget-service-request'}, 'enctype': form_enctype(form)}) }}
+    <div class="form-group col-md-6">
+        {{ form_widget(form.date) }}
+    </div>
+    
+    <div class="col-md-6 form-group">
+        <div class="dropdown">
+            <div class="select-container">
+                {{ form_widget(form.typeId) }}
+            </div>
+        </div>
+        {{ form_errors(form.typeId) }}
+    </div>
+    <div class="form-group form-body col-md-12">
+        {{ form_widget(form.subject) }}
+        {{ form_label(form.subject) }}
+    </div>
+    <div class="form-group form-body col-md-12">
+        {{ form_widget(form.text) }}
+    </div>
+    <div {{hideAttachments ? 'style="display:none"' : ''}} class="form-group form-body col-md-12">
+        {{ form_widget(form.attachments) }}
+    </div>
+    {% if is_granted("ROLE_MANAGER") %}
+    <div class="form-group form-body col-md-12">
+        {{ form_widget(form.sendSms) }}
+        {{ form_label(form.sendSms) }}
+    </div>
+    {% endif %}
+    <div class="form-footer col-md-12">
+        {{ form_widget(form.save) }}
+    </div>
+{{ form_end(form) }}

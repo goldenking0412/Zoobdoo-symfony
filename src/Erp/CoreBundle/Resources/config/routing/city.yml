@@ -1,0 +1,4 @@
+erp_core_get_cities_by_state_code:
+    path:     /get-cities-by-state-code/{stateCode}
+    defaults: { _controller: ErpCoreBundle:City:getCitiesByStateCode, stateCode:null }
+    methods: [GET]

@@ -1,0 +1,11 @@
+erp_user_service_request:
+    path: /service-request/{toUserId}
+    defaults: { _controller: ErpUserBundle:ServiceRequest:index, toUserId:null }
+    methods: [GET, POST]
+    requirements:
+        toUserId: \d+
+
+erp_user_service_request_submit:
+    path: /service-request
+    defaults: { _controller: ErpUserBundle:ServiceRequest:index, toUserId:null }
+    methods: [POST]

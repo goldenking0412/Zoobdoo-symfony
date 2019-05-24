@@ -1,0 +1,48 @@
+<style>
+  .visual:after{
+    background: url({{ asset('assets/images/erpSite/img-bottom.png') }}) no-repeat;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 300px;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+</style>
+<section class="visual">
+    <div class="clouds">
+        <div class="x1">
+        <div class="cloud"></div>
+        </div>
+        <div class="x2">
+              <div class="cloud"></div>
+        </div>
+        <div class="x3">
+              <div class="cloud"></div>
+        </div>
+        <div class="x4">
+              <div class="cloud"></div>
+        </div>
+        <div class="x5">
+              <div class="cloud"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="image-holder">
+          <img src="{{ asset('assets/images/erpSite/img1.png') }}" alt="image description">
+        </div>
+
+        <div class="text-holder">
+          <h1>A Better Way To Manage Properties.</h1>
+          <ul class="btns-list">
+            <li><a href="{{ path('fos_user_registration_register')}}" class="btn btn-default blue">Sign Up</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#login-modal"  class="btn btn-primary blue">Log In</a></li>
+          </ul>
+        </div>
+    </div>
+    <ul class="btns-mobile" data-spy="affix" data-offset-top="400">
+        <li><a href="{{ path('fos_user_registration_register') }}" class="btn btn-default blue">Sign Up</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#login-modal"  class="btn btn-default blue">Log In</a></li>
+    </ul>
+</section>

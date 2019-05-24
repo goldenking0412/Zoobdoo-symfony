@@ -1,0 +1,32 @@
+{% form_theme form 'ErpUserBundle:Form:form_horizontal.html.twig' %}
+
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+<div class="container-fluid">
+    <div class="row text-right">
+        <h1 class="text-center bold-text">Step 2: {{ landlord.__toString() }} </h1>
+        <div class="row text-center">
+            <div class="col-md-12">
+                {{ form_start(form, {'method': 'POST', 'action': path('erp_user_landlords_pay_landlord'), 'attr': {'id': 'pay-landlord-step-2'} }) }}
+                <label>
+                    {{ form_row(form.landlordId) }}
+                    <span>
+                        <input type="checkbox" name="accepted" id="accepted" checked required>
+                        <strong>Accept:</strong> sure or approve transfer the following payment to the said landlord
+                    </span>
+                    <br />
+                    <br />
+                    <br />
+                </label>
+                {{ form_row(form.amount) }}
+                {{ form_row(form.description) }}
+                <div class="text-center">
+                    {{ form_widget(form.button, {'attr': {'style': 'display: inline-block;'} }) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,91 @@
+{% form_theme form 'ErpUserBundle:Form:form_horizontal.html.twig' %}
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/file-validator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/upload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/remittance.controller.js') }}"></script>
+
+    <section id="register-form-remittances">
+        {% if not submitted %}
+            {% if (remittance.id is not null) %}
+                {% set title = 'Edit remittance' %}
+                {% set action = 'erp_user_remittances_edit' %}
+                {% set actionParams = {'remittanceId': remittance.id} %}
+            {% else %}
+                {% set title = 'Add remittance' %}
+                {% set action = 'erp_user_remittances_create' %}
+                {% set actionParams = {} %}
+            {% endif %}
+
+            <h1 class="text-center bold-text">{{ title }}</h1>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_start(form, {'method': 'POST', 'action': path(action, actionParams), 'attr': {'id': 'form-remittance'} }) }}
+                    {{ form_row(form.amount) }}
+                    <br/>
+                    <div>
+                        {{ form_label(form.type) }}
+                        <br />
+                        <span class="fake-select">
+                            {{ form_widget(form.type, {'attr': {'class': 'select-control form-control', 'style': 'width: 75% !important;'} }) }}
+                        </span>
+                    </div>
+                    <br/><br/>
+                    <div>
+                        {{ form_label(form.toUser) }}
+                        <br />
+                        <span class="fake-select">
+                            {{ form_widget(form.toUser, {'attr': {'class': 'select-control form-control', 'style': 'width: 75% !important;'} }) }}
+                        </span>
+                    </div>
+                    <br/><br/>
+                    <div>
+                        {{ form_label(form.property) }}
+                        <br />
+                        <span class="fake-select">
+                            {{ form_widget(form.property, {'attr': {'class': 'select-control form-control', 'style': 'width: 75% !important;'} }) }}
+                        </span>
+                    </div>
+                    <br/><br/>
+                    <div>
+                        {{ form_label(form.document) }}
+                        <div class="file-upload">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                {{ form_widget(form.document.file) }}
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                {{ form_widget(form.document.originalName, {'attr': {'class':'form-control upload-input'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12" id="form-remittance-document-errors">
+                            {{ form_custom_errors.widget(form.document.file) }}
+                            {{ form_custom_errors.widget(form.document.originalName) }}
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <div>
+                        {{ form_label(form.comment) }}
+                        <br />
+                        {{ form_widget(form.comment, {'attr': {'style': 'width: 80%;'} }) }}
+                    </div>
+                    <br/><br/>
+                    <div class="text-center">
+                        <button id="submit" name="submit" class="btn-circle" type="submit" style="margin-top: 10px; display: inline-block !important;">Save</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="row text-center">
+                <div class="col-md-12" style="margin-top: 10px; margin-bottom: 30px;">
+                    <h1>The remittance has been successfully saved.</h1>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+{% else %}
+    {% form_theme form 'ErpUserBundle:Form:form_compact.html.twig' %}
+    {% render(controller("FOSUserBundle:Security:login")) %}
+{% endif %}

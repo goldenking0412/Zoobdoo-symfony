@@ -1,0 +1,26 @@
+Erp\PaymentBundle\Entity\StripeAccount:
+    properties:
+        accountId:
+            - NotBlank: { groups: [US] }
+        city:
+            - NotBlank: { groups: [US] }
+        line1:
+            - NotBlank: { groups: [US] }
+        postalCode:
+            - NotBlank: { groups: [US] }
+        state:
+            - NotBlank: { groups: [US] }
+        businessName:
+            - NotBlank: { groups: [US, company] }
+        businessTaxId:
+            - NotBlank: { groups: [US, company] }
+        birthday:
+            - NotBlank: { groups: [US] }
+        firstName:
+            - NotBlank: { groups: [US] }
+        lastName:
+            - NotBlank: { groups: [US] }
+        ssnLast4:
+            - NotBlank: { groups: [US] }
+        type:
+            - NotBlank: { groups: [US] }

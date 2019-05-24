@@ -1,0 +1,12 @@
+{% extends 'ErpCoreBundle::EmailNotification/common.html.twig' %}
+
+{% block title %}
+    Online Application e-Sign Instruction
+{% endblock %}
+
+{% block message %}
+    Please follow these steps to sign your Online Application (you will receive the link shortly):<br/>
+    1) Sign and Complete the document<br/>
+    2) Download signed copy<br/>
+    3) Send it to Manager: <b>{{ llName }}</b>, <b>{{ llEmail }}</b>
+{% endblock %}

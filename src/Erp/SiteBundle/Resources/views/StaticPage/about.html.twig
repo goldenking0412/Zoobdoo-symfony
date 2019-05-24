@@ -1,0 +1,35 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% set metaTitle = 'About us | Zoobdoo' %}
+{% set metaDescription = 'Zoobdoo is where proparty managers and tenants connect. Manage all of your properties, post vacant spaces, and receive rent payments online. Sign up today!' %}
+
+{% block pageContent %}
+    <section class="top-block">
+        <div class="container">
+            <h1>About Us</h1>
+            <h2>Zoobdoo is an online property management tool for property managers and tenants, and we love making everything easier.
+            </h2>
+        </div>
+    </section>
+    <main id="main">
+        <section class="about-area">
+            <div class="container">
+                <div class="text-holder">
+                    <p>It’s what we do. It’s who we are. As a team of experienced professionals from many backgrounds, including realty and property management, we aspire for the online property management lifestyle: a place where property managers can effectively and affordably manage more properties with ease.</p>
+                    <p>Our goal is to create work that is honest and transparent. Solutions that are simple to understand, quick, and give managers the ability to manage far more properties then they are now. Passion and creativity drives us. We’re willing to go the distance for our property managers. We want them to walk away growing their business while saving more money, and we will do just about anything to get them there. </p>
+                    <p>You can manage your rents, <a href="#" class="link">get background and credit checks</a>, create rental contracts along with receiving online e-signatures, <a href="#" class="link">accept rent payments online</a>, send rental applications and collect fees, and even post <a href="#">apartments for rent</a> from the Zoobdoo website onto other public sites.</p>
+                    <p>Let’s us help you grow your business! Drop us an email now at <a href="mailto:info@zoobdoo.com" class="link">info@zoobdoo.com</a>, and let’s get started!</p>
+                    <ul class="list">
+                        <li><a href="{{ path('erp_site_static_page', {'slug': 'features', 'tab': 'tab2-0'}) }}">Manager Features</a></li>
+                        <li><a href="{{ path('erp_site_static_page', {'slug': 'features', 'tab': 'tab3-0'}) }}">Tenant Features</a></li>
+                        <li><a href="{{ path('erp_site_contact_page') }}">Contact us</a></li>
+                    </ul>
+                </div>
+                <div class="image-holder">
+                    <img src="{{ asset('assets/images/erpSite/img3.svg') }}" alt="image description">
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% set email = (user.email is defined) ? user.email : user.invitedEmail %}
+
+<div class="row">
+    <div class="col-md-9 col-xs-9">
+        <ul class="list-holder">
+            <li><span class="color">Name:</span> {{ user.getFirstName() }} {{ user.getLastName() }}</li>
+            <li><span class="color">Email:</span> {{ email }}</li>
+            <li>
+                <span class="color">Status:</span>
+                <span class="btn  {{ status == 'Pending' ? 'yellow' : (user.isEnabled ? '' : 'red') }}">
+                    {{ status == 'Pending' ? status : (user.isEnabled ? 'Active' : 'Deactivated') }}
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-3 col-xs-3 text-right">
+        {% set urlDelete = path('erp_property_listings_delete_tenant', {'propertyId' : property.getId()}) %}
+        {% if editButton %}
+            {% set urlDelete = path('erp_property_listings_delete_invited_tenant', {'propertyId' : property.getId(), 'invitedTenantId': user.id}) %}
+            <a href="{{ path('erp_property_listings_wizard_invited_tenant', {'propertyId' : property.getId()}) }}" class="btn lightbox-ajax"><i class="icon icon-edit"></i></a>
+        {% endif %}
+        <a href="{{ urlDelete }}" class="btn red lightbox-ajax">X</a>
+    </div>
+</div>

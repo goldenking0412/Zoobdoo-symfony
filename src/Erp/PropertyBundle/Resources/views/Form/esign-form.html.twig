@@ -1,0 +1,37 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% if msg is defined %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                {{ msg|raw }}
+            </div>
+        </div>
+    </div>
+{% else %}
+    {{ form_start(form, { attr: {'class': 'form-horizontal', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                Please enter email and press Submit button. Do not close this popup and wait for about 5 seconds until you see success message.
+                {{ form_label(form.email) }}
+                {% if user is defined %}
+                    {{ form_widget(form.email, {'value': user.email}) }}
+                {% else %}
+                    {{ form_widget(form.email) }}
+                {% endif %}
+                {{ form_custom_errors.widget(form.email) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="button-wrap">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endif %}

@@ -1,0 +1,9 @@
+erp_core_city:
+    resource: "@ErpCoreBundle/Resources/config/routing/city.yml"
+    prefix:   /city
+    
+erp_check_path:
+    path:     /login_check
+    defaults:
+        _controller: ErpUserBundle:Security:check
+    methods: [POST]

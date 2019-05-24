@@ -1,0 +1,74 @@
+{% extends 'SonataAdminBundle:CRUD:list.html.twig' %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+{% endblock notice %}
+
+{% block navbar_title %}
+    {{ admin.label }}
+{% endblock %}
+
+{% if app.session.flashbag.has('erp_sonata_flash_success') %}
+    {% block notice_flash %}
+        {% for flashMessage in app.session.flashbag.get('erp_sonata_flash_success') %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ flashMessage|raw }}
+            </div>
+        {% endfor %}
+    {% endblock notice_flash %}
+{% endif %}
+
+{% block table_footer %}
+    <tfoot>
+    <tr>
+        <th colspan="{{ admin.list.elements|length - (app.request.isXmlHttpRequest ? (admin.list.has('_action') + admin.list.has('batch')) : 0) }}">
+            <div class="form-inline">
+                {% if not app.request.isXmlHttpRequest %}
+                {% if admin.hasRoute('batch') and batchactions|length > 0  %}
+                    {% block batch %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% endif %}
+
+                    <div class="pull-right">
+                        {% if admin.hasRoute('export') and admin.isGranted("EXPORT") and admin.getExportFormats()|length %}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-export"></i>
+                                    {{ "label_export_download"|trans({}, "SonataAdminBundle") }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {% for format in admin.getExportFormats() %}
+                                    <li>
+                                        <a href="{{ admin.generateUrl('export', admin.modelmanager.paginationparameters(admin.datagrid, 0) + {'format' : format}) }}">
+                                            <i class="glyphicon glyphicon-download"></i>
+                                            {{ format|upper }}
+                                        </a>
+                                    <li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            &nbsp;-&nbsp;
+                        {% endif %}
+
+                        {# block pager_results #}
+                            {# parent() #}
+                        {# endblock #}
+                    </div>
+                {% endif %}
+            </div>
+        </th>
+    </tr>
+
+    {% block pager_links %}
+        {{ parent() }}
+    {% endblock %}
+
+    </tfoot>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends '::base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block headerBannerTitle %}
+    Request an Appointment
+{% endblock %}
+
+{% form_theme form 'GregwarCaptchaBundle::captcha.html.twig' %}
+
+{% block pageContent %}
+    <div class="page-content">
+        <section id="property-details" class="property-details">
+            <div class="container">
+                {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+                <div class="row">
+                    <h2 class="appointment-title">Request an Appointment - <strong>{{ property.getName() }}</strong>
+                    </h2>
+                </div>
+                {{ form_start(form, { attr: {'class': 'form-horizontal appointment-request', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-4 col-xs-6">
+                            {{ form_label(form.userName) }}
+                            {{ form_widget(form.userName) }}
+                            {{ form_custom_errors.widget(form.userName) }}
+                        </div>
+                        <div class="col-md-4 col-xs-6">
+                            {{ form_label(form.phone) }}
+                            {{ form_widget(form.phone) }}
+                            {{ form_custom_errors.widget(form.phone) }}
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+                            {{ form_custom_errors.widget(form.email) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_label(form.subject) }}
+                            {{ form_widget(form.subject) }}
+                            {{ form_custom_errors.widget(form.subject) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_label(form.message) }}
+                            {{ form_widget(form.message) }}
+                            {{ form_custom_errors.widget(form.message) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="captcha-wrap">
+                                <label class="control-label security-label">
+                                    {{ form_label(form.captcha) }}
+                                </label>
+                                {{ form_widget(form.captcha) }}
+                                {{ form_custom_errors.widget(form.captcha) }}
+                            </div>
+                            <div class="button-wrap">
+                                {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </section>
+    </div>
+{% endblock %}

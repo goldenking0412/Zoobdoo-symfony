@@ -1,0 +1,27 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% set metaTitle = 'Error 404 | Zoobdoo' %}
+{% set metaDescription = 'Zoobdoo is where proparty managers and tenants connect. Manage all of your properties, post vacant spaces, and receive rent payments online. Sign up today!' %}
+
+{% block pageContent %}
+
+    <section class="top-block">
+        <div class="container">
+            <h1>Ops! Page Not Found</h1>
+        </div>
+    </section>
+
+    <main id="main">
+        <section class="not-found-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12" style="margin: 50px;">
+                        <p>The link you are trying to open is either expired or does not exist.</p>
+                        <p>Please <a href="/register">register</a> or <a href="/login">login</a> to use all features of the website or <a href="/contact">contact</a> Administrator for questions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

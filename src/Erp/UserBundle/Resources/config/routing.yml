@@ -1,0 +1,51 @@
+erp_user_registeration:
+    resource: "@ErpUserBundle/Resources/config/routing/registration.yml"
+    prefix:   /register
+
+erp_user_profile:
+    resource: "@ErpUserBundle/Resources/config/routing/profile.yml"
+    prefix:     /profile
+
+erp_user_profile_messages:
+    resource: "@ErpUserBundle/Resources/config/routing/messages.yml"
+    prefix:     /profile
+
+erp_user_profile_service_request:
+    resource: "@ErpUserBundle/Resources/config/routing/service-request.yml"
+    prefix:     /profile
+
+erp_user_profile_settings:
+    resource: "@ErpUserBundle/Resources/config/routing/settings.yml"
+    prefix:     /profile
+
+erp_user_profile_documentation:
+    resource: "@ErpUserBundle/Resources/config/routing/documentation.yml"
+    prefix:     /profile
+
+erp_user_profile_forum:
+    resource: "@ErpUserBundle/Resources/config/routing/forum.yml"
+    prefix:     /profile
+
+erp_user_dashboard:
+    resource: "@ErpUserBundle/Resources/config/routing/dashboard.yml"
+    prefix:   /account
+
+erp_user_late_rent_payment:
+    resource: "@ErpUserBundle/Resources/config/routing/fee.yml"
+    prefix:   /fee
+
+erp_user_user:
+    resource: "@ErpUserBundle/Resources/config/routing/user.yml"
+    prefix:   /account
+
+erp_user_accounting:
+    resource: "@ErpUserBundle/Resources/config/routing/accounting.yml"
+    prefix:   /dashboard/accounting
+
+erp_user_landlords:
+    resource: "@ErpUserBundle/Resources/config/routing/landlords.yml"
+    prefix:   /landlords
+
+erp_user_remittances:
+    resource: "@ErpUserBundle/Resources/config/routing/remittance.yml"
+    prefix:   /remittances

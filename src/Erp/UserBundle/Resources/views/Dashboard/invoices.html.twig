@@ -1,0 +1,24 @@
+<div class="profile-widget-item">
+    <div class="widget-title-row">
+        <div class="login-block-title bold-text">Invoices</div>
+    </div>
+
+    <div class="profile-widget-item-body">
+        <div class="col-xs-12">
+            <canvas
+                id="invoices-chart"
+                width="400"
+                height="200"
+                data-invoices="{{ invoices|json_encode }}"
+                data-intervals="{{ intervals|json_encode }}"
+                data-labels="{{ labels|json_encode }}"
+                data-listing-url="{{ url('erp_stripe_invoice_index') }}"
+                ></canvas>
+        </div>
+    </div>
+    <hr>
+
+    <div class="question-mark">
+
+    </div>
+</div>

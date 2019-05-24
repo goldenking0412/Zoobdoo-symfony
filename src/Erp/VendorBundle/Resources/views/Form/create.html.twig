@@ -1,0 +1,55 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-service"></i> Services</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        {% include "ErpUserBundle:ServiceRequests/blocks:menu.html.twig" %}
+
+        <div class="form-area style">
+            <div class="container">
+                <h2>Creating Vendor</h2>
+                <br />
+                <br />
+
+                <div class="row">
+                    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+                </div>
+
+                {{ form_start(form, {'method': 'POST', 'action': path('erp_vendor_create'), 'attr': {'class': 'form'} }) }}
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.name) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.name) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.name) }}
+                    </div>
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.email) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.email) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.email) }}
+                    </div>
+                </div>
+
+                <div class="btn-holder">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}

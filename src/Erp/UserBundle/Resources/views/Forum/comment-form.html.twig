@@ -1,0 +1,12 @@
+{{ form_start(form, { attr: {'class': 'create-comment', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+
+    {{ form_widget(form.text) }}
+
+    {% if user.isReadOnlyUser() %}
+        <a class="btn-circle" type="submit" href="{{ path('erp_user_profile_read_only_popup') }}">Submit</a>
+        <div class="hidden">{{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}</div>
+    {% else %}
+        {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+    {% endif %}
+
+{{ form_end(form) }}

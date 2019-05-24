@@ -1,0 +1,79 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1><i class="icon icon-accounting"></i> Accounting</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+            <div class="tabs-area">
+                <div class="container" style="justify-content: left;">
+                    <ul class="tabset">
+                        <li>
+                            <a href="#tab1-0" class="{{ currentRoute == 'erp_user_accounting_index' ? 'active' : '' }}">Ledger</a>
+                        </li>
+                        <li>
+                            <a href="#tab2-0" class="{{ currentRoute == 'erp_user_accounting_list_invoices' ? 'active' : '' }}">Invoices</a>
+                        </li>
+                        <li>
+                            <a href="#tab3-0" class="{{ currentRoute == 'erp_user_remittances_index' ? 'active' : '' }}">Remittances</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
+        {{ include('ErpUserBundle:Blocks:statement-form.html.twig') }}
+
+        {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+            <div class="tab-content style">
+                <div id="tab1-0">
+                    <div class="container">
+                        {{ render(controller('ErpUserBundle:Accounting:showAccountingLedger')) }}
+                    </div>
+                </div>
+                <div id="tab2-0">
+                    <div class="container">
+                        {{ render(controller('ErpUserBundle:Accounting:listInvoices')) }}
+                    </div>
+                </div>
+                <div id="tab3-0">
+                    <div class="container">
+                        {{ render(controller('ErpUserBundle:Remittance:list')) }}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="container">
+                {{ render(controller('ErpUserBundle:Accounting:showAccountingLedger')) }}
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) or user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_LANDLORD')) %}
+        <script type="text/javascript" src="{{ asset('bundles/erpuser/js/statement.controller.js') }}"></script>
+        <script type="text/javascript">
+            var eventRoot;
+            $(document).ready(function () {
+                $('.ref-btn.refunded-btn').on('click', function (event) {
+                    event.preventDefault();
+                });
+                $('.ref-btn.refund-btn').on('click', function (event) {
+                    eventRoot = event;
+                });
+
+                var tab = decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent('t').replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+                if (tab) {
+                    $('a[href=\'#' + tab + '\']').trigger('click');
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}

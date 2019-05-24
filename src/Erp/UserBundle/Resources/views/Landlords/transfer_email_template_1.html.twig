@@ -1,0 +1,55 @@
+{% extends "ErpUserBundle:Mail:layout.html.twig" %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="invoice-title">
+                <h2>
+                    <img src="{{ base_scheme ~ '/assets/images/logo_Zoobdoo.png' }}" class="img-responsive" style="width: 300px; max-width: 300px; height: auto;" />
+                </h2>
+                <h3 class="pull-right">
+                    Trasfer payment details
+                </h3>
+            </div>
+            <hr>
+            <div class="row">
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <address>
+                Hello, <b>{{ charge.landlord.firstname }} {{ charge.landlord.lastname }}.</b>
+            </address>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Please see following transfer payment details: <br/><br/>
+            <b>Transfer Id:</b> {{ charge.txnId }}  <br/>
+            <b>Amount:</b> {{ charge.amount }} USD  <br/>
+            <b>Transfer DateTime:</b> {{ charge.datTimeMail }}  <br/><br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            {% if (charge.description) %}
+                <b>Note:</b> {{ charge.description }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <address>
+                Sincerely yours, <br/>{{ charge.manager.firstname }} {{ charge.manager.lastname }}.
+                <br /><br />
+            </address>
+        </div>
+    </div>
+{% endblock %}

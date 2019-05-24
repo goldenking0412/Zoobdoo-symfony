@@ -1,0 +1,66 @@
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+erp_vendor:
+    resource: "@ErpVendorBundle/Resources/config/routing.yml"
+    prefix:   /
+
+erp_workorder:
+    resource: "@ErpWorkorderBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+erp_olark:
+    resource: "@ErpOlarkBundle/Resources/config/routing.yml"
+    prefix:   /
+
+erp_signature:
+    resource: "@ErpSignatureBundle/Resources/config/routing.yml"
+    prefix:   /
+
+erp_payment:
+    resource: "@ErpPaymentBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+admin_area:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+erp_user:
+    resource: "@ErpUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+erp_site_routing:
+    resource: "@ErpSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+erp_core_routing:
+    resource: "@ErpCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+erp_property_routing:
+    resource: "@ErpPropertyBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gregwar_captcha_routing:
+    resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
+    prefix: /_gcb
+
+erp_smart_move:
+    resource: "@ErpSmartMoveBundle/Resources/config/routing.yml"
+    prefix:   /smart-move
+
+erp_stripe:
+    resource: "@ErpStripeBundle/Resources/config/routing.yml"
+    prefix: /
+
+erp_notification:
+    resource: "@ErpNotificationBundle/Resources/config/routing.yml"
+    prefix: /

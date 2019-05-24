@@ -1,0 +1,33 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: '%database.host%'
+    database_port: '%database.port%'
+    database_name: '%database.name%'
+    database_user: '%database.user%'
+    database_password: '%database.password%'
+    mailer_transport: '%mailer.transport%'
+    mailer_host: '%mailer.host%'
+    mailer_user: '%mailer.user%'
+    mailer_password: '%mailer.password%'
+    mailer_port: '%mailer.port%'
+    mailer_encryption: '%mailer.encryption%'
+    contact_email: '%contact.email%'
+    siteUrl: 'https://zoobdoo.com'
+    secret: ThisTokenIsNotSoSecretChangeIt
+    docusign_integrator_key: '%docusign.integrator.key%'
+    docusign_email: '%docusign.username%'
+    docusign_password: '%docusign.password%'
+    docusign_environment: '%docusign.environment%'
+    docusign_account_id: '%docusign.account.id%'
+    google_analytics_id: '%google.analytics.id%'
+    hellosign_api_key: '%hellosign.api.key%'
+    hellosign_app_clientid: '%hellosign.api.app.clientid%'
+    hellosign_app_testenv: true
+    redis_host: '%redis.host%'
+    redis_port: '%redis.port%'
+    redis_password: '%redis.password%'
+    application_version: 0.0.10-dev.70dc899
+    olark_api_id: '%olark.api.id%'
+    twilio_sid: '%twilio.sid%'
+    twilio_auth_token: '%twilio.auth.token%'
+    twilio_number: '%twilio.number%'

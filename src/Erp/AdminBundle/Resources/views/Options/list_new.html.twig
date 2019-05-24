@@ -1,0 +1,24 @@
+{% extends 'SonataAdminBundle:CRUD:list.html.twig' %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+    <style> 
+        .table > thead > tr > th,
+        .table > tbody > tr > th,
+        .table > tfoot > tr > th,
+        .table > thead > tr > td,
+        .table > tbody > tr > td,
+        .table > tfoot > tr > td {
+            padding: 4px;
+        }
+    </style> 
+{% endblock notice %}
+
+{% block navbar_title %}
+    {{ admin.label }}
+
+{% endblock %}
+

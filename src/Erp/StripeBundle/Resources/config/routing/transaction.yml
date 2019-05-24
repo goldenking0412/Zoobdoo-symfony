@@ -1,0 +1,7 @@
+erp_stripe_transaction_index:
+    path: /transactions
+    defaults: { _controller: ErpStripeBundle:Transaction:index }
+
+erp_stripe_transaction_export:
+    path: /export
+    defaults: { _controller: ErpStripeBundle:Transaction:export }

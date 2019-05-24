@@ -1,0 +1,16 @@
+<div class="container-fluid" id="form-copy">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <p>Application Forms has been copied to selected properties.</p>
+            </div>
+            <div class="form-group">
+                <ul>
+                    {% for property in properties %}
+                        <li>{{ property.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button type="button" class="btn-circle" data-dismiss="modal" aria-hidden="true">OK</button>
+        </div>
+</div>
+

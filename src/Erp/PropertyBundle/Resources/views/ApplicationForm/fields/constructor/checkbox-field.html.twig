@@ -1,0 +1,7 @@
+<div class="form-fields">
+    <div class="form-group col-xs-12">
+        <a href="#" data-href="{{ path('erp_property_application_remove_field', {'propertyId':propertyId, 'fieldId':field.id}) }}" class="close hide-field" aria-hidden="true">&times;</a>
+        <input type="checkbox" id="{{ field.type }}_{{ field.id }}" name="{{ field.type }}_{{ field.id }}" class="form-control checkbox-btn">
+        <label class="control-label agreement-check" for="{{ field.type }}_{{ field.id }}">{{ field.name }}</label>
+    </div>
+</div>

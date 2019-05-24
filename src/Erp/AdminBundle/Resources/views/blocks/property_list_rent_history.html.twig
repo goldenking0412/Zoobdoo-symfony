@@ -1,0 +1,37 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% spaceless %}
+        {% if object.getHistory() is not empty %}
+            <table class="table table-bordered table-striped" id="list-properties">
+                <thead>
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="sonata-ba-list-field-header-text">Tenant</th>
+                        <th class="sonata-ba-list-field-header-text">Status</th>
+                        <th class="sonata-ba-list-field-header-text">Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object.getHistory() %}
+                        {% set adminTenantChild = admin.getChild('sonata.page.admin.tenants') %}
+                        {% set baseRouteName = (adminTenantChild.getBaseRouteName())|replace({(admin.getBaseRouteName() ~ '_'): ''}) %}
+                        {% set tenant = item.getProperty().getTenantUser() %}
+                        <tr>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                {% if adminTenantChild.isGranted('SHOW', tenant) and adminTenantChild.hasRoute('show') %}
+                                    <a href="{{ path(baseRouteName ~ '_show', {'id': tenant.getId()}) }}" class="btn btn-sm btn-default show-link" title="{{ 'action_show'|trans({}, 'SonataAdminBundle') }}">
+                                        {{ item.getProperty().getTenantUser() }}
+                                    </a>
+                                {% else %}
+                                    {{ item.getProperty().getTenantUser() }}
+                                {% endif %}
+                            </td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getStatus() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getCreatedAt()|date('F d, Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}

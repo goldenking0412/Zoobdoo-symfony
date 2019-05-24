@@ -1,0 +1,37 @@
+<div class="col">
+    <div class="open-close1 active">
+        <header class="head">
+            <span class="text">Late Rent Payments</span>
+            <a href="#" class="opener">[<span class="icon"></span>]</a>
+        </header>
+        <div class="slide">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tenant</th>
+                        <th>Owed</th>
+                        <th>Days Late</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if properties_was_not_paid|length %}
+                        {% for property in properties_was_not_paid %}
+                            {% set action = path('erp_user_user_allow_rent_payment', {'userId': property.tenantUser.id}) %}
+                            {% set popupUrl = path('erp_user_fee_create', {'user': property.tenantUser.id}) %}
+                            <tr>
+                                <td data-title="Tenant"><span class="blue">{{ property.tenantUser.fullName }}</span></td>
+                                <td data-title="Owed">{{ property.tenantUser.totalOwedAmount|money }}</td>
+                                <td><span class="red">{{ property.tenantUser.rentPaymentBalance.getDayLate() }}</span></td>
+                            </tr>
+                        {% endfor %}    
+                    </tbody>
+                {% else %}
+                    <tr>
+                        <td colspan="3">No item available</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>

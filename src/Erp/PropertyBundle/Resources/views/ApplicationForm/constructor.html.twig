@@ -1,0 +1,85 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/upload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/application.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/application-fee.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="container">
+        <div class="form-group text-right">
+            <a href="{{ path('erp_property_listings_edit_documents', {'propertyId': propertyId}) }}" class="btn edit-btn">Back</a>
+        </div>
+    </div>
+    <!-- Application Form Constructor-->
+    <section id="rental-form-constructor" class="register-form rental-form">
+        <div class="container">
+            <div class="row">
+                <div class="title-block col-md-10 col-md-offset-1">
+                    <h1 class="bold-text">Create Online Rental Application</h1>
+                </div>
+            </div>
+
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    {% set disableFee = false %}
+                    {% if feeForm.noFee.vars.checked %}
+                        {% set disableFee = true %}
+                    {% endif %}
+                    {{ form_start(feeForm, {'action': path('erp_property_application_form_save_application_fee', {'property': propertyId}), 'attr': {'class': 'form'} }) }}
+                        <div class="form-group">
+                            {{ form_label(feeForm.noFee, null, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_widget(feeForm.noFee) }}
+                            {{ form_errors(feeForm.noFee) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(feeForm.fee, null, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_widget(feeForm.fee, {'attr': {'class': 'form-control', 'disabled': disableFee}}) }}
+                            {{ form_errors(feeForm.fee) }}
+                        </div>
+                        {{ form_widget(feeForm.submit,  {'attr': {'class': 'btn-circle'} }) }}
+                    {{ form_end(feeForm) }}
+
+
+                    <div class="form form-horizontal">
+                        <div class="row">
+                            {% set applicationSections = applicationForm.applicationSections %}
+                            {% for applicationSection in applicationSections %}
+                                {% include('ErpPropertyBundle:ApplicationForm/blocks:section.html.twig') %}
+                            {% endfor %}
+
+                            <div class="form-group section-block agreement-block">
+                                <div class="col-xs-12 block-fields">
+                                    <div class="agreement-group form-group col-xs-12">
+                                        <input type="checkbox" name="agreement" class="form-control checkbox-btn"
+                                               id="agreement-check">
+                                        <label class="control-label agreement-check" for="agreement-check">I authorize the
+                                            verification of the information provided on this form as to my credit and
+                                            employment. I have received a copy of this application.</label>
+
+                                        <div class="col-xs-6 sign-block">
+                                            <label class="control-label">Signature of applicant:</label>
+                                        </div>
+                                        <div class="col-xs-4 col-xs-offset-2">
+                                            <label class="control-label">Date:</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% include('ErpPropertyBundle:ApplicationForm/blocks:add-section.html.twig') %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,110 @@
+version: '2.0'
+
+services:
+    db:
+        restart: always
+        build: ./docker/mysql
+        volumes:
+            - ./docker/mysql/data:/var/lib/mysql
+            - ./app/logs/mysql:/var/log/mysql
+        environment:
+            - MYSQL_ROOT_HOST
+            - MYSQL_ALLOW_EMPTY_PASSWORD
+            - MYSQL_DATABASE
+            - MYSQL_USER
+            - MYSQL_PASSWORD
+        ports:
+            - '3307:3306'
+
+    nginx:
+        restart: always
+        build:
+            context: ./docker/nginx
+            args:
+                - APP_ENV=${APP_ENV}
+        ports:
+          - '80:80'
+          - '443:443'
+        volumes:
+          - ./app/logs/nginx:/var/log/nginx
+          - ./docker/nginx/certs.dist/$APP_ENV/:/etc/nginx/certs/
+          - ./docker/nginx/sites-enabled.dist/$APP_ENV/default.conf:/etc/nginx/sites-enabled/default.conf
+          - ./:/var/www/
+        depends_on:
+          - php
+
+    php:
+        restart: always
+        build:
+            context: ./docker/php
+            args:
+                - APP_ENV=${APP_ENV}
+        volumes:
+            - ./:/var/www/
+            - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+            - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./docker/php/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+        depends_on:
+            - rabbitmq
+            - db
+            - redis
+        environment:
+            - SYMFONY__DATABASE__HOST=${MYSQL_ROOT_HOST}
+            - SYMFONY__DATABASE__PORT=${MYSQL_PORT}
+            - SYMFONY__DATABASE__NAME=${MYSQL_DATABASE}
+            - SYMFONY__DATABASE__USER=${MYSQL_USER}
+            - SYMFONY__DATABASE__PASSWORD=${MYSQL_PASSWORD}
+            - SYMFONY__RABBITMQ__HOST=${RABBITMQ_HOST}
+            - SYMFONY__RABBITMQ__PORT=${RABBITMQ_PORT}
+            - SYMFONY__RABBITMQ__USER=${RABBITMQ_USER}
+            - SYMFONY__RABBITMQ__PASSWORD=${RABBITMQ_PASSWORD}
+            - SYMFONY__RABBITMQ__VHOST=${RABBITMQ_VHOST}
+            - SYMFONY__STRIPE__PUBLIC__KEY=${STRIPE_PUBLIC_KEY}
+            - SYMFONY__STRIPE__SECRET__KEY=${STRIPE_SECRET_KEY}
+            - SYMFONY__PLAID__CLIENT__ID=${PLAID_CLIENT_ID}
+            - SYMFONY__PLAID__PUBLIC__KEY=${PLAID_PUBLIC_KEY}
+            - SYMFONY__PLAID__SECRET__KEY=${PLAID_SECRET_KEY}
+            - SYMFONY__PLAID__ENV=${PLAID_ENV}
+            - SYMFONY__MAILER__HOST=${MAILER_HOST}
+            - SYMFONY__MAILER__USER=${MAILER_USER}
+            - SYMFONY__MAILER__PASSWORD=${MAILER_PASSWORD}
+            - SYMFONY__MAILER__TRANSPORT=${MAILER_TRANSPORT}
+            - SYMFONY__MAILER__PORT=${MAILER_PORT}
+            - SYMFONY__MAILER__ENCRYPTION=${MAILER_ENCRYPTION}
+            - SYMFONY__CONTACT__EMAIL=${CONTACT_EMAIL}
+            - SYMFONY__DOCUSIGN__INTEGRATOR__KEY=${DOCUSIGN_INTEGRATOR_KEY}
+            - SYMFONY__DOCUSIGN__USERNAME=${DOCUSIGN_USERNAME}
+            - SYMFONY__DOCUSIGN__PASSWORD=${DOCUSIGN_PASSWORD}
+            - SYMFONY__DOCUSIGN__ENVIRONMENT=${DOCUSIGN_ENVIRONMENT}
+            - SYMFONY__DOCUSIGN__ACCOUNT__ID=${DOCUSIGN_ACCOUNT_ID}
+            - SYMFONY__GOOGLE__ANALYTICS__ID=${GOOGLE_ANALYTICS_ID}
+            - SYMFONY__HELLOSIGN__API__KEY=${HELLOSIGN_API_KEY}
+            - SYMFONY__HELLOSIGN__API__APP__CLIENTID=${HELLOSIGN_API_APP_CLIENTID}
+            - SYMFONY__REDIS__HOST=${REDIS_HOST}
+            - SYMFONY__REDIS__PORT=${REDIS_PORT}
+            - SYMFONY__REDIS__PASSWORD=${REDIS_PASSWORD}
+            - SYMFONY__OLARK__API__ID=${OLARK_API_ID}
+            - SYMFONY__TWILIO__SID=${TWILIO_SID}
+            - SYMFONY__TWILIO__AUTH__TOKEN=${TWILIO_AUTH_TOKEN}
+            - SYMFONY__TWILIO__NUMBER=${TWILIO_NUMBER}
+
+    rabbitmq:
+        restart: always
+        image: rabbitmq
+        environment:
+            - HOSTNAME=${RABBITMQ_HOST}
+            - RABBITMQ_NODENAME=rabbitmq
+            - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+            - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+            - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_VHOST}
+        ports:
+            - 15672:15672
+            - 5672:5672
+        volumes:
+            - ./docker/rabbitmq/:/var/app
+
+    redis:
+        restart: always
+        image: redis:4-alpine
+        ports:
+            - 6379:6379

@@ -1,0 +1,6 @@
+erp_user_messages:
+    path:     /messages/{toUserId}
+    defaults: { _controller: ErpUserBundle:Message:index, toUserId:null }
+    methods: [GET, POST]
+    requirements:
+        toUserId: \d+

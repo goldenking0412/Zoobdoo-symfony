@@ -1,0 +1,55 @@
+{% set routeProperties = [
+'erp_property_listings_all',
+'erp_property_listings_add',
+'erp_property_listings_show',
+'erp_property_listings_edit_documents',
+'erp_property_property_settings_edit',
+'erp_notification_user_notification_list',
+'erp_notification_user_notification_history',
+'erp_notification_user_notification_create',
+'erp_notification_template_list',
+'erp_notification_template_create',
+'erp_notification_template_create_sms',
+'erp_notification_user_eviction',
+'erp_notification_template_create',
+'erp_notification_user_eviction_create',
+'erp_property_unit_buy',
+'erp_property_listings_wizard_remove_bank_account',
+'erp_property_listings_wizard_security_deposit',
+'erp_property_listings_wizard_invited_tenant',
+'erp_property_listings_wizard_landlord',
+'erp_property_listings_wizard_manager',
+'erp_property_listings_wizard_edit_images',
+'erp_property_listings_wizard_payment_settings',
+'erp_property_listings_wizard_add',
+'erp_property_listings_wizard_edit_xhr',
+'erp_property_listings_wizard_edit',
+'erp_property_listings_wizard',
+'erp_property_listings_wizard_search',
+]
+%}
+
+{% set routeServiceRequests = ['erp_user_service_request', 'erp_workorder_index', 'erp_workorder_create' , 'erp_vendor_index'] %}
+
+{% set routeAccounting = ['erp_user_accounting_index', 'erp_user_accounting_list_invoices'] %}
+
+{% set routeTenant = [
+'erp_user_email_options', 
+'erp_user_details', 
+'erp_user_profile_dashboard', 
+'fos_user_profile_show', 
+'erp_user_contact_info', 
+'erp_user_documentation', 
+] 
+%}
+
+{% set routeDocumentation = ['erp_smart_move_check_page', 'erp_user_documentation'] %}
+
+
+{% if app.user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+    {% include 'ErpUserBundle:Blocks/cross:manager-navbar.html.twig' %}
+{% elseif app.user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_LANDLORD')) %}
+    {% include 'ErpUserBundle:Blocks/cross:landlord-navbar.html.twig' %}
+{% else %}
+    {% include 'ErpUserBundle:Blocks/cross:tenant-navbar.html.twig' %}
+{% endif %}

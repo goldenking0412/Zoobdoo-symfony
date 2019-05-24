@@ -1,0 +1,262 @@
+/* Messages Block */
+.messages-row {
+    .messages-col {
+        .messages-history {
+            .messages-time {
+                float:right;
+            }
+        }
+    }
+}
+
+.messages-row {
+    .messages-col {
+        border-left: 1px solid #e3e1e1;
+        padding: 25px 0 0 50px;
+        .companion-messages-name {
+            margin: 0;
+            font-size: 26px;
+            color: #ca171b;
+            font-family: LatoBold;
+            padding-bottom: 25px;
+            word-wrap: break-word;
+            border-bottom: 1px solid #e3e1e1;
+        }
+        .messages-history {
+            max-height: 750px;
+            overflow: auto;
+            .request-item {
+                padding-top: 20px;
+                .messages-subject {
+                    margin-bottom: 5px;
+                    display: inline-block;
+                }
+            }
+            .messages-item {
+                padding: 25px;
+                word-wrap: break-word;
+                position: relative;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                &.sent-message {
+                    background-color: #ededed;
+                    margin: 30px 30px 30px 50px;
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        border-left: 25px solid #ededed;
+                        border-top: 25px solid rgba(113, 101, 58, 0);
+                        border-bottom: 25px solid rgba(113, 101, 58, 0);
+                        right: -16px;
+                        top: 10px;
+                    }
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        border-left: 25px solid #ededed;
+                        border-top: 25px solid rgba(255, 241, 190, 0);
+                        border-bottom: 25px solid rgba(255, 241, 190, 0);
+                        right: -15px;
+                        top: 10px;
+                    }
+                }
+                &.received-message {
+                    background-color: #feefde;
+                    margin: 30px 30px 30px 15px;
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        border-right: 25px solid #feefde;
+                        border-top: 25px solid rgba(113, 101, 58, 0);
+                        border-bottom: 25px solid rgba(113, 101, 58, 0);
+                        left: -16px;
+                        top: 10px;
+                    }
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        border-right: 25px solid #feefde;
+                        border-top: 25px solid rgba(255, 241, 190, 0);
+                        border-bottom: 25px solid rgba(255, 241, 190, 0);
+                        left: -15px;
+                        top: 10px;
+                    }
+                }
+            }
+            .messages-subject {
+                font-family: NunitoRegular;
+                font-size: 20px;
+            }
+            .messages-time {
+                margin-left: 10px;
+                font-family: LatoRegular;
+                font-size: 14px;
+                color: #8d8d8d;
+            }
+            .messages-text {
+                color: #706e7b;
+                padding: 0;
+                font-family: NunitoRegular;
+            }
+        }
+        .form-group {
+            margin: 0;
+            .form-footer {
+                border: none;
+                padding: 0;
+            }
+            .form-control {
+                padding: 10px 20px;
+            }
+            textarea {
+                height: 80px;
+            }
+        }
+    }
+    .companions-col {
+        padding: 0;
+        &.mobile-companions-col {
+            display: none;
+            .dropdown {
+                .dropdown-menu {
+                    width: 99%;
+                    padding: 0;
+                    font-size: 16px;
+                    -webkit-border-radius: 10px;
+                    -moz-border-radius: 10px;
+                    border-radius: 10px;
+                    .companion-name {
+                        &:hover {
+                            background-color: #f5f5f5;
+                        }
+                        a {
+                            &:hover {
+                                background-color: transparent;
+                            }
+                        }
+                    }
+                }
+                button {
+                    width: 100%;
+                    -webkit-border-radius: 20px;
+                    -moz-border-radius: 20px;
+                    border-radius: 20px;
+                    text-align: left;
+                    padding: 6px 20px;
+                    color: #555;
+                    height: 40px;
+                    font-size: 16px;
+                    font-family: NunitoRegular;
+                    border-color: #adadad;
+                    background-color: transparent;
+                    &:hover,
+                        &:focus {
+                        color: #555;
+                        background-color: transparent;
+                        border-color: #adadad;
+                    }
+                    .select-container {
+                        height: 21px;
+                        background: url(../images/arrow-down.jpg) right no-repeat;
+                        width: 28px;
+                        right: 15px;
+                        border: none;
+                        display: inline-block;
+                        vertical-align: middle;
+                        position: absolute;
+                    }
+                }
+            }
+            .companions-list {
+                .companion-name {
+                    position: relative;
+                    line-height: 2;
+                    font-family: LatoBold;
+                    border-bottom: 1px solid #e3e1e1;
+                    a {
+                        &:hover {
+                            text-decoration: none;
+                        }
+                    }
+                    &.current {
+                        &:after {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+        &.default-companions-col {
+            display: block;
+        }
+        .companions-list {
+            .companion-name {
+                position: relative;
+                line-height: 2;
+                font-family: LatoBold;
+                border-bottom: 1px solid #e3e1e1;
+                &.current {
+                    a {
+                        color: #7070af; /* #ca171b; */
+                    }
+                    &:after {
+                        background-color: #fff;
+                        margin-left: 2px;
+                        content: '';
+                        display: inline-block;
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        right: -2px;
+                        width: 2px;
+                        z-index: 2;
+                    }
+                }
+                a {
+                    height: 100%;
+                    width: 100%;
+                    color: #555;
+                    display: inline-block;
+                    padding: 10px 0 10px 20px;
+                    &:hover {
+                        text-decoration: none;
+                        color: #ca171b;
+                    }
+                    .messages-total {
+                        font-family: LatoRegular;
+                        color: #706e7b;
+                    }
+                }
+                .messages-count-icon {
+                    padding: 0 9px;
+                    border-radius: 17px;
+                    color: #fff;
+                    border: 4px solid #fff;
+                    background-color: rgba(248,99,35,1);
+                    position: absolute;
+                    top: -12px;
+                    right: -21px;
+                    text-align: center;
+                    z-index: 2;
+                    span {
+                        font-size: 13px;
+                        position: relative;
+                        display: block;
+                        line-height: 24px;
+                    }
+                }
+                ul {
+                    padding-left: 15px;
+                }
+            }
+        }
+    }
+}
+
+#messages, #service-request, .documentation-section {
+    padding-bottom: 230px;
+    .title-block {
+        margin: 0;
+    }
+}

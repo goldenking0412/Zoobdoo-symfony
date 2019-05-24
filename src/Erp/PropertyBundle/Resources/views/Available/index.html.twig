@@ -1,0 +1,78 @@
+{% extends '::base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% block paramsToJs %}
+    <input type="hidden" id="search-action-url" value="{{ path('erp_property_search') }}"/>
+    <input type="hidden" name="route__erp_core_get_cities_by_state_code" value="{{ path('erp_core_get_cities_by_state_code') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/available-properties.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/city.controller.js') }}"></script>
+{% endblock %}
+
+{% block headerBannerTitle %}
+    Available Properties
+{% endblock %}
+
+{% block pageContent %}
+
+    <section id="available-properties" class="available-properties">
+        <div class="container">
+            <div class="row">
+                <div class="text-block">
+                    <p>Search easily for available properties in a city of your choice by various search criteria and apply for rentals on-line.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group property-form">
+
+                    {{ form_start(form, { attr: {'id' : 'property-search-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+                        <div class="col-md-2 col-xs-6 dropdown">
+                            {{ form_label(form.state) }}
+                            <div class="select-container">
+                                {{ form_widget(form.state) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-xs-4 city-col dropdown">
+                            {{ form_label(form.cityId) }}
+                            <div class="select-container">
+                                {{ form_widget(form.cityId) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-xs-6 street-input">
+                            {{ form_label(form.address) }}
+                            {{ form_widget(form.address) }}
+                        </div>
+
+                        <div class="col-md-2 col-xs-4 zip-col">
+                            {{ form_label(form.zip) }}
+                            {{ form_widget(form.zip) }}
+                        </div>
+
+                        <div class="col-md-2 col-xs-12 search-col">
+                            <button type="submit" class="btn-circle">Search</button>
+                        </div>
+                    <div class="hide">
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for property in properties %}
+                    <div class="col-md-3 col-xs-6 property-card">
+                        {% include 'ErpPropertyBundle:Property:property-card.html.twig' %}
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

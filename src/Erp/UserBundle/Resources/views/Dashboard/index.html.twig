@@ -1,0 +1,80 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>#}
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/Chart.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/chart-decorator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/cashflows-chart.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/properties-history-chart.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/late-rent-payment.controller.js') }}"></script>
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-dashboard"></i> Dashboard</h1>
+        </div>
+    </div>
+
+    {% if not ((user.stripeAccount is defined) and (user.stripeAccount is not null)) %}
+        <div class="alert">
+            <div class="container">
+                <div class="text-holder">
+                    <div class="image"><img src="{{ asset('assets/images/alert.svg') }}" alt="alert"></div>
+                    <strong class="text">Please verify your bank in order to accept &amp; make payments.</strong>
+                </div>
+                <a href="#" class="btn-circle white">Verify Now</a>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+    <main id="main">
+        <div class="action-block">
+            <div class="container">
+                <h2>Quick Actions</h2>
+                <div class="row">
+                    <a href="{{ path('erp_smart_move_check_page') }}" class="box">
+                        <div class="image-holder">
+                            <img src="{{ asset('assets/images/search-icon.svg') }}" alt="search">
+                        </div>
+                        <span class="text">Background Checks</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="property-details style">
+            <div class="container">
+                <h2>Overview</h2>
+                <div class="row-holder">
+                    {{ render(controller('ErpUserBundle:Dashboard:showProperties')) }}
+                    {{ render(controller('ErpUserBundle:Dashboard:showCashflows')) }}
+                </div>
+
+                <div class="row-holder style">
+                    {{ render(controller('ErpUserBundle:Dashboard:showLateRentPayments'))}}
+                    {{ render(controller('ErpUserBundle:Dashboard:showPaymentDetails')) }}
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[linked-element]').click(function () {
+                var id = $(this).attr('linked-element');
+                $(id).toggle();
+            });
+        });
+    </script>
+{% endblock %}

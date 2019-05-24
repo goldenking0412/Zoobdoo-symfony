@@ -1,0 +1,78 @@
+<div class="col">
+    <div class="open-close1 active">
+        <header class="head">
+            <span class="text">Pay Rent</span>
+            <a href="#" class="opener">[<span class="icon"></span>]</a>
+        </header>
+        <div class="slide">
+            {% if exception is defined %}
+                <div class="alert alert-danger" style="margin: 5px;">
+                    {{ exception.message }}
+                </div>
+            {% elseif info is defined %}
+                {{ info }}
+            {% else %}
+                {% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+                {% form_theme form _self %}
+
+                {% block date_widget %}
+                    {% set type = 'text' %}
+                    {{ block('form_widget_simple') }}
+                {% endblock date_widget %}
+
+                {{ form_start(form, {'action': path('erp_property_scheduled_rent_payment_rent'), 'attr': {'class': 'form pay-widget'} }) }}
+                <div class="field-area">
+                    <div class="wrap">
+                        <div class="field">
+                            {{ form_widget(form.amount) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field-area" style="margin-top: 30px;">
+                    <div class="wrap">
+                        <div class="field">
+                            {{ form_widget(form.startPaymentAt) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field-area" style="margin-top: 30px;">
+                    <div class="wrap">
+                        <div class="field">
+                            <div class="select-container dropdown">
+                                {{ form_widget(form.category, {'attr': {'class': 'select-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+                <div class="form-footer" style="margin-top: 30px;">
+                    <div class="checkbox">
+                        {{ form_widget(form.type) }}
+                        {{ form_label(form.type) }}
+                    </div>
+
+                    {% if form.agreeAutoWithdrawal is defined %}
+                        <div class="checkbox">
+                            {{ form_widget(form.agreeAutoWithdrawal) }}
+                            {{ form_label(form.agreeAutoWithdrawal) }}
+                        </div>
+                    {% endif %}
+
+                    <div class="edit-row text-center">
+                        {% set attr = {'attr': 'btn-circle'} %}
+
+                        {% if manager.stripeAccount == false or user.stripeCustomer == false %}
+                            {% set attr = attr|merge({'disabled': 'disabled'}) %}
+                        {% endif %}
+
+                        {{ form_widget(form.submit, {'attr': attr}) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+    </div>
+</div>

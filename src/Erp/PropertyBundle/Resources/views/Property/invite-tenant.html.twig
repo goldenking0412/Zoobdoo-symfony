@@ -1,0 +1,16 @@
+<div id="add-tenant-block">
+    {% if user.isReadOnlyUser() %}
+        <div class="edit-row">
+            <a class="btn-circle lightbox-ajax" type="submit" href="{{ path('erp_user_profile_read_only_popup') }}">Add tenant</a>
+        </div>
+    {% else %}
+        {{ form_start(form, { attr: {'class': 'form-horizontal invite-tenant add-tenant-form', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+            {{ form_label(form.invitedEmail) }}
+            {{ form_widget(form.invitedEmail) }}
+            <div class="button-wrap">
+                {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+            </div>
+        {{ form_end(form) }}
+    {% endif %}
+</div>
+

@@ -1,0 +1,19 @@
+{% block fos_user_content %}
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+              <h1>Login to Your Account</h1><br>
+                 <form class="form-horizontal" id="form-login" action="{{ path('fos_user_security_check') }}" method="post" autocomplete="off">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                    <input type="text" name="_username" value="" placeholder="Username">
+                    <input type="password" name="_password" placeholder="Password">
+                    <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+              </form>
+              
+              <div class="login-help">
+                  <a href="{{ path('fos_user_registration_register')}}">Register</a> - <a href="{{ path('fos_user_resetting_request') }}" data-toggle="modal" data-target="#login-modal" id="forgot-password-link">Forgot Password</a>
+              </div>
+          </div>
+      </div>
+    </div>
+{% endblock fos_user_content %}

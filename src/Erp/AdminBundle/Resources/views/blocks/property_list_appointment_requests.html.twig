@@ -1,0 +1,28 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% spaceless %}
+        {% if object.getAppointmentRequests() is not empty %}
+            <table class="table table-bordered table-striped" id="list-properties">
+                <thead>
+                    <tr class="sonata-ba-list-field-header">
+                        <th class="sonata-ba-list-field-header-text">Name</th>
+                        <th class="sonata-ba-list-field-header-text">Phone</th>
+                        <th class="sonata-ba-list-field-header-text">Email</th>
+                        <th class="sonata-ba-list-field-header-text">Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object.getAppointmentRequests() %}
+                        <tr>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getUserName() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getPhone() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getEmail() }}</td>
+                            <td class="sonata-ba-list-field sonata-ba-list-field-text">{{ item.getCreatedDate()|date('F d, Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}

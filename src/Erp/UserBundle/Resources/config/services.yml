@@ -1,0 +1,58 @@
+parameters:
+    authentication_handler.class: Erp\UserBundle\Handler\AuthenticationHandler
+    erp.users.administrator_service.class: Erp\UserBundle\Services\Administrator
+    erp.users.manager_service.class: Erp\UserBundle\Services\Manager
+    erp.users.manager.form_registration.class: Erp\UserBundle\Form\Type\ManagerRegistrationFormType
+    erp.users.form_reset_password.class: Erp\UserBundle\Form\Type\UserResetPasswordFormType
+    erp.users.twig.user_extension.class: Erp\UserBundle\Twig\UserExtension
+    erp.users.user.class: Erp\UserBundle\Services\UserService
+    erp.users.statement.class: Erp\UserBundle\Services\StatementService
+
+services:
+    authentication_handler:
+        class:        %authentication_handler.class%
+        arguments:    [@router, @security.context]
+
+    erp.users.administrator_service:
+        class:        %erp.users.administrator_service.class%
+        arguments:    [@service_container]
+
+    erp.users.manager_service:
+        class:        %erp.users.manager_service.class%
+        arguments:    [@service_container]
+
+    erp.users.manager.form_registration:
+        class: %erp.users.manager.form_registration.class%
+        tags:
+            - { name: form.type, alias: erp_users_manager_form_registration }
+
+    erp.users.form_reset_password:
+        class: %erp.users.form_reset_password.class%
+        tags:
+            - { name: form.type, alias: erp_users_form_reset_password }
+
+    erp.users.twig.user_extension:
+        class: %erp.users.twig.user_extension.class%
+        tags:
+            -  { name: twig.extension }
+        arguments: [@service_container]
+
+    erp.users.user.service:
+        class: %erp.users.user.class%
+        arguments: [@service_container]
+
+    erp.users.statement.service:
+        class: %erp.users.statement.class%
+        arguments: [@service_container]
+
+    erp_user.mailer.abstract_processor:
+        class: Erp\UserBundle\Mailer\BaseProcessor
+        abstract: true
+        calls:
+            - [injectProperties, ['@mailer', '@templating']]
+
+    erp_user.mailer.processor:
+        class: Erp\UserBundle\Mailer\Processor
+        parent: erp_user.mailer.abstract_processor
+        arguments:
+            - '%contact_email%'

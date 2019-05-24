@@ -1,0 +1,115 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-property"></i>Credit Card</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="form-area style">
+            <div class="container">
+                {% if errors %}
+                    <span class="field-validation-error">{{ errors }}</span>
+                {% endif %}
+
+                {{ form_start(form, {'action': path('erp_payment_stripe_save_credit_card'), 'attr': {'class': 'form cc-form', 'novalidate': 'novalidate'} }) }}
+                {% for error in form.vars.errors %}
+                    <span class="field-validation-error">{{ error.message }}</span>
+                {% endfor %}
+
+                <div class="field-area">
+                    <div class="lable">
+                        <label>{{ form_label(form.number) }}</label>
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.number) }}
+                        {{ form_custom_errors.widget(form.number) }}
+                    </div>
+                </div>
+
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="col-md-12">
+                            <div class="lable">
+                                <label>Expiration Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="lable">
+                                <label>{{ form_label(form.expMonth) }}</label>
+                            </div>
+                            <div class="field">
+                                {{ form_widget(form.expMonth) }}
+                                {{ form_custom_errors.widget(form.expMonth) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="lable">
+                                <label>{{ form_label(form.expYear) }}</label>
+                            </div>
+                            <div class="field">
+                                <div class="select-container">
+                                    {{ form_widget(form.expYear) }}
+                                </div>
+                                {{ form_custom_errors.widget(form.expYear) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrap">
+                        <div class="lable">
+                            <label>{{ form_label(form.cvc) }}</label>
+                        </div>
+                        <div class="field">
+                            <div class="select-container">
+                                {{ form_widget(form.cvc) }}
+                            </div>
+                            {{ form_custom_errors.widget(form.cvc) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-holder text-center">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                </div>
+                {{ form_end(form)}}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/available-properties.controller.js') }}"></script>
+    <script src="https://js.stripe.com/v2"></script>
+    <script>Stripe.setPublishableKey('{{ stripe_public_key }}');</script>
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var form = $('[name="{{ form.vars.name }}"]');
+
+            function stripeResponseHandler(status, response) {
+                if (status < 200 || status >= 300) {
+                    return false;
+                } else {
+                    $('#{{ form.token.vars.id }}').val(response['id']);
+                    form.get(0).submit();
+                }
+            }
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+                Stripe.card.createToken(form, stripeResponseHandler);
+
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

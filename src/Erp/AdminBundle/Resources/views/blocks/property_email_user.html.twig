@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field_value %}
+    {{ parent() }}
+    <a href="{{ field_description.options.route.show }}" class="btn btn-sm btn-default show-link" title="{{ 'action_show'|trans({}, 'SonataAdminBundle') }}" style="margin: 0px 2px; border-radius: 3px;">
+        <i class="fa fa-eye"></i>
+        {{ 'action_show'|trans({}, 'SonataAdminBundle') }}
+    </a>
+    <a href="{{ field_description.options.route.edit }}" class="btn btn-sm btn-default edit-link" title="{{ 'action_edit'|trans({}, 'SonataAdminBundle') }}" style="margin: 0px 2px; border-radius: 3px;">
+        <i class="fa fa-edit"></i>
+        {{ 'action_edit'|trans({}, 'SonataAdminBundle') }}
+    </a>
+{% endblock %}

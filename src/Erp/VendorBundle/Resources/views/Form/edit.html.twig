@@ -1,0 +1,108 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-service"></i> Services</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        {% include "ErpUserBundle:ServiceRequests/blocks:menu.html.twig" %}
+
+        <div class="form-area style">
+            <div class="container">
+                <h2>Edit Vendor: {{ vendor.getName() }}</h2>
+                <br />
+                <br />
+                
+                <div class="row">
+                    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+                </div>
+                
+                {{ form_start(form, {'attr': {'class': 'form'}, 'method': 'POST', 'action': path('erp_vendor_edit', {'vendorId' : vendor.getId()}) }) }}
+
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.companyName) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.companyName) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.companyName) }}
+                </div>
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.businessType) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.businessType) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.businessType) }}
+                </div>  
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.website) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.website) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.website) }}
+                </div> 
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.address) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.address) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.address) }}
+                </div> 
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.firstName) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.firstName) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.firstName) }}
+                </div>
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.lastName) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.lastName) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.lastName) }}
+                </div>  
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.contactEmail) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.contactEmail) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.contactEmail) }}
+                </div>
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.contactPhone) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.contactPhone) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.contactPhone) }}
+                </div>
+                
+                <div class="btn-holder">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}

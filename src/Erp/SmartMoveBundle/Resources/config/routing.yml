@@ -1,0 +1,39 @@
+erp_smart_move_check:
+    path:     /check
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:backgroundCreditCheckWidget }
+    methods: [POST]
+
+erp_smart_move_check_page:
+    path:     /background-checks
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:backgroundChecks}
+    methods: [GET]
+
+erp_smart_move_get_reports:
+    path:     /get-reports
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:getReports }
+    methods: [POST]
+
+erp_smart_move_check_is_paid:
+    path:     /check-is-paid/{smRenterId}
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:checkIsPaid, smRenterId:null }
+    methods: [POST]
+
+erp_smart_move_smart_move_pay_report:
+    path:     /report/pay/{smRenterId}
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:payReport, smRenterId:null }
+    methods: [GET, POST]
+
+erp_smart_move_personal_form:
+    path:     /{token}/personal-form
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:personalForm }
+    methods: [GET, POST]
+
+erp_smart_move_exam_form:
+    path:     /{token}/exam-form
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:examForm }
+    methods: [GET, POST]
+
+erp_smart_move_get_reports:
+    path:     /get-report
+    defaults: { _controller: ErpSmartMoveBundle:SmartMove:getReports }
+    methods: [GET]

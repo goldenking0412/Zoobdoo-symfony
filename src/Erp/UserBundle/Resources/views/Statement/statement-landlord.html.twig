@@ -1,0 +1,125 @@
+{% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+<style>
+    .font-reduced {
+        font-size: 12px !important;
+    }
+    .text-top {
+        vertical-align: top !important;
+    }
+</style>
+
+<section id="statement">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+            <div class="row">
+                <div class=" col-md-6 col-sm-6 col-lg-6">
+                    <h2>
+                        {% if user.logo and user.logo.path %}
+                            <img src="{{ asset(user.logo.path ~ '/' ~ user.logo.name) }}" class="img-responsive" style="width: 200px; max-width: 200px; height: auto;" />
+                        {% endif %}
+                        <!-- <img src="http://www.zoobdoo.com/assets/images/logo_Zoobdoo.png" class="img-responsive" style="width: 300px; max-width: 300px; height: auto;" /> //-->
+                    </h2>
+                    <address>
+                        {{ user.getFullName() }}<br />
+                        {{ user.getAddressOne() }}<br />
+                        {% if (user.getAddressTwo() is not null) and (user.getAddressTwo() != '') %}{{ user.getAddressTwo() }}{% endif %}<br />
+                        {% if user.getCity() is not null %}{{ user.getCity().getName() }}, {{ user.getCity().getStateCode() }} {{ user.getCity().getZip() }}{% endif %}
+                    </address>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-lg-6 text-right">
+                    <h2>
+                        {% if landlord.logo and landlord.logo.path %}
+                            <img src="{{ asset(landlord.logo.path ~ '/' ~ landlord.logo.name) }}" class="img-responsive" style="width: 200px; max-width: 200px; height: auto;" />
+                        {% endif %}
+                        <!-- <img src="http://www.zoobdoo.com/assets/images/logo_Zoobdoo.png" class="img-responsive" style="width: 300px; max-width: 300px; height: auto;" /> //-->
+                    </h2>
+                    <address>
+                        {{ landlord.getFullName() }}<br />
+                        {{ landlord.getAddressOne() }}<br />
+                        {% if (landlord.getAddressTwo() is not null) and (landlord.getAddressTwo() != '') %}{{ landlord.getAddressTwo() }}{% endif %}<br />
+                        {% if landlord.getCity() is not null %}{{ landlord.getCity().getName() }}, {{ landlord.getCity().getStateCode() }} {{ landlord.getCity().getZip() }}{% endif %}
+                    </address>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="pull-left">
+                    <h4>
+                        Income Statement - Period: {{ period }}
+                    </h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover font-reduced">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1 col-xs-1 text-top">Date</th>
+                                <th class="col-md-2 col-xs-2 text-top">Payee / Payer</th>
+                                <th class="col-md-1 col-xs-1 text-top">Trans. #</th>
+                                <th class="col-md-2 col-xs-2 text-top">Description</th>
+                                <th class="col-md-2 col-xs-2 text-top">Income</th>
+                                <th class="col-md-2 col-xs-2 text-top">Expense</th>
+                                <th class="col-md-2 col-xs-2 text-top">Balance</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% if records|length > 0 %}
+                                {% set balance = 0 %}
+                                {% for item in records %}
+                                    {% set income = item['income'] %}
+                                    {% set expense = (item['expense'] > 0) ? item['expense'] : (-1 * item['expense']) %}
+                                    {% set balance = balance + income - expense %}
+                                    <tr>
+                                        <td class="font-reduced text-top">{{ item['dateCreated']|date('F j, Y') }}</td>
+                                        <td class="font-reduced text-top">{{ item['payee'] }} / {{item['payer'] }}</td>
+                                        <td class="font-reduced text-top">{{ item['id'] }}</td>
+                                        <td class="font-reduced text-top">{{ item['description'] }}</td>
+                                        <td class="font-reduced text-top">{{ income|stripe_money(false) }}</td>
+                                        <td class="font-reduced text-top">{{ expense|stripe_money(false) }}</td>
+                                        <td class="font-reduced text-top">{{ balance|stripe_money(false) }}</td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td class="font-reduced text-top" colspan="3">&nbsp;</td>
+                                    <td class="font-reduced text-top text-left" colspan="3"
+                                        >Ending Cash Balance
+                                    </td>
+                                    <td class="font-reduced text-top">{{ balance }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="font-reduced text-top" colspan="12">
+                                        No matches found
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                        {% if records|length > 0 %}
+                            <tfooter>
+                                <tr>
+                                    <td colspan="4" class="text-left font-reduced text-top">
+                                        <strong>Total</strong>
+                                    </td>
+                                    <td class="font-reduced text-top">
+                                        <strong>{{ totalIncome|stripe_money(false) }}</strong>
+                                    </td>
+                                    <td class="font-reduced text-top">
+                                        <strong>{{ totalExpenses|stripe_money(false) }}</strong>
+                                    </td>
+                                    <td class="font-reduced text-top">&nbsp;</td>
+                            </tfooter>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% if pdfLink is defined %}
+    {% include 'ErpUserBundle:Blocks/cross:saveaspdf.html.twig' %}
+{% endif %}

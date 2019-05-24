@@ -1,0 +1,9 @@
+<div class="notification-template-nav">
+    <div class="row">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="{{ (currentRoute == 'erp_notification_template_create') ? ' active' : ''}}"><a href="{{ path('erp_notification_template_create') }}">Create template</a></li>
+            <li role="presentation" class="{{ (currentRoute == 'erp_notification_user_eviction_create') ? ' active' : ''}}"><a href="{{ path('erp_notification_user_eviction_create') }}">Send Eviction</a></li>
+            <li role="presentation" class="{{  currentRoute == 'erp_notification_user_eviction' ? ' active' : ''}}"><a href="{{ path('erp_notification_user_eviction') }}">Eviction History</a></li>
+        </ul>
+    </div>
+</div>

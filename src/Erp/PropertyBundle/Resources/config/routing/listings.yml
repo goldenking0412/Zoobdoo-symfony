@@ -1,0 +1,76 @@
+erp_property_listings_all:
+    path:     /all
+    defaults: { _controller: ErpPropertyBundle:Listing:index }
+    methods: [GET, POST]
+
+erp_property_listings_add:
+    path:     /add
+    defaults: { _controller: ErpPropertyBundle:Listing:edit, propertyId: null }
+    methods: [GET, POST]
+
+erp_property_listings_show:
+    path:     /{propertyId}/show
+    defaults: { _controller: ErpPropertyBundle:Listing:show }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+    
+
+erp_property_listings_delete:
+    path:     /{propertyId}/delete
+    defaults: { _controller: ErpPropertyBundle:Listing:delete }
+    methods: [GET, DELETE]
+    requirements:
+        propertyId: \d+
+
+erp_property_listings_edit_documents:
+    path:     /{propertyId}/edit-documents
+    defaults: { _controller: ErpPropertyBundle:Listing:editDocuments }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_listings_delete_tenant:
+    path:     /{propertyId}/delete/tenant
+    defaults: { _controller: ErpPropertyBundle:Listing:deleteTenant }
+    methods: [GET, DELETE]
+    requirements:
+        propertyId : \d+
+
+erp_property_listings_delete_invited_tenant:
+    path:     /{propertyId}/delete/invited-tenant/{invitedTenantId}
+    defaults: { _controller: ErpPropertyBundle:Listing:deleteInvitedTenant }
+    methods: [GET, DELETE]
+    requirements:
+        propertyId : \d+
+        invitedTenantId : \d+
+
+erp_property_repost_request:
+    path:     /{propertyId}/repost-request
+    defaults: { _controller: ErpPropertyBundle:Listing:repostRequest }
+    methods: [GET, POST]
+    requirements:
+        propertyId : \d+
+
+erp_property_listing_search:
+    path:     /properties/search
+    defaults: { _controller: ErpPropertyBundle:Listing:search }
+    options:
+        expose: true
+    methods: [GET, POST]
+
+erp_property_listings_all_data_for_export:
+    path:     /get-data-compile
+    defaults: { _controller: ErpPropertyBundle:Listing:getAllProperty }
+    methods: [GET, POST]
+
+erp_property_listings_all_data_for_xml_export:
+    path:     /get-data-xml-compile
+    defaults: { _controller: ErpPropertyBundle:Listing:getPropertyXml }
+    methods: [GET, POST]
+
+erp_property_listings_transactions:
+    path:     /{propertyId}/transactions
+    defaults: { _controller: ErpPropertyBundle:Listing:transactions }
+    methods: [GET]
+    requirements:
+        propertyId : \d+

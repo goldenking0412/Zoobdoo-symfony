@@ -1,0 +1,170 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+<div class="form-area style">
+    <div class="container">
+        To set Property status to "Rented" please add Tenant to it on Listings page.
+    </div>
+    <br /><br />
+
+    <div class="container">
+        {{ form_start(form, { attr: {'id' : ('property-edit-form-' ~ property.id), 'data-id': property.id, 'class': 'form', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+        <div class="errors">
+            {{ form_custom_errors.widget(form) }}
+        </div>
+        {% if xhr %}
+            <input type="hidden" value="1" name="xhr" />  
+        {% endif %}
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.name) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.name, {'id': (form.name.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.name) }}
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.type) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.type, {'id': (form.type.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.type) }}
+            </div>
+        </div>
+        <div class="field-area three">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.status) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.status, {'id': (form.status.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.status) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.ofBeds) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.ofBeds, {'id': (form.ofBeds.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.ofBeds) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.ofBaths) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.ofBaths, {'id': (form.ofBaths.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.ofBaths) }}
+            </div>
+        </div>
+        <div class="field-area two">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.settings.paymentAmount) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.settings.paymentAmount, {'id': (form.settings.paymentAmount.vars.id ~ '_' ~ property.id), 'attr': {'class': 'paymentAmount'} }) }}
+                </div>
+                {{ form_custom_errors.widget(form.settings.paymentAmount) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.squareFootage) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.squareFootage, {'id': (form.squareFootage.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.squareFootage) }}
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.address) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.address, {'id': (form.address.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.address) }}
+            </div>
+        </div>
+        <div class="field-area three">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.city) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.city, {'id': (form.city.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.city) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.stateCode) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.stateCode, {'id': (form.stateCode.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.stateCode) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.zip) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.zip, {'id': (form.zip.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.zip) }}
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.amenities) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.amenities, {'id': (form.amenities.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.amenities) }}
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.aboutProperties) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.aboutProperties, {'id': (form.aboutProperties.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.aboutProperties) }}
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.additionalDetails) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.additionalDetails, {'id': (form.additionalDetails.vars.id ~ '_' ~ property.id)}) }}
+                </div>
+                {{ form_custom_errors.widget(form.additionalDetails) }}
+            </div>
+        </div>
+        <div class="text-right">
+            {{ form_widget(form.submit, {'attr': {'class': 'btn-circle property-details-submit'}, 'id': (form.submit.vars.id ~ '_' ~ property.id), 'label': buttonLabel }) }}
+        </div>
+        <div class="hide">{{ form_end(form) }}</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var baseRoute = decodeURI('{{ path('erp_core_get_cities_by_state_code', {'stateCode': '{stateCode}'}) }}');
+</script>

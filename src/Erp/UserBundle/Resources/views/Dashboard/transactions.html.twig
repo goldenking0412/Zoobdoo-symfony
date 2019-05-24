@@ -1,0 +1,47 @@
+<div class="widget-title-row">
+    <div class="login-block-title bold-text">Transaction History</div>
+</div>
+<div class="history-block">
+    <div class="payment-history">
+        <ul class="payment-table-title">
+            <li>
+                <span class="col-xs-2 bold-text">Date</span>
+                <span class="col-xs-1 bold-text">Amount</span>
+                <span class="col-xs-1 bold-text amount-col">Currency</span>
+                <span class="col-xs-2 bold-text">From</span>
+                <span class="col-xs-2 bold-text">To</span>
+                <span class="col-xs-2 bold-text">Payment Method</span>
+            </li>
+        </ul>
+        <ul class="payment-table">
+            {% for transaction in pagination %}
+                {# set sender #}
+                {{ transaction.customer.user.email }}
+
+                {# set recipient #}
+                {% if transaction.account %}
+                    {{ transaction.account.user.email }}
+                {% else %}
+                    System
+                {% endif %}
+
+                {# set payment_method #}
+                {% if transaction.paymentMethod == constant('Erp\\StripeBundle\\Entity\\Transaction::BANK_ACCOUNT_PAYMENT_METHOD') %}
+                    ACH
+                {% elseif transaction.paymentMethod == constant('Erp\\StripeBundle\\Entity\\Transaction::CREDIT_CARD_PAYMENT_METHOD') %}
+                    Credit Card
+                {% endif %}
+                {#TODO transaction.currency, transaction.currency to format money#}
+                <li>
+                    <span class="col-xs-2">{{ transaction.created|date('Y/m/d') }}</span>
+                    <span class="col-xs-1">{{ transaction.amount|stripe_money }}</span>
+                    <span class="col-xs-1 amount-col">{{ transaction.currency|upper }}</span>
+                    <span class="col-xs-2">{{ sender }}</span>
+                    <span class="col-xs-2">{{ recipient }}</span>
+                    <span class="col-xs-2">{{ payment_method }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {{ render(controller('ErpStripeBundle:Transaction:export')) }}
+</div>

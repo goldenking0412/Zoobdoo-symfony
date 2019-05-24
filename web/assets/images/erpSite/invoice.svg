@@ -1,0 +1,20 @@
+<svg id="invoice" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 72.392 89.473">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ee1621"/>
+      <stop offset="1" stop-color="#ff9300"/>
+    </linearGradient>
+  </defs>
+  <path id="Path_121" data-name="Path 121" class="cls-1" d="M7.756,18.457a3.232,3.232,0,0,0,1.492.812v1.763h3.389V19.269a2.305,2.305,0,0,0,1.356-.814,3.79,3.79,0,0,0,1.487-2.977A3.885,3.885,0,0,0,14.124,12.5a4.319,4.319,0,0,0-3.254-1.084,1.146,1.146,0,0,1-.814-.272q-.406-.2-.406-.406c0-.136,0-.272.272-.406a1.422,1.422,0,0,1,1.763,0l.406.406v.678H15.48v-.678a3.885,3.885,0,0,0-1.352-2.987,3.232,3.232,0,0,0-1.492-.814V4.9H9.247V6.8a3.614,3.614,0,0,0-1.356.814A3.79,3.79,0,0,0,6.4,10.594a3.885,3.885,0,0,0,1.356,2.982,4.319,4.319,0,0,0,3.254,1.084,1.146,1.146,0,0,1,.814.272l.406.406c0,.136,0,.272-.406.406a1.234,1.234,0,0,1-.949.406,1.927,1.927,0,0,1-.814-.272l-.406-.406v-.678H6.4v.683a3.885,3.885,0,0,0,1.356,2.979Z" transform="translate(2.276 1.743)"/>
+  <path id="Path_122" data-name="Path 122" class="cls-1" d="M60.056,0H0V89.473H72.392V12.337ZM61,11.252V5.694l5.558,5.558Zm8,3.526V86.084H3.389V3.389H57.616V14.777Z"/>
+  <rect id="Rectangle_69" data-name="Rectangle 69" class="cls-1" width="21.419" height="3.389" transform="translate(22.233 10.303)"/>
+  <rect id="Rectangle_70" data-name="Rectangle 70" class="cls-1" width="33.62" height="3.389" transform="translate(22.233 17.488)"/>
+  <rect id="Rectangle_71" data-name="Rectangle 71" class="cls-1" width="58.564" height="3.389" transform="translate(6.914 27.926)"/>
+  <rect id="Rectangle_72" data-name="Rectangle 72" class="cls-1" width="42.025" height="3.389" transform="translate(6.914 35.247)"/>
+  <path id="Path_123" data-name="Path 123" class="cls-1" d="M48.052,33.136H4.4v38.5H65.136V33H48.052ZM7.789,41.815V36.389H34.36v5.426Zm0,8.815V45.2H34.36v5.423Zm0,8.815V54.013H34.36v5.423Zm0,8.815V62.824H34.36v5.423ZM37.614,41.815V36.389h10.3v5.426Zm10.439,12.2v5.423h-10.3V54.013Zm0,8.815v5.423h-10.3V62.824Zm-10.3-12.2V45.2h10.3v5.423Zm13.692-8.808V36.389h10.3v5.426Zm0,8.815V45.2h10.3v5.423Zm0,8.815V54.013h10.3v5.423Zm0,8.815V62.824h10.3v5.423Z" transform="translate(1.565 11.737)"/>
+</svg>

@@ -1,0 +1,41 @@
+<div class="documentation-block">
+    <div class="doc-title bold-text">Documentation</div>
+    <div class="errors documentation-errors"></div>
+
+    <ul class="doc-col" id="document-fields-list">
+        {% if (property.getId()) %}
+            {% for documentField in form.documents %}
+                {{ form_custom_errors.widget(documentField.file) }}
+                {{ form_custom_errors.widget(documentField.originalName) }}
+            {% endfor %}
+            {% for document in property.getDocuments() %}
+                {% if document.id %}
+                    <li class="doc-property-item">
+                        <span class="fa fa-file-o"></span>
+                        <div class="property-doc-info">
+                            <a target="_blank" href="{{ asset(document.getPath() ~ '/' ~ document.getName()) }}">{{ document.getOriginalName() }}</a>
+                            <span class="property-doc-details">{{ document.getExtension() }}, {{ document.getFileSize(true) }}</span>
+                        </div>
+                        <span class="doc-delete" data-doc-attr-count="{{ loop.index - 1 }}">X</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+    <div class="edit-row">
+        <a href="#" class="btn edit-btn" id="add-another-document">upload</a>
+        {% if (property.getId()) %}
+            <a href="{{ path('erp_property_application_form', {'propertyId':property.id}) }}" class="apply-online">{% if property.applicationForm %}Edit{% else %}Create{% endif %} online Application Form &#187;</a>
+        {% endif %}
+    </div>
+
+    <div class="hide">
+        <ul id="document-fields-list">
+            {% for documentField in form.documents %}
+                <li id="new-form-doc-field-{{ loop.index - 1 }}">
+                    {{ form_widget(documentField) }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

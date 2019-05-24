@@ -1,0 +1,9 @@
+{% extends 'ErpUserBundle:Documentation/Menu:menu.html.twig' %}
+
+{% block root %}
+    {% set listAttributes = item.childrenAttributes %}
+    {% set listAttributes = listAttributes|merge({'class': listAttributes.class ~ ' dropdown-menu' }) %}
+    {% set listAttributes = listAttributes|merge({'aria-labelledby': 'dropdownMenu1' }) %}
+
+    {{ block('list') -}}
+{% endblock %}

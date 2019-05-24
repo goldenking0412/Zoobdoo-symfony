@@ -1,0 +1,28 @@
+<h1>Criminal Records</h1>
+<table border="1" cellpadding="7" width="100%" cellspacing="0">
+    <thead>
+    <tr>
+        <td><strong>Category</strong></td>
+        <td><strong>State</strong></td>
+        <td><strong>Rapsheet</strong></td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for record in report %}
+        <tr style="page-break-after: auto;">
+            <td>{{ record['Category'] }}</td>
+            <td>{{ record['State'] }}</td>
+            <td>
+                {% for rapsheet in record['Rapsheet'] %}
+                    {% for field, value in rapsheet %}
+                        {% if value and value is not iterable and field != 'id' and field != 'entityID' %}
+                            {{ field }}: {{ value }}<br/>
+                        {% endif %}
+                    {% endfor %}
+                    <hr/>
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

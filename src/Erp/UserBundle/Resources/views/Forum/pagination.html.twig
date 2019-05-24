@@ -1,0 +1,7 @@
+{% if pageCount > 1 %}
+    {% if next is defined %}
+        <div class="col-xs-12 more-row">
+            <a class="more-comments" href="{{ path(route, query|merge({(pageParameterName): next})) }}" data-href="">View More Comments <span class="fa fa-angle-down"></span></a>
+        </div>
+    {% endif %}
+{% endif %}

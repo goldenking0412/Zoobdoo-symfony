@@ -1,0 +1,41 @@
+{% if property.name and property.city and property.stateCode and property.address %}
+    {% set propertyImages = property.getImages()|length ? property.getImages() : null %}
+
+    <div class="col-md-3">
+        <a href=" {{ path('erp_property_listings_show', { 'propertyId':  property.getId() })}}" class="article">
+            <div class="image-holder">
+
+                {% if propertyImages %}
+                    {% for image in propertyImages %}
+                        {% if loop.first %}
+                            <img alt="" title="" src="{{asset(image.getPath() ~ '/' ~ image.getName()) | imagine_filter('listings_317_161')}}">
+                        {% endif %}        
+                    {% endfor %}
+                {% else %}
+                    <img alt="" title="" src="https://placehold.it/317x161">
+                {% endif %}
+            </div>
+            <div class="text-holder">
+                <span class="title">
+                    {{ property.getName() }}
+                </span>
+                <div class="text-area">
+                    <address>
+                        {{ property.getStateCode() }} 
+                        {{ property.getCity() ? property.getCity().getName() : '' }} <br>
+                        {{ property.getAddress() }}
+                    </address>
+                    {% set additionalClass = '' %}
+                    {% if (property.getStatus() == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_RENTED')) %}
+                        {% set additionalClass = ' red' %}
+                    {% elseif (property.getStatus() == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_DRAFT')) %}
+                        {% set additionalClass = ' yellow' %}
+                    {% endif %}
+                    <span class="btn{{ additionalClass }}">
+                        {{ property.getStatus()|capitalize }}
+                    </span>
+                </div>
+            </div>
+        </a>
+    </div>
+{% endif %}

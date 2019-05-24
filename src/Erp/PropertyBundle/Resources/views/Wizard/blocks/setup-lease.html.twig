@@ -1,0 +1,101 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+<div class="form-area style">
+    <div class="container">
+        {{ form_start(form, { attr: {'id' : 'property-edit-form', 'class': 'form', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+        <div class="errors">
+            {{ form_custom_errors.widget(form) }}
+        </div>
+        {% if xhr %}
+            <input type="hidden" value="1" name="xhr" />  
+        {% endif %}
+        <div class="field-area three">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.paymentAmount) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.paymentAmount, {'attr': {'class': 'paymentAmount'} }) }}
+                </div>
+                {{ form_custom_errors.widget(form.paymentAmount) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.dayUntilDue) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.dayUntilDue) }}
+                </div>
+                {{ form_custom_errors.widget(form.dayUntilDue) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.moveInDate) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.moveInDate) }}
+                </div>
+                {{ form_custom_errors.widget(form.moveInDate) }}
+            </div>
+        </div>
+        <div class="field-area row">
+            <div class="wrap col-md-3">
+                <div class="lable">
+                    {{ form_label(form.atWill) }}
+                    {{ form_widget(form.atWill) }}
+                </div>
+                {{ form_custom_errors.widget(form.atWill) }}
+            </div>
+            <div class="wrap col-md-3">
+                <div class="lable">
+                    {{ form_label(form.termLease) }}
+                    {{ form_widget(form.termLease) }}
+                </div>
+                {{ form_custom_errors.widget(form.termLease) }}
+            </div>
+            <div class="wrap col-md-3">
+                <div class="lable">
+                    {{ form_label(form.allowPartialPayments) }}
+                    {{ form_widget(form.allowPartialPayments) }}
+                </div>
+                {{ form_custom_errors.widget(form.allowPartialPayments) }}
+            </div>
+            <div class="wrap col-md-3">
+                <div class="lable">
+                    {{ form_label(form.allowCreditCardPayments) }}
+                    {{ form_widget(form.allowCreditCardPayments) }}
+                </div>
+                {{ form_custom_errors.widget(form.allowCreditCardPayments) }}
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="lable">
+                {{ form_label(form.leaseEnd) }}
+            </div>
+            <div class="field">
+                {{ form_widget(form.leaseEnd) }}
+            </div>
+            {{ form_custom_errors.widget(form.leaseEnd) }}
+        </div>
+        <div class="field-area">
+            {% set agreeAutoWithdrawalText = null %}
+            {% if property.settings.allowAutoDraft %}
+                {% if (property.tenantUser) %}
+                    {% if property.tenantUser.isAgreeAutoWithdrawal %}
+                        {% set agreeAutoWithdrawalText = 'Agree the auto-withdrawal' %}
+                    {% else %}
+                        {% set agreeAutoWithdrawalText = 'Disagree the auto-withdrawal' %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            <div class="lable">
+                {{ form_label(form.allowAutoDraft) }}
+                {{ form_widget(form.allowAutoDraft) }}
+            </div>
+            {{ form_custom_errors.widget(form.allowAutoDraft) }} {{ agreeAutoWithdrawalText ? (agreeAutoWithdrawalText) : '' }}
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn-circle property-details-submit">{{buttonLabel}}</button>
+        </div>
+        <div class="hide">{{ form_end(form) }}</div>
+    </div>
+</div>

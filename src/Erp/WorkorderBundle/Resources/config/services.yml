@@ -1,0 +1,9 @@
+parameters:
+    erp.workorders.twig.workorder_extension.class: Erp\WorkorderBundle\Twig\WorkorderExtension
+
+services:
+    erp.workorders.twig.user_extension:
+        class: %erp.workorders.twig.workorder_extension.class%
+        tags:
+            -  { name: twig.extension }
+        arguments: [@service_container]

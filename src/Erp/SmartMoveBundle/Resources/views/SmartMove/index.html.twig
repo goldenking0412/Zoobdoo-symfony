@@ -1,0 +1,72 @@
+{% set baseTemplate = user ? 'ErpUserBundle:Profile:base.html.twig' : '::base.html.twig' %}
+{% extends baseTemplate %}
+
+{% set headerWhiteClass = true %}
+
+{% block headerBannerTitle %}
+    Tenant Screening
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('bundles/erpsmartmove/js/sm-personal.form.controller.js') }}"></script>
+    {% if not user %}
+        <script type="text/javascript" src="{{ asset('bundles/erpcore/js/bootstrap-datepicker.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/erpcore/js/vendor.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/available-properties.controller.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/erpuser/js/profile-tenant.js') }}"></script>
+    {% endif %}
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+    <section id="register-form-tenants" class="register-form personal-info sm-tenant-personal-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="title-block">
+                        <h1 class="bold-text">
+                            {% if isPersonalForm %}
+                                User personal information
+                            {% else %}
+                                IDMA exam evaluation
+                            {% endif %}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+            {% if isError is defined and not isError %}
+                <div class="exam-message">
+                    {% if isPersonalForm %}
+                        Please, fill accurately your personal information. Ensure that all data is valid and complete before submiting the form.
+                    {% else %}
+                        {% if isAnswered is defined and isAnswered %}
+                            <p>Thank you for your answers! Your manager will check your screening reports and
+                                contact you later.</p>
+                            <h3>Exam status: passed.</h3>
+                        {% else %}
+                            Please, answer carefully questions about your personal information. Ensure that all data is valid and complete before submiting the form.
+                            <br/>
+                            <span class="errors">You have only 5 minutes to complete this form. Exam can be retrieved 7 times in 30 days.</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    {% if isPersonalForm %}
+                        {% include "ErpSmartMoveBundle:SmartMove:personal-form.html.twig" %}
+                    {% else %}
+                        {% include "ErpSmartMoveBundle:SmartMove:exam-form.html.twig" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,29 @@
+<div class="tabs-area">
+    <div class="container">
+        {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_LANDLORD')) %}
+            {% set setupStringOtherUser = 'Manager' %}
+            {% set stringCurrentTab = 'manager' %}
+        {% else %}
+            {% set setupStringOtherUser = 'Landlord' %}
+            {% set stringCurrentTab = 'landlord' %}
+        {% endif %}
+
+        <ul class="tabset fake style">
+            {% if property.id %}
+                <li><a class="{{ currentTab == 'property-details' ? 'active' : '' }}" href="{{ path('erp_property_listings_wizard_edit', {'propertyId': property.id}) }}">Property Details</a></li>
+                <li><a class="{{ currentTab == 'property-images' ? 'active' : '' }}" href="{{ path('erp_property_listings_wizard_edit_images', {'propertyId': property.id}) }}">Images</a></li>
+                <li><a class="{{ currentTab == 'setup-lease' ? 'active' : '' }}" href="{{ path('erp_property_listings_wizard_payment_settings', {'propertyId': property.id}) }}">Setup Lease</a></li>
+                <li><a class="{{ currentTab == stringCurrentTab ? 'active' : '' }}" href="{{ path('erp_property_listings_wizard_' ~ stringCurrentTab, {'propertyId': property.id}) }}">Setup {{ setupStringOtherUser }}</a></li>
+                <li><a class="{{ currentTab == 'tenants' ? 'active' : '' }}" href="{{ path('erp_property_listings_wizard_invited_tenant', {'propertyId': property.id}) }}">Setup Tenants</a></li>
+                <li><a class="{{ currentTab == 'security-deposit' ? 'active' : '' }}" href="{{ path('erp_property_listings_wizard_security_deposit', {'propertyId': property.id}) }}">Setup Security Deposit</a></li>
+                {% else %}
+                <li><a class="{{ currentTab == 'property-details' ? 'active' : '' }}">Property Details</a></li>
+                <li><a class="{{ currentTab == 'property-images' ? 'active' : '' }}">Images</a></li>
+                <li><a class="{{ currentTab == 'setup-lease' ? 'active' : '' }}">Lease</a></li>
+                <li><a class="{{ currentTab == stringCurrentTab ? 'active' : '' }}">{{ setupStringOtherUser }}</a></li>
+                <li><a class="{{ currentTab == 'tenants' ? 'active' : '' }}">Tenants</a></li>
+                <li><a class="{{ currentTab == 'security-deposit' ? 'active' : '' }}">Security Deposit</a></li>
+                {% endif %}
+        </ul>
+    </div>
+</div>

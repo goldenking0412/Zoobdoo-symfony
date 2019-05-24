@@ -1,0 +1,158 @@
+{% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+{% if landlords|length or tenants|length %}
+    <section id="form-section">
+        <form id="form-charge" method="post" action="{{ path('erp_user_landlords_charge') }}" role="form">
+            <ul class="nav nav-tabs">
+                <li role="landlords" class="active"><a href="#landlords" data-toggle="tab" style="color: #777;">Landlords</a></li>
+                <li role="presentation"><a href="#tenants" data-toggle="tab" style="color: #777;">Tenants</a></li>
+            </ul>
+
+            <div class="tab-content ">
+                <div class="tab-pane active" id="landlords">
+                    {% if landlords|length %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-1"></th>
+                                    <th class="col-xs-3">Name</th>
+                                    <th class="col-xs-2">Phone</th>
+                                    <th class="col-xs-2">Email</th>
+                                    <th class="col-xs-4">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for landlord in landlords %}
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="receiverId[{{ loop.index0 }}]" id="receiver{{ landlord.id }}" value="{{ landlord.id }}"/>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" nowrap>
+                                            <label for="receiver{{ landlord.id }}">{{ landlord.firstname }} {{ landlord.lastname }}</label>
+                                        </td>
+                                        <td class="text-left" nowrap>
+                                            <label for="receiver{{ landlord.id }}">{{ landlord.phone }}</label>
+                                        </td>
+                                        <td class="text-left">
+                                            <label for="receiver{{ landlord.id }}">{{ landlord.email }}</label>
+                                        </td>
+                                        <td class="text-left" nowrap>
+                                            <label for="receiver{{ landlord.id }}">{{ landlord.addressOne }}</label>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center">
+                            You have no landlords yet.
+                        </p>
+                    {% endif %}
+                </div>
+
+                <div class="tab-pane" id="tenants">
+                    {% if tenants|length %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-1"></th>
+                                    <th class="col-xs-3">Name</th>
+                                    <th class="col-xs-2">Phone</th>
+                                    <th class="col-xs-2">Email</th>
+                                    <th class="col-xs-4">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tenant in tenants %}
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="receiverId[{{ loop.index0 + landlords|length }}]" id="receiver{{ tenant.id }}" value="{{ tenant.id }}"/>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" nowrap>
+                                            <label for="receiver{{ tenant.id }}">{{ tenant.firstname }} {{ tenant.lastname }}</label>
+                                        </td>
+                                        <td class="text-left" nowrap>
+                                            <label for="receiver{{ tenant.id }}">{{ tenant.phone }}</label>
+                                        </td>
+                                        <td class="text-left">
+                                            <label for="receiver{{ tenant.id }}">{{ tenant.email }}</label>
+                                        </td>
+                                        <td class="text-left" nowrap>
+                                            <label for="receiver{{ tenant.id }}">{{ tenant.addressOne }}</label>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center">
+                            You have no tenants yet.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="container-fluid text-center">
+                <button type="submit" value="Next" class="btn-circle" role="button" style="display: inline-block;">Next</button>
+            </div>
+        </form>
+    </section>
+{% else %}
+    <p class="text-center">
+        You have no landlords or tenants yet.
+    </p>
+{% endif %}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#form-charge').on('submit', function (event) {
+            event.preventDefault();
+            $(this).find('button[type="submit"]').attr('disabled', 'disabled');
+            $.ajax({
+                url: this.action,
+                data: $(this).serialize(),
+                dataType: 'html',
+                method: this.method,
+                success: function (response) {
+                    var $document = $(document), $formSection = $('#form-section');
+                    $formSection.html(response.replace('<section id="form-section">', '').replace('</section>', ''));
+                    $document.on('change', '#erp_user_landlords_charge_recurring', function (event) {
+                        $document.find('#erp_user_landlords_charge_recurringDayOfMonth').attr('disabled', !(this.checked));
+                    });
+                    $document.find('form').on('submit', function (event) {
+                        event.preventDefault();
+                        $(this).find('button[type="submit"]').attr('disabled', 'disabled');
+                        $.ajax({
+                            url: this.action,
+                            data: $(this).serialize(),
+                            dataType: 'html',
+                            method: this.method,
+                            success: function (response) {
+                                $formSection.html(response.replace('<section id="form-section">', '').replace('</section>', ''));
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(jqXHR.responseText);
+                            }
+                        });
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var response;
+                    try {
+                        response = JSON.parse(jqXHR.responseText);
+                    } catch (err) {
+                        response = jqXHR.responseText;
+                    }
+                    console.log(response);
+                }
+            });
+        });
+    });
+</script>
+
+
+

@@ -1,0 +1,50 @@
+<div class="popup-content" id="body-refund">
+    <p>Are you sure you want to refund this transaction?</p>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-lg-12 text-center">
+            <a href="{{ pathApply }}" class="btn-solid" id="btn-confirm-refund">YES</a>
+            <button type="button" class="btn-solid btn-solid-noborder" onclick="$.fancybox.close()">NO</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function _disableRefundButton(target) {
+        target.className = 'refund-btn refunded-btn disabled';
+        target.innerHTML = 'Refunded';
+        target.setAttribute('href', '#');
+        target.removeAttribute('role');
+    }
+
+    function _processResponse(response) {
+        var $temp = $('<div></div>').html(response);
+        $(document).find('#body-refund').html($temp.find('#body-refund').html());
+    }
+
+    $(document).ready(function () {
+        $(document).find('#btn-confirm-refund').on('click', function (event) {
+            event.preventDefault();
+
+            var action = this.href || this.getAttribute('href');
+
+            $.ajax({
+                url: action,
+                data: '',
+                dataType: 'json',
+                success: function (response) {
+                    _disableRefundButton(eventRoot.target);
+                    _processResponse(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var response;
+                    try {
+                        response = JSON.parse(jqXHR.responseText);
+                    } catch (err) {
+                        response = jqXHR.responseText;
+                    }
+                    _processResponse(response);
+                }
+            });
+        });
+    });
+</script>

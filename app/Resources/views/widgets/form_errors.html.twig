@@ -1,0 +1,12 @@
+{% macro widget(form) %}
+    {% spaceless %}
+        {% if form.vars.errors|length %}
+            {% for error in form.vars.errors %}
+                <div class="alert alert-danger" style="font-size: 14px !important; overflow: hidden !important; line-height: 1.8em !important; font-weight: 300;padding: 10px 15px;">
+                    {{ error.message }}
+                </div>
+                <br>
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}

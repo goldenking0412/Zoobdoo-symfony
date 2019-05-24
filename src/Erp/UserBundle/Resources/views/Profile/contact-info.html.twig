@@ -1,0 +1,125 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block paramsToJs %}
+    <input type="hidden" name="route__erp_core_get_cities_by_state_code" value="{{ path('erp_core_get_cities_by_state_code') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/city.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-chat"></i> Contact Info</h1>
+            <a href="#" class="search visible-mobile"><i class="icon icon-search"></i></a>
+        </div>
+    </div>
+
+
+    <main id="main">
+        <div class="form-area style">
+            <div class="container">
+                {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+                {{ form_start(form, { attr: {'class': 'form', 'novalidate': 'novalidate', 'id': 'form-messages'}, 'enctype': form_enctype(form)}) }}
+                    <div class="field-area two">
+                         <div class="wrap">
+                            <div class="lable">
+                                <label for="title">{{ form_label(form.addressOne) }}</label>
+                            </div>
+                            <div class="field">
+                                {{ form_widget(form.addressOne) }}
+                                {{ form_custom_errors.widget(form.addressOne) }}
+
+                            </div>
+                        </div>
+                         <div class="wrap">
+                            <div class="lable">
+                                <label for="title">{{ form_label(form.addressTwo) }}</label>
+                            </div>
+                            <div class="field">
+                                {{ form_widget(form.addressTwo) }}
+                                {{ form_custom_errors.widget(form.addressTwo) }}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-area three">
+                        <div class="wrap">
+                            <div class="lable">
+                                <label for="title">{{ form_label(form.state) }}</label>
+                            </div>
+                            <div class="field">
+                                <div class="select-container">
+                                    {{ form_widget(form.state) }}
+                                </div>
+                                {{ form_errors(form.state) }}
+                            </div>
+                        </div>
+                        <div class="wrap">
+                            <div class="lable">
+                                <label for="bed"> {{ form_label(form.city) }}</label>
+                            </div>
+                            <div class="field">
+                                {{ form_widget(form.city) }}
+                                {{ form_custom_errors.widget(form.city) }}
+                            </div>
+                        </div>
+                        <div class="wrap">
+                            <div class="lable">
+                                <label for="bath">{{ form_label(form.postalCode) }}</label>
+                            </div>
+                            <div class="field">
+                                {{ form_widget(form.postalCode) }}
+                                {{ form_custom_errors.widget(form.postalCode) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-area two">
+                        <div class="wrap">
+                            <div class="lable">
+                                <label for="title">{{ form_label(form.phone) }}</label>
+                            </div>
+                            <div class="field">
+                                {{ form_widget(form.phone) }}
+                                {{ form_custom_errors.widget(form.phone) }}
+
+                            </div>
+                        </div>
+                        <div class="wrap">
+                            <div class="lable">
+                                <label for="title">{{ form_label(form.workPhone) }}</label>
+                            </div>
+                            <div class="field">
+                                {{ form_widget(form.workPhone) }}
+                                {{ form_custom_errors.widget(form.workPhone) }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-area">
+                        <div class="lable">
+                            <label for"website">
+                                {{ form_label(form.websiteUrl) }}
+                            </label>
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.websiteUrl) }}
+                            {{ form_custom_errors.widget(form.websiteUrl) }}
+                        </div>
+                    </div>
+                    <div class="btn-holder">
+                        {{ form_widget(form.save, {'attr': {'class': 'blue'}}) }}
+                    </div>
+                {{ form_end(form)}}
+            </div>
+        </div>
+    </main>
+{% endblock %}

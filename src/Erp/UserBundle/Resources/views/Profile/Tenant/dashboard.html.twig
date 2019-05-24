@@ -1,0 +1,199 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    {% set property = user.getTenantProperty() %}
+
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1>
+                {% if user.image %}
+                    <img src="{{ asset(user.image.path ~ '/' ~ user.image.name) | imagine_filter('profile_image') }}"/>
+                {% else %}
+                    <i class="icon icon-user"></i>
+                {% endif %}
+                Your Profile
+            </h1>
+        </div>
+    </div>
+
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+    <main id="main">
+        <div class="property-details style">
+            <div class="container">
+                <h2>
+                    Current balance:
+                    {% if app.user.rentPaymentBalance.balance is defined %}
+                        {{ app.user.rentPaymentBalance.balance|money }}
+                    {% else %}
+                        00.00$
+                    {% endif %}
+                </h2>
+
+                <div class="row-holder">
+                    {{ render(controller('ErpPropertyBundle:ScheduledRentPayment:payRent')) }}
+                    {{ render(controller('ErpUserBundle:Dashboard:showPaymentDetails')) }}
+                </div>
+
+                <div class="row-holder">
+                    {{ render(controller('ErpPaymentBundle:Stripe:paymentsPreferences')) }}
+
+                    <div class="col">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Account Details</span>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="text-holder">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="address-info">
+
+
+                                                        <span class="title">Username</span>
+                                                        <span class="text">{{ user.firstName }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="address-info">
+                                                        <span class="title">Password</span>
+                                                        <span class="text">****</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a type="submit" href="{{ path('erp_user_details') }}" class="btn-circle">Edit</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="text-holder">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="address-info">
+                                                        <span class="title"><i class="fa fa-envelope-o"></i> Primary, Email</span>
+                                                        <span class="text">{{ user.email }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="address-info">
+                                                        <span class="title"><i class="fa fa-envelope-o"></i> Secondary Email address</span>
+                                                        <span class="text">{{ user.secondEmail }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a type="submit" href="{{ path('erp_user_email_options') }}" class="btn-circle">Edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-6">
+                                        <div class="text-holder">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="address-info">
+                                                        <span class="title">Primary, Billing Address</span>
+                                                        <span class="text">
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i> {{ user.addressOne }}<br />
+                                                            {{ user.addressTwo }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a type="submit" href="{{ path('erp_user_address_details') }}" class="btn-circle">Edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascript_inline %}
+    {# TODO Refactoring #}
+    <script>
+        (function ($) {
+            var linkHandler = Plaid.create({
+                env: '{{ plaid_env }}',
+                clientName: 'Zoobdoo',
+                key: '{{ plaid_public_key }}',
+                product: ['auth'],
+                selectAccount: true,
+                onSuccess: function (public_token, metadata) {
+                    $.blockUI({message: 'Account verifying... Please wait.'});
+                    $.ajax({
+                        url: '{{ path("erp_payment_stripe_verify_bank_account") }}',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            publicToken: public_token,
+                            accountId: metadata.account_id
+                        },
+                        success: function (response) {
+                            if (response.redirect) {
+                                $.blockUI({message: 'Now you\'ll be redirected.'});
+                                setTimeout(function () {
+                                    $.unblockUI();
+                                    document.location = response.redirect;
+                                }, 1500);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            $.blockUI({message: ('Error: ' + jqXHR.responseText)});
+                            setTimeout(function () {
+                                $.unblockUI();
+                            }, 1500);
+                        }
+                    });
+                },
+                onExit: function (err, metadata) {
+                    if (err !== null) {
+
+                    }
+                }
+            });
+
+            $('#verify-ba').click(function () {
+                linkHandler.open();
+            });
+        })(jQuery);
+    </script>
+    <script>
+        $(document).ready(function () {
+            if ($('#erp_property_scheduled_rent_payment_category').val() === 'deposit_payment') {
+                $('#erp_property_scheduled_rent_payment_type').parent().hide();
+                $('#erp_property_scheduled_rent_payment_startPaymentAt').parent().hide();
+                $('#erp_property_scheduled_rent_payment_startPaymentAt').attr('required', false);
+            }
+            $('#erp_property_scheduled_rent_payment_category').change(function () {
+                if ($('#erp_property_scheduled_rent_payment_category').val() === 'deposit_payment') {
+                    $('#erp_property_scheduled_rent_payment_type').parent().hide();
+                    $('#erp_property_scheduled_rent_payment_startPaymentAt').parent().hide();
+                    $('#erp_property_scheduled_rent_payment_startPaymentAt').attr('required', false);
+                } else {
+                    $('#erp_property_scheduled_rent_payment_type').parent().show();
+                    $('#erp_property_scheduled_rent_payment_startPaymentAt').parent().show();
+                    $('#erp_property_scheduled_rent_payment_startPaymentAt').attr('required', 'required');
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

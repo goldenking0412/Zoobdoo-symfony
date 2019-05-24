@@ -1,0 +1,55 @@
+<table border="1" cellpadding="7" width="100%" cellspacing="0">
+    <tr>
+        <td align="center" colspan="6" style="font-weight: bold; font-size: 36px; padding-bottom: 20px;">
+            Transactions History
+        </td>
+    </tr>
+    <tr>
+        <th>Date:</th>
+        <th>Amount:</th>
+        <th>Currency:</th>
+        <th>From:</th>
+        <th>To:</th>
+        <th>Payment Method:</th>
+    </tr>
+    {% if transactions|length %}
+        {% for transaction in transactions %}
+            {%- set sender -%}
+                {{ transaction.customer.user.email }}
+            {%- endset -%}
+
+            {%- set recipient -%}
+                {% if transaction.account %}
+                    {{ transaction.account.user.email }}
+                {% else %}
+                    System
+                {% endif %}
+            {%- endset -%}
+
+            {%- set payment_method -%}
+                {% if transaction.paymentMethod == constant('Erp\\StripeBundle\\Entity\\Transaction::BANK_ACCOUNT_PAYMENT_METHOD') %}
+                    ACH
+                {% elseif transaction.paymentMethod == constant('Erp\\StripeBundle\\Entity\\Transaction::CREDIT_CARD_PAYMENT_METHOD') %}
+                    Credit Card
+                {% endif %}
+            {%- endset -%}
+            {#TODO transaction.currency, transaction.currency to format money#}
+            <tr>
+                <td>{{ transaction.created|date('Y/m/d') }}</td>
+                <td>{{ transaction.amount|stripe_money }}</td>
+                <td>{{ transaction.currency|upper }}</td>
+                <td>{{ sender }}</td>
+                <td>{{ recipient }}</td>
+                <td>{{ payment_method }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4"><i>No results</i></td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td colspan="5">Total payments:</td>
+        <td>{{ transactions|length }}</td>
+    </tr>
+</table>

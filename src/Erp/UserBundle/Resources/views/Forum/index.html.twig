@@ -1,0 +1,70 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="page-content">
+        <section id="manager-forum" class="profile forum-page">
+            <div class="container">
+                <div class="row">
+                    <div class="title-block">
+                        <h1 class="bold-text">Manager Forum</h1>
+                    </div>
+                </div>
+
+                <div class="row messages-row">
+                    <div class="col-xs-12 messages-col request-messages profile-widget-row">
+                        {% if pagination|length %}
+                            <div class="doc-table" style="width: 100%;">
+                                <div class="profile-widget-item">
+                                    <div class="widget-title-row">
+                                        <div class="login-block-title doc-table-title bold-text">
+                                            <ul class="payment-table-title">
+                                                <li>
+                                                    <div class="col-xs-6 bold-text">Topic</div>
+                                                    <div class="col-xs-2 bold-text replies">Replies</div>
+                                                    <div class="col-xs-4 bold-text last-post">Last Post</div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="forum-block">
+                                        <ul class="forum-list">
+                                            {% for topic in pagination %}
+                                                <li class="topic-row">
+                                                    <div class="col-xs-6 topic">
+                                                        <a href="{{ path('erp_user_profile_forum_topic', {'topicId':topic.id}) }}">{{ topic.name }}</a>
+                                                        <span class="grey-text">by &nbsp;</span><span>{{ topic.user.firstName|e }} {{ topic.user.lastName|e }} &nbsp;</span>
+                                                        <span class="grey-text">{{ topic.createdDate|date('m/d/Y') }}</span>
+                                                    </div>
+                                                    <div class="col-xs-2 replies">
+                                                        <span>{{ topic.forumComments|length }}</span>
+                                                    </div>
+                                                    <div class="col-xs-4 last-post">
+                                                        {% if topic.forumComments|length %}
+                                                            {% set lastComment = topic.forumComments|first %}
+                                                            <span class="author"><span class="grey-text">by &nbsp;</span><span>{{ lastComment.user.firstName }} {{ lastComment.user.lastName }} &nbsp;</span></span><span class="grey-text">on {{ lastComment.createdDate|date('m/d/Y H:i a') }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {{ knp_pagination_render(pagination) }}
+                                </div>
+                            {% else %}
+                                <div class="text-center">
+                                    Topics have not been created yet
+                                </div>
+                            {% endif %}
+
+                            {% include "ErpUserBundle:Forum:create-topic-form.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

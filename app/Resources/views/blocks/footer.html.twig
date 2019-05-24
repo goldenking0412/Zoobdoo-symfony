@@ -1,0 +1,87 @@
+<div class="bottom-area">
+    <aside class="bottom-aside">
+        <div class="links-area">
+            <ul class="accordion">
+                <li>
+                    <a class="opener" href="#">COMPANY</a>
+                    <ul class="slide">
+                        <li>
+                            <a href="{{ path('erp_site_static_page', {'slug':'about'}) }}">About Us</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('erp_site_static_page', {'slug':'how-it-works'}) }}">How It Works</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('erp_site_static_page', {'slug':'contact'}) }}">Contact</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('erp_site_static_page', {'slug':'faq'}) }}">FAQ</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="opener" href="#">FEATURES</a>
+                    <ul class="slide">
+                        <li>
+                            <a href="{{ path('erp_site_static_page', {'slug':'features', 'tab': 'tab2-0'}) }}">Property Managers</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('erp_site_static_page', {'slug':'features', 'tab': 'tab2-0'}) }}">Tenants</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="opener" href="#">PROPERTY MANAGERS</a>
+                    <ul class="slide">
+                        <li>
+                            <a href="#" data-href="#" data-toggle="modal" data-target="#login-modal">Log In</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fos_user_registration_register') }}">Sign Up</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="opener" href="#">TENANTS</a>
+                    <ul class="slide">
+                        <li>
+                            <a href="#" data-href="#" data-toggle="modal" data-target="#e-invite-modal">Invite a Property Manager</a>
+                        </li>
+                        <li>
+                            <a href="#" data-href="#" data-toggle="modal" data-target="#login-modal">Log In</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="logo-box">
+                <a href="/" class="logo">
+                    <img src="{{ asset('assets/images/erpSite/logo.svg')}}" alt="logo">
+                    <img src="{{ asset('assets/images/erpSite/slogan.svg')}}" alt="slogan">
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <footer id="footer">
+        <p>
+            <a href="#">
+                &copy; Copyright 2018 Zoobdoo
+                {% if (app_version is defined) %}
+                    {% set app_version_array = app_version|split('-') %}
+                    {{ app_version_array.0 }}
+                {% endif %}
+            </a>
+        </p>
+        <ul class="social-networks">
+            <li><a href="https://www.facebook.com/zoobdoomanager/" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="https://twitter.com/Zoobdoo_" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/zoobdoo-com" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="https://www.pinterest.com/zoobdoocom/pins/" target="_blank"><i class="fab fa-pinterest-p"></i> </a></li>
+        </ul>
+        <span class="text"><a href="{{ path('erp_site_static_page', {'slug':'terms-of-service'}) }}">Terms of Service</a></span>
+    </footer>
+</div>
+
+{% block eInviteModal %}
+    {{ render(controller('ErpSiteBundle:Index:sendInviteToManager')) }}
+{% endblock %}

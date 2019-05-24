@@ -1,0 +1,35 @@
+<div class="col">
+    <div class="open-close1 active">
+        <header class="head">
+            <span class="text">Properties</span>
+            <a href="#" class="opener">[<span class="icon"></span>]</a>
+        </header>
+        <div class="slide">
+            <div class="unit-info">
+                <span class="title">Total Units</span>
+                <span class="val">{{ app.user.getProperties()|length }}</span>
+            </div>
+            <canvas
+                    id="properties-history-chart"
+                    width="90%"
+                    height="90%"
+                    data-available-properties="{{ available_properties }}"
+                    data-rented-properties="{{ rented_properties }}"
+                    data-labels="{{ labels|json_encode }}"
+                    >
+            </canvas>
+            <div class="graph-info">
+                <div class="box">
+                    <span class="circle"></span>
+                    <strong class="title">Vacant</strong>
+                    <span class="val">{{ available_properties }}</span>
+                </div>
+                <div class="box">
+                    <span class="circle style"></span>
+                    <strong class="title">Rented</strong>
+                    <span class="val">{{ rented_properties }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

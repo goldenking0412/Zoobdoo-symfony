@@ -1,0 +1,310 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-service"></i> Services</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        {% include "ErpUserBundle:ServiceRequests/blocks:menu.html.twig" %}
+
+        <div class="form-area style">
+            <div class="container">
+                <h2>Creating Work Order</h2>
+                <br />
+                <br />
+
+                <div class="row">
+                    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+                </div>
+
+                {{ form_start(form, { attr: {'class': 'form'} }) }}
+                {{ form_widget(form.manager) }}
+                <input type="hidden" id="serviceData" name="serviceData" value="" />
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.createdDate) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.createdDate, {'attr': {'class': 'date'} }) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.createdDate) }}
+                    </div>
+
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.status) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.status) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.status) }}
+                    </div>
+                </div>
+
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.contractor) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.contractor) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.contractor) }}
+                    </div>
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.currency) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.currency) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.currency) }}
+                    </div>
+                </div>
+
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.severity) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.severity) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.severity) }}
+                    </div>
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.urgency) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.urgency) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.urgency) }}
+                    </div>
+                </div>
+
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.description) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.description) }}
+                    </div>
+                    {{ form_custom_errors.widget(form.description) }}
+                </div>
+
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.serviceDate) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.serviceDate, {'attr': {'class': 'form-control date'} }) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.serviceDate) }}
+                    </div>
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.serviceTime) }}
+                        </div>
+                        <div class="field">
+                            {{ form_widget(form.serviceTime) }}
+                        </div>
+                        {{ form_custom_errors.widget(form.serviceTime) }}
+                    </div>
+                </div>
+
+
+                <div class="row text-center" style="height: 350px; padding-top: 30px">
+                    <div class="col-md-12" style="height:100%">
+                        <div id="jsGrid"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-xs-4 text-right">
+                            <div id="sub_total">Sub Total: USD <span id="sub_total_value">0.00</span></div>
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            <div id="tax_total">Tax (10%): USD <span id="tax_total_value">0.00</span></div>
+                        </div>
+                        <div class="col-xs-4 text-left">
+                            <div id="total">Total: USD <span id="total_value">0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-holder text-align-center">
+                    {{ form_widget(form.save) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/erpworkorder/css/jsgrid.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/erpworkorder/css/theme.css') }}" />
+    <style>
+        .config-panel {
+            padding: 10px;
+            margin: 10px 0;
+            background: #fcfcfc;
+            border: 1px solid #e9e9e9;
+            display: inline-block;
+        }
+
+        .config-panel label {
+            margin-right: 10px;
+        }
+
+        .custom-combobox {
+            position: relative;
+            display: inline-block;
+        }
+        .custom-combobox-toggle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin-left: -1px;
+            padding: 0;
+        }
+        .custom-combobox-input {
+            margin: 0;
+            padding: 5px 10px;
+        }
+
+        .ui-draggable, .ui-droppable {
+            background-position: top;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/jsgrid.core.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/jsgrid.load-indicator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/jsgrid.load-strategies.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/jsgrid.sort-strategies.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/jsgrid.validation.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/jsgrid.field.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/fields/jsgrid.field.text.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/fields/jsgrid.field.number.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/fields/jsgrid.field.decimal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/fields/jsgrid.field.select.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/fields/jsgrid.field.checkbox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/fields/jsgrid.field.control.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpworkorder/js/main.js') }}"></script>
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#jsGrid").jsGrid({
+                height: "100%",
+                width: "100%",
+                filtering: false,
+                inserting: true,
+                editing: true,
+                sorting: true,
+                paging: true,
+                autoload: true,
+                pageSize: 15,
+                pageButtonCount: 5,
+                onRefreshed: function (args) {
+                    var items = args.grid.option("data");
+
+                    var subTotal = 0;
+                    var tax = 0;
+
+                    items.forEach(function (item) {
+                        subTotal += Math.round(item.hours * item.rate * 100) / 100;
+                        tax += item.tax_code / 10;
+                    });
+
+                    var total = subTotal + tax;
+
+                    $("#sub_total > #sub_total_value").text(subTotal);
+                    $("#tax_total > #tax_total_value").text(tax);
+                    $("#total > #total_value").text(total);
+
+                    $("#serviceData").val(JSON.stringify(items));
+                },
+                //controller: db,
+                fields: [
+                    {
+                        name: "task_name",
+                        title: "Service",
+                        type: "text",
+                        validate: "required",
+                        width: 150
+                    },
+                    {
+                        name: "hours",
+                        title: "Hours",
+                        type: "number",
+                        validate: "required",
+                        width: 100,
+                        insertTemplate: function () {
+                            var input = this.__proto__.insertTemplate.call(this);
+                            input.val('0');
+                            return input;
+                        }
+                    },
+                    {
+                        name: "rate",
+                        title: "Cost",
+                        type: "decimal",
+                        validate: "required",
+                        width: 100,
+                        insertTemplate: function () {
+                            var input = this.__proto__.insertTemplate.call(this);
+                            input.val('0.00');
+                            return input;
+                        },
+                        itemTemplate: function (value) {
+                            return 'USD ' + value;
+                        }
+                    },
+                    {
+                        name: "tax_code",
+                        title: "Tax",
+                        type: "number",
+                        width: 100,
+                        insertTemplate: function () {
+                            var input = this.__proto__.insertTemplate.call(this);
+                            input.val('0');
+                            return input;
+                        },
+                        itemTemplate: function (value) {
+                            return 'USD ' + value;
+                        }
+                    },
+                    {
+                        name: "amount",
+                        title: "Amount",
+                        type: "label",
+                        editing: false,
+                        itemTemplate: function (value, item) {
+                            return 'USD ' + Math.round(item.hours * item.rate * 100) / 100;
+                        }
+                    },
+                    {
+                        type: "control",
+                        modeSwitchButton: false,
+                        editButton: false
+                    }
+                ]
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% form_theme form _self %}
+
+{%- block date_widget -%}
+{% set type = 'text' %}
+{{ block('form_widget_simple') }}
+{%- endblock date_widget -%}
+
+{% block pageContent %}
+    {{ parent() }}
+    {% include "ErpPropertyBundle:Wizard/blocks:header.html.twig" %}
+
+    <main id="main">
+        {% include "ErpPropertyBundle:Wizard/blocks:tabs.html.twig" with {'property': property, 'currentTab': 'security-deposit'} %}
+
+        <div class="tab-content">
+            {% include "ErpPropertyBundle:Wizard/blocks:security-deposit.html.twig"  %}
+        </div>
+    </main>
+
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.yes-want').hide();
+            if ($('#erp_property_security_deposit_yesWantSecurityDeposit').is(':checked')) {
+                $('#erp_property_security_deposit_notWantSecurityDeposit').prop('checked', false);
+                $('#erp_property_security_deposit_amount').attr('required', 'required');
+                $('.yes-want').show();
+            }
+
+            if ($('#erp_property_security_deposit_notWantSecurityDeposit').is(':checked')) {
+                $('#erp_property_security_deposit_yesWantSecurityDeposit').prop('checked', false);
+                $('#erp_property_security_deposit_amount').attr('required', false);
+                $('.yes-want').hide();
+            }
+
+            if ($('#erp_property_security_deposit_sendToMainAccount').is(':checked')) {
+                $('#erp_property_security_deposit_addBankAccount').prop('checked', false);
+            }
+
+            if ($('#erp_property_security_deposit_addBankAccount').is(':checked')) {
+                $('#erp_property_security_deposit_sendToMainAccount').prop('checked', false);
+            }
+
+            $('#erp_property_security_deposit_notWantSecurityDeposit').click(function () {
+                if ($('#erp_property_security_deposit_notWantSecurityDeposit').is(':checked')) {
+                    $('#erp_property_security_deposit_yesWantSecurityDeposit').prop('checked', false);
+                    $('#erp_property_security_deposit_amount').attr('required', false);
+                    $('.yes-want').hide();
+                }
+            });
+            $('#erp_property_security_deposit_yesWantSecurityDeposit').click(function () {
+                if ($('#erp_property_security_deposit_yesWantSecurityDeposit').is(':checked')) {
+                    $('#erp_property_security_deposit_notWantSecurityDeposit').prop('checked', false);
+                    $('#erp_property_security_deposit_amount').attr('required', 'required');
+                    $('.yes-want').show();
+                }
+            });
+            $('#erp_property_security_deposit_sendToMainAccount').click(function () {
+                if ($('#erp_property_security_deposit_sendToMainAccount').is(':checked')) {
+                    $('#erp_property_security_deposit_addBankAccount').prop('checked', false);
+                }
+            });
+            $('#erp_property_security_deposit_addBankAccount').click(function () {
+                if ($('#erp_property_security_deposit_addBankAccount').is(':checked')) {
+                    $('#erp_property_security_deposit_sendToMainAccount').prop('checked', false);
+                }
+            });
+            var linkHandler = Plaid.create({
+                env: '{{ plaid_env }}',
+                clientName: 'Zoobdoo',
+                key: '{{ plaid_public_key }}',
+                product: ['auth'],
+                selectAccount: true,
+                onSuccess: function (public_token, metadata) {
+                    $.ajax({
+                        url: '{{ path("erp_payment_stripe_verify_bank_account_deposit") }}',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            publicToken: public_token,
+                            accountId: metadata.account_id,
+                            propertyId:{{property.id}}
+                        },
+                        success: function (response) {
+                            if (response.redirect) {
+                                $.blockUI({message: 'Now you\'ll be redirected.'});
+                                setTimeout(function () {
+                                    $.unblockUI();
+                                    document.location = response.redirect;
+                                }, 1500);
+                            } else {
+                                //$('#accountId').val(metadata.account_id);
+                                //$('#publicToken').val(public_token);
+                                $('#property-edit-form').submit();
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            $.blockUI({message: ('Error: ' + jqXHR.responseText)});
+                            setTimeout(function () {
+                                $.unblockUI();
+                            }, 1500);
+                        }
+                    });
+                },
+                onExit: function (err, metadata) {
+                    $('#btn-security-deposit').html('Next');
+                    if (err !== null) {
+
+                    }
+                }
+            });
+            var bankAccount = '{{ (bankAccount ? 1 : 0) }}';
+            $('#btn-security-deposit').click(function () {
+                if ($('#erp_property_security_deposit_addBankAccount').is(':checked') && $('#erp_property_security_deposit_yesWantSecurityDeposit').is(':checked')) {
+                    if (bankAccount === 1) {
+                        return true;
+                    } else {
+                        linkHandler.open();
+                        $('#btn-security-deposit').html('Processing...');
+                        return false;
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% block user_block %}
+    {% if app.user %}
+        <li class="user-footer">
+            <div class="pull-right">
+                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out fa-fw"></i> {{ 'logout'|trans({}, 'FOSUserBundle') }}</a>
+            </div>
+        </li>
+    {% endif %}
+{% endblock %}

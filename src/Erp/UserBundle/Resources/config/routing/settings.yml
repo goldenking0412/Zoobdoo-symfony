@@ -1,0 +1,4 @@
+erp_user_settings:
+    path:     /change-user-settings
+    defaults: { _controller: ErpUserBundle:Setting:changeUserSettings}
+    methods: [POST]

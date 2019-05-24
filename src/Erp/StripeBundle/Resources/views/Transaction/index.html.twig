@@ -1,0 +1,56 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+    <div class="page-content">
+        <section id="managers-listings" class="listings profile">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Type</td>
+                                    <td>Amount</td>
+                                    <td>Currency</td>
+                                    <td>Created</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if pagination|length %}
+                                    {% for transaction in pagination %}
+                                        {% set sender = transaction.customer.user.email %}
+                                        {% set recipient = (transaction.account) ? transaction.account.user.email : 'System' %}
+
+                                        {% if transaction.paymentMethod == constant('Erp\\StripeBundle\\Entity\\Transaction::BANK_ACCOUNT_PAYMENT_METHOD') %}
+                                            {% set payment_method = 'ACH' %}
+                                        {% elseif transaction.paymentMethod == constant('Erp\\StripeBundle\\Entity\\Transaction::CREDIT_CARD_PAYMENT_METHOD') %}
+                                            {% set payment_method = 'Credit Card' %}
+                                        {% endif %}
+                                        {#TODO transaction.currency, transaction.currency to format money#}
+                                        <tr>
+                                            <td>{{ transaction.created|date('Y/m/d') }}</td>
+                                            <td>{{ transaction.amount|stripe_money }}</td>
+                                            <td>{{ transaction.currency|upper }}</td>
+                                            <td>{{ sender }}</td>
+                                            <td>{{ recipient }}</td>
+                                            <td>{{ payment_method }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No matches.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        {% if pagination|length %}
+                            {{ knp_pagination_render(pagination) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

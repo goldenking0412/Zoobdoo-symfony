@@ -1,0 +1,4 @@
+services:
+    erp.site.left_menu_service:
+        class: Erp\SiteBundle\Services\LeftMenuService
+        arguments: ['@service_container']

@@ -1,0 +1,70 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    {% set title %}
+        {% if type == constant('Erp\\StripeBundle\\Entity\\Transaction::CASH_IN') %}
+            {{ date_from|date('F') }} Cash In
+        {% elseif type == constant('Erp\\StripeBundle\\Entity\\Transaction::CASH_OUT') %}
+            {{ date_from|date('F') }} Cash Out
+        {% else %}
+            Cashflows
+        {% endif %}
+    {% endset %}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-dashboard"></i> Cashflows</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="property-details style">
+            <div class="container">
+                <div class="row-holder style">
+                    <div class="col" style="width: 100%;">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">{{ title }}</span>
+                            </header>
+                            <div class="slide">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Type</th>
+                                            <th>Amount</th>
+                                            <th>Currency</th>
+                                            <th>Created</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if pagination|length %}
+                                            {% for cashflow in pagination %}
+                                                <tr>
+                                                    <td>{{ cashflow.id }}</td>
+                                                    <td>{{ cashflow.type }}</td>
+                                                    <td>{{ cashflow.amount|stripe_money }}</td>
+                                                    <td>{{ cashflow.currency }}</td>
+                                                    <td>{{ cashflow.created|date('Y/m/d') }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="5" class="text-center">No matches.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                                {% if pagination|length %}
+                                    {{ knp_pagination_render(pagination) }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

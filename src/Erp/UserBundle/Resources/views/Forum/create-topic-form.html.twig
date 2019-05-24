@@ -1,0 +1,38 @@
+{{ form_start(form, { attr: {'class': 'form-horizontal', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group title-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                {{ form_custom_errors.widget(form.name) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                {{ form_label(form.text) }}
+                {{ form_widget(form.text) }}
+                {{ form_custom_errors.widget(form.text) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div class="form-footer">
+                    {% if user.isReadOnlyUser() %}
+                        <a class="btn-circle" type="submit" href="{{ path('erp_user_profile_read_only_popup') }}" role="popup">Submit</a>
+                        <div class="hidden">{{ form_widget(form.save) }}</div>
+                    {% else %}
+                        {{ form_widget(form.save, {'attr': {'class': 'btn-circle'} }) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{ form_end(form) }}

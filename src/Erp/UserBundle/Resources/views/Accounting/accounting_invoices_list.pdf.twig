@@ -1,0 +1,49 @@
+{% extends "::base.pdf.twig" %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="text-center">
+            <h2>
+                List of Invoices (at {{ "now"|date('M d, Y - h:i:s') }})
+            </h2>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="col-xs-2 col-md-2">Date Created</th>
+                    <th class="col-xs-2 col-md-2">Sent To</th>
+                    <th class="col-xs-4 col-md-4">Description</th>
+                    <th class="col-xs-2 col-md-2">Amount</th>
+                    <th class="col-xs-2 col-md-2">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pagination %}
+                    <tr>
+                        <td class="text-left">
+                            {{ item.getCreatedAt()|date('M d, Y') }}<br/>
+                            {{ item.getCreatedAt()|date('h:i:s') }}
+                        </td>
+                        <td class="text-left">
+                            {{ item.getReceiver().getEmail() }}
+                        </td>
+                        <td class="text-left">
+                            {% if (item.description) %}
+                                <em>{{ item.getDescription() }}</em>
+                            {% endif %}
+                        </td>
+                        <td class="text-left">
+                            {{ item.getAmount()|stripe_money(false) }}
+                        </td>
+                        <td class="text-left">
+                            <span class="invoice-status">{{ item.getStatus()|capitalize }}</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "::base.pdf.twig" %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="text-center">
+            <h2>
+                Accounting Ledger / Manager: {{user.fullName }}
+            </h2>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="col-xs-3">Date</th>
+                    <th class="col-xs-3">Transaction</th>
+                    <th class="col-xs-3">Description</th>
+                    <th class="col-xs-3">Status</th>
+                    <th class="col-xs-2" nowrap>Income</th>
+                    <th class="col-xs-4">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pagination %}
+                    <tr>
+                        <td class="text-center">
+                            {{ item.created|date('M d, Y') }}<br/>
+                            {{ item.created|date('h:i:s') }}
+                        </td>
+                        <td class="text-left">
+                            {{ item.customer ? item.customer.user.fullName : '' }}<br/>
+                            {{ item.paymentMethodDescription }}
+                        </td>
+                        <td class="text-left">
+
+                            {% if (item.metadata) %}
+                                {% if (item.metadata.description) %}
+                                    <em>{{ item.metadata.description }}</em><br/>
+                                {% endif %}
+                            {% endif %}
+
+                        </td>
+                        <td class="text-left">{{ item.status|transaction_status }}</td>
+                        <td class="text-left">{{ item.amount|stripe_money }}</td>
+                        <td class="text-left">{{ item.balance|stripe_money }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

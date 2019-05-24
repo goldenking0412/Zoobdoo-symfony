@@ -1,0 +1,71 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% block headerBannerTitle %}
+    {{ page.headerTitle|e }}
+{% endblock %}
+
+{% block pageContent %}
+    <!-- About -->
+    <div class="page-content">
+
+        <section id="about" class="about {{ page.code }}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 search-col">
+                        <form action="{{ path('fos_user_registration_register') }}" method="GET">
+                            <span class="search-title">Make Your Job Easier!</span>
+                            <input type="text" name="email" class="form-control" placeholder="Enter Email Address">
+                            <button type="submit" class="btn gradient-btn">SignUp!</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-{% if page.withSubmenu %}9{% else %}12{% endif %} text-col">
+                        <div class="text-title">
+                            {{ page.title }}
+                        </div>
+                        <div class="about-text rights-box">
+                            {{ page.content|raw }}
+                        </div>
+                    </div>
+                    {% if page.withSubmenu %}
+                        <div class="col-md-3 menu-col">
+                            <ul>
+                                {% for submenuPage in submenuPages %}
+                                    <li{% if submenuPage == page %} class="current"{% endif %}><a href="{{ path('erp_site_static_page', {'slug':submenuPage.slug}) }}"><span class="fa fa-angle-right"></span>{{ submenuPage.headerTitle }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row banner-row">
+                    <div class="col-md-12">
+                        <div class="banner homepage-banner">
+                        <span class="banner-text">Wish Your <span class="bold-text">Property Manager</span> Was On <span
+                                    class="bold-text">Zoobdoo?</span></span>
+                            <a role="popup" href="{{ path('erp_site_send_invite_to_manager') }}" class="btn btn-lg btn-rounded gradient-btn">SEND eInvite</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+    <style>
+
+        .about-text.rights-box h3 a{color:#ca171b;}
+        .about-text.rights-box p a{color:#706e7b;}
+        .rights-box p{margin-bottom:5px;}
+        .rights-box h3{margin-bottom:15px;}
+
+    </style>
+{% endblock %}
+
+
+{% block javascript_inline %}
+    <script>
+        jQuery('.about-text.rights-box a').attr('target','_blank');
+    </script>
+{% endblock %}

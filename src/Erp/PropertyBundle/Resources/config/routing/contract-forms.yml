@@ -1,0 +1,43 @@
+erp_property_contract_form:
+    path:     /{propertyId}/constructor
+    defaults: { _controller: ErpPropertyBundle:ContractForm:constructor }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_contract_form_publish:
+    path:     /{propertyId}/publish
+    defaults: { _controller: ErpPropertyBundle:ContractForm:publishForm }
+    methods: [POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_contract_form_fill:
+    path:     /{propertyId}/fill
+    defaults: { _controller: ErpPropertyBundle:ContractForm:fill }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_contract_form_charge:
+    path:     /{propertyId}/charge
+    defaults: { _controller: ErpPropertyBundle:ContractForm:charge }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_contract_update_section:
+    path:     /{propertyId}/update-section/{sectionId}
+    defaults: { _controller: ErpPropertyBundle:ContractForm:updateSection }
+    methods: [POST]
+    requirements:
+        propertyId: \d+
+        sectionId: \d+
+
+erp_property_contract_remove_section:
+    path:     /{propertyId}/remove-section/{sectionId}
+    defaults: { _controller: ErpPropertyBundle:ContractForm:removeSection }
+    methods: [GET, DELETE]
+    requirements:
+        propertyId: \d+
+        sectionId: \d+

@@ -1,0 +1,166 @@
+{% extends "ErpUserBundle:Mail:layout.html.twig" %}
+
+{% set isModal = (pdf_link is defined) %}
+
+{% block theBodyContent %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="invoice-title">
+                    <h2>
+                        {% if sender.logo and sender.logo.path %}
+                            <img src="{{ absolute_url(asset(sender.logo.path ~ '/' ~ sender.logo.name)) }}" class="img-responsive" style="width: 200px; max-width: 200px; height: auto;" />
+                        {% endif %}
+                        <!-- <img src="http://www.zoobdoo.com/assets/images/logo_Zoobdoo.png" class="img-responsive" style="width: 300px; max-width: 300px; height: auto;" /> //-->
+                    </h2>
+                    <h3 class="pull-right">
+                        Invoice # {{ charge.id }}
+                    </h3>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <address>
+                            {{ sender.getFullName() }}<br />
+                            {{ sender.getAddressOne() }}<br />
+                            {% if (sender.getAddressTwo() is not null) and (sender.getAddressTwo() != '') %}{{ sender.getAddressTwo() }}{% endif %}<br />
+                            {% if sender.getCity() is not null %}{{ sender.getCity().getName() }}, {{ sender.getCity().getStateCode() }} {{ sender.getCity().getZip() }}{% endif %}
+                        </address>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <address>
+                            {% set receiver = charge.getReceiver() %}
+                            <strong>Billed To:</strong><br />
+                            {{ receiver.getFullName() }}<br />
+                            {{ receiver.getAddressOne() }}<br />
+                            {% if (receiver.getAddressTwo() is not null) and (receiver.getAddressTwo() != '') %}{{ receiver.getAddressTwo() }}{% endif %}<br />
+                            {% if receiver.getCity() is not null %}{{ receiver.getCity().getName() }}, {{ receiver.getCity().getStateCode() }} {{ receiver.getCity().getZip() }}{% endif %}
+                        </address>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-right: 10px; margin-left: auto;">
+                        <table class="pull-right table-invoice-date">
+                            <tr>
+                                <td class="text-left"><strong>Order Date:</strong></td>
+                                <td class="text-right">{{ charge.getCreatedAt()|date('M d, Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><strong>Due Date:</strong></td>
+                                <td class="text-right">{{ charge.getCreatedAt()|date('M d, Y') }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Invoice summary</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <td><strong>Description</strong></td>
+                                        <td class="text-center"><strong>Amount</strong></td>
+                                        <td class="text-right"><strong>Sub-total</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ charge.getDescription() }}</td>
+                                        <td class="text-center">{{ charge.getAmount()|stripe_money(false) }}</td>
+                                        <td class="text-right">{{ charge.getAmount()|stripe_money(false) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line text-right"><strong>Subtotal</strong></td>
+                                        <td class="thick-line text-right">{{ charge.getAmount()|stripe_money(false) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-right"><strong>Total</strong></td>
+                                        <td class="no-line text-right">{{ charge.getAmount()|stripe_money(false) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-xs-12">
+                <address>
+                    <strong>Payment Method:</strong><br />
+                    Please follow <a style="color: #00f;" href="{{ url('erp_user_landlords_choose_charge_type', {'token': charge.id}) }}" target="_blank">this link</a>
+                    to pay: <a style="color: #00f;" href="{{ url('erp_user_landlords_choose_charge_type', {'token': charge.id}) }}" target="_blank">{{ url('erp_user_landlords_choose_charge_type', {'token': charge.id}) }}</a><br />
+                </address>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <address>
+                    <strong>Terms and Conditions:</strong><br />
+                    Balance Due Net 30 days<br /><br />
+                </address>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block theBody %}
+    {% set sender = charge.getManager() %}
+    {% if isModal %}
+        {{ block('theBodyContent') }}
+        <div class="popup-content">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a class="btn-solid" href="{{ path('erp_user_accounting_show_invoice', {'invoiceId': charge.id, '_format': 'pdf'}) }}">Save as PDF</a>
+                    <button type="button" class="btn-solid btn-solid-noborder" onclick="$.fancybox.close()">Close</button>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {{ block('theBodyContent') }}
+    {% endif %}
+{% endblock %}
+
+{% block header %}
+    {% if not isModal %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block bodyTagStart %}
+    {% if not isModal %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block container %}
+    {{ block('theBody') }}
+{% endblock %}
+
+{% block footer %}
+    {% if not isModal %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block htmlEnd %}
+    {% if not isModal %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

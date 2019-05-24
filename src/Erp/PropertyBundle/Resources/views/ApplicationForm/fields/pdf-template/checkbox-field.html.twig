@@ -1,0 +1,3 @@
+<div class="field">
+    <b>{{ field.name }}</b>: {% if formData[field.type ~ '_' ~ field.id] is defined %}{{ 'yes' }}{% else %}{{ 'no' }}{% endif %}
+</div>

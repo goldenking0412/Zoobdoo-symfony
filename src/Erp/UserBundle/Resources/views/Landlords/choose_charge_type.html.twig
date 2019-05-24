@@ -1,0 +1,69 @@
+{% extends '::base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% block headerBannerTitle %}
+    Confirm Charge
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+    <section id="managers-profile" class="profile">
+        <div class="container-fluid">
+            <div class="row">
+                {% if charge.isPaid %}
+                    <div class="title-block">
+                        <h1 class="bold-text">Paid</h1>
+                        {% if (charge.transaction) %}
+                            <p>Chosen link for charge payment was already paid in {{ charge.transaction.created|date('M d, Y') }} at {{ charge.transaction.created|date('h:i:s') }}.</p>
+                        {% else %}
+                            <p>Chosen link for charge payment was already paid.</p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="title-block">
+                        {% if charge.isRecurring %}
+                            <h1 class="bold-text">
+                                Recurring charge
+                            </h1>
+                            <p class="bold-text">Monthly repeatable</p>
+                        {% else %}
+                            <h1 class="bold-text">
+                                Charge
+                            </h1>
+                            <p class="bold-text">Single payment</p>
+                        {% endif %}
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-md-push-3 col-md-pull-3">
+                                <table class="table">
+                                    <tr>
+                                        <td class="text-right">From:<br/></td>
+                                        <td class="text-left bold-text">{{ charge.receiver.fullName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">To:</td>
+                                        <td class="text-left bold-text">{{ charge.manager.fullName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Amount:</td>
+                                        <td class="text-left bold-text">{{ charge.amount|money }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Description:</td>
+                                        <td class="text-left bold-text"><em>{{ charge.description }}</em></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="confirm-align_btn">
+                        <a class="btn edit-btn" href="{{ path('erp_user_landlords_confirm_charge', {'type': 'cc', 'token': token}) }}">Credit Card</a>
+                        <a class="btn edit-btn" href="{{ path('erp_user_landlords_confirm_charge', {'type': 'ba', 'token': token}) }}">Bank Account</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

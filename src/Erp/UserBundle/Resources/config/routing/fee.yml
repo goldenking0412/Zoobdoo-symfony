@@ -1,0 +1,27 @@
+erp_user_fee_update:
+    path:     /update/{user}
+    defaults: { _controller: ErpUserBundle:Fee:update }
+    methods: [GET, POST]
+    requirements:
+        user: \d+
+
+erp_user_fee_create:
+     path:     /reate/{user}
+     defaults: { _controller: ErpUserBundle:Fee:create }
+     methods: [GET, POST]
+     requirements:
+        user: \d+
+
+erp_user_fee_remove:
+     path:     /remove/{id}
+     defaults: { _controller: ErpUserBundle:Fee:remove }
+     methods: [GET, DELETE]
+     requirements:
+        id: \d+
+
+erp_user_fee_remove_user:
+     path:     /user/remove/{id}
+     defaults: { _controller: ErpUserBundle:Fee:removeUser }
+     methods: [GET, DELETE]
+     requirements:
+        id: \d+

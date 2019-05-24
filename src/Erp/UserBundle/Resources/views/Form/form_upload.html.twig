@@ -1,0 +1,18 @@
+{% block file_widget %}
+    {% spaceless %}
+        <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+        {% set type = type|default('file') %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} />
+        </div>
+    {% endspaceless %}
+{% endblock file_widget %}
+
+
+{% block text_widget %}
+    {% spaceless %}
+        <div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
+            <input type="text" {{ block('widget_attributes') }} />
+        </div>
+    {% endspaceless %}
+{% endblock text_widget %}
+

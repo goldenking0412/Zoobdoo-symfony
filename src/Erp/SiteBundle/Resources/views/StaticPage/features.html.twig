@@ -1,0 +1,375 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% set metaTitle = 'Features | Zoobdoo' %}
+{% set metaDescription = 'Zoobdoo is where proparty managers and tenants connect. Manage all of your properties, post vacant spaces, and receive rent payments online. Sign up today!' %}
+{% set tab = app.request.query.get('tab') %}
+
+{% block pageContent %}
+    <section class="top-block style">
+        <div class="container">
+            <h1>Features</h1>
+            <h2>Zoobdoo streamline’s your complete property management process, so you can spend more time doing the things you love.</h2>
+        </div>
+        <ul class="tabset style">
+            <li>
+                <a href="#tab1-0"{% if tab == 'tab1-0' %} class="active"{% endif %}>
+                    <span class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon1-1.png')}}" alt="image description" class="normal">
+                        <img src="{{ asset('assets/images/erpSite/icon1-active.png')}}" alt="image description" class="active">
+                    </span>
+                    <span class="text">Landlord</span>
+                </a>
+            </li>
+            <li>
+                <a href="#tab2-0"{% if tab == 'tab2-0' %} class="active"{% endif %}>
+                    <span class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon2-1.png')}}" alt="image description" class="normal">
+                        <img src="{{ asset('assets/images/erpSite/icon2-1-active.png')}}" alt="image description" class="active">
+                    </span>
+                    <span class="text">Manager</span>
+                </a>
+            </li>
+            <li>
+                <a href="#tab3-0"{% if tab == 'tab3-0' %} class="active"{% endif %}>
+                    <span class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon3-1.png')}}" alt="image description" class="normal">
+                        <img src="{{ asset('assets/images/erpSite/icon3-1-active.png')}}" alt="image description" class="active">
+                    </span>
+                    <span class="text">Tenant</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <div class="tab-content style">
+        <div id="tab1-0"{% if tab == 'tab1-0' %} class="active"{% endif %}>
+            <div class="boxes-area">
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon4.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Accept ACH or Credit <br >Card Payments</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/recurring.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Recurring payments</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon6.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Create &amp; <br>Save Leases</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/statements.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Manager & Owner Statements</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/service.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Automated Maintenance Requests</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/listproperty.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>List Property Vacancies</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/accounting.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Accounting Tool</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/invoice.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Create and Manage Invoices</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/eviction.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Send Eviction Notices</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/trackpay.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Track Late Payments & Expenses</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/notifications.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Setup + Send Notifications & <br>Alerts by Email + Text</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/messages.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Messaging</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon6.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Create & Manage Leases, <br>Documents + E Signatures</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/onlineapps.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Setup Online Applications & Fees</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/vendor.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Vendor Management</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab2-0"{% if tab == 'tab2-0' %} class="active"{% endif %}>
+            <div class="boxes-area">
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon4.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Accept ACH or Credit <br >Card Payments</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/stoprefund.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Stop and Refund Payments</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/invoice.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Create and Manage Invoices</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/listproperty.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>List Property Vacancies</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/service.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Work Orders and Service Requests</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/vendor.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Vendor Management</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/trackpay.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Track Late Payments & Expenses</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/accounting.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Accounting Tool</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon5.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Run Credit, Eviction, <br >&amp; Criminal Reports</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/eviction.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Send Eviction Notices</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/statements.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Manager & Owner Statements</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/notifications.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Setup + Send Notifications & <br>Alerts by Email + Text</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/messages.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Messaging</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon6.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Create & Manage Leases, <br>Documents + E Signatures</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/onlineapps.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Setup Online Applications & Fees</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab3-0"{% if tab == 'tab3-0' %} class="active"{% endif %}>
+            <div class="boxes-area">
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon5.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Credit, Eviction, and Criminal Reports</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/service.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Automated Maintenance Requests</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon4.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Pay rent with ACH or Credit Card Payments</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/icon6.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Manage & E-Sign Leases</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/alerts.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Recieve Notifications <br>and Alerts</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="image-holder">
+                        <img src="{{ asset('assets/images/erpSite/messages.svg')}}" alt="image description">
+                    </div>
+                    <div class="text">
+                        <p>Messages</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-area">
+        <div class="block-manager text-center">
+            <div class="container">
+                <h3>Wish Your Property Manager Was On <a href="{{ path('erp_site_homepage') }}" class="link">Zoobdoo</a>?</h3>
+                <a href="#" data-href="#" class="btn btn-primary" data-toggle="modal" data-target="#e-invite-modal">Send eInvite!</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

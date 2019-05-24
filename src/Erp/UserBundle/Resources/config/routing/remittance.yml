@@ -1,0 +1,27 @@
+erp_user_remittances_list:
+    path: /list.{_format}
+    defaults:
+        _controller: ErpUserBundle:Remittance:list
+        _format: 'html'
+    requirements:
+        _format: 'html|pdf'
+    methods: [GET, POST]
+
+erp_user_remittances_create:
+    path: /create
+    defaults: { _controller: ErpUserBundle:Remittance:create }
+    methods: [GET, POST]
+
+erp_user_remittances_edit:
+    path: /edit/{remittanceId}
+    defaults: { _controller: ErpUserBundle:Remittance:edit }
+    methods: [GET, POST]
+    requirements:
+        remittanceId: \d+
+
+erp_user_remittances_delete:
+    path: /delete/{remittanceId}
+    defaults: { _controller: ErpUserBundle:Remittance:delete }
+    methods: [GET, DELETE]
+    requirements:
+        remittanceId: \d+

@@ -1,0 +1,59 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% set metaTitle = 'Features | Zoobdoo' %}
+{% set metaDescription = 'Zoobdoo is where proparty managers and tenants connect. Manage all of your properties, post vacant spaces, and receive rent payments online. Sign up today!' %}
+{% set tab = app.request.query.get('tab') %}
+
+{% block pageContent %}
+    <section class="top-block style">
+        <div class="container">
+            <h1>How it works</h1>
+        </div>
+    </section>
+
+    <main id="main">
+        <section class="about-area">
+            <div class="container">
+                <div class="text-holder text-center">
+                    <div class="content-row">
+                        <div>Signup and register your account</div>
+                    </div>
+
+                    <div class="content-row">
+                        <div class="fa fa-arrow-down arrow">&nbsp;</div>
+                    </div>
+
+                    <div class="content-row">
+                        <div>Enter your credit card or bank information along with any tenant(s) information and emails to begin</div>
+                    </div>
+
+                    <div class="content-row">
+                        <div class="fa fa-arrow-down arrow">&nbsp;</div>
+                    </div>
+
+                    <div class="content-row">
+                        <div>Tenant(s) will receive an email link to sign up and register their own personal Zoobdoo tenant account</div>
+                    </div>
+
+                    <div class="content-row">
+                        <div class="fa fa-arrow-down arrow">&nbsp;</div>
+                    </div>
+
+                    <div class="content-row">
+                        <div>Your Managers services are now available</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="bottom-area">
+        <div class="block-manager text-center">
+            <div class="container">
+                <h3>Wish Your Property Manager Was On <a href="{{ path('erp_site_homepage') }}" class="link">Zoobdoo</a>?</h3>
+                <a href="#" data-href="#" class="btn btn-primary" data-toggle="modal" data-target="#e-invite-modal">Send eInvite!</a>
+            </div>
+        </div>
+    </div>
+    {{ render(controller('ErpSiteBundle:Index:sendInviteToManager')) }}
+{% endblock %}

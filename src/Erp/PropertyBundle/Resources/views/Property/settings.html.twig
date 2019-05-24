@@ -1,0 +1,173 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% form_theme form _self %}
+{% form_theme autoWithdrawalForm _self %}
+
+{% block date_widget %}
+    {% set type = 'text' %}
+    {{ block('form_widget_simple') }}
+{% endblock date_widget %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1><i class="icon icon-property"></i> Property ID {{ property.id }}  &nbsp; <i class="fa fa-angle-right"></i> &nbsp; Payment Settings </h1>
+        </div>
+    </div>
+
+
+    <main id="main">
+        {% include  "ErpPropertyBundle:Listings/blocks:menu.html.twig" %}
+
+        <div class="row">
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+        </div>
+
+        <div class="form-area style">
+            <div class="container">
+                To set Property status to "Rented" please add Tenant to it on Listings page.
+            </div>
+            <br /><br />
+            <div class="container">
+                {% if property.settings.allowAutoDraft %}
+                    {% if (property.tenantUser) %}
+                        {% if property.tenantUser.isAgreeAutoWithdrawal %}
+                            {{ form_start(autoWithdrawalForm, {'action': path('erp_property_scheduled_stop_auto_withdrawal', {'user': property.tenantUser.id}) }) }}
+                            <div class="field-area">
+                                <div class="lable">
+                                    <label>
+                                        To stop auto-withdrawals please choose date and submit
+                                    </label>
+                                </div>
+                                <div class="lable">
+                                    <label for="title">
+                                        {{ form_label(autoWithdrawalForm.endAt) }}
+                                    </label>
+                                </div>
+                                <div class="field">
+                                    {{ form_widget(autoWithdrawalForm.endAt, {'attr': {'class': 'form-control date'} }) }}
+                                    {{ form_custom_errors.widget(autoWithdrawalForm.endAt) }}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 submit-row">
+                                {{ form_widget(autoWithdrawalForm.submit, {'attr': {'class': 'btn-circle'} }) }}
+                            </div>
+                            {{ form_end(autoWithdrawalForm) }}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+
+                {{ form_start(form, { attr: {'id' : 'property-edit-form', 'class': 'form'}, 'enctype': form_enctype(form)}) }}
+                {{ form_custom_errors.widget(form) }}
+
+                <div class="field-area">
+                    <div class="lable">
+                        <label for="title">
+                            {{ form_label(form.dayUntilDue) }}
+                        </label>
+                    </div>
+                    <div class="field select-container">
+                        {{ form_widget(form.dayUntilDue) }}
+                        {{ form_custom_errors.widget(form.dayUntilDue) }}
+                    </div>
+                </div>
+
+                <div class="field-area">
+                    <div class="lable">
+                        <label>
+                            {{ form_label(form.moveInDate) }}
+                        </label>
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.moveInDate) }}
+                        {{ form_custom_errors.widget(form.moveInDate) }}
+                    </div>
+                </div>
+
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.atWill) }}
+                            {{ form_widget(form.atWill) }}
+                            {{ form_custom_errors.widget(form.atWill) }}
+                        </div>
+                    </div>
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.termLease) }}
+                            {{ form_widget(form.termLease) }}
+                            {{ form_custom_errors.widget(form.termLease) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.leaseEnd) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.leaseEnd) }}
+                        {{ form_custom_errors.widget(form.leaseEnd) }}
+                    </div>
+                </div>   
+
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.paymentAmount) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.paymentAmount) }}
+                        {{ form_custom_errors.widget(form.paymentAmount) }}
+                    </div>
+                </div>
+
+                <div class="field-area two">
+                    <div class="wrap">
+                        <div class="lable">
+                            {{ form_label(form.allowPartialPayments) }}
+                            {{ form_widget(form.allowPartialPayments) }}
+                            {{ form_custom_errors.widget(form.allowPartialPayments) }}
+                        </div>
+                    </div>
+                    <div class="wrap">
+                        <div class="lable">
+                            <label>
+                                {{ form_label(form.allowCreditCardPayments) }}
+                                {{ form_widget(form.allowCreditCardPayments) }}
+                                {{ form_custom_errors.widget(form.allowCreditCardPayments) }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {% set agreeAutoWithdrawalText = null %}
+                {% if property.settings.allowAutoDraft %}
+                    {% if (property.tenantUser) %}
+                        {% if property.tenantUser.isAgreeAutoWithdrawal %}
+                            {% set agreeAutoWithdrawalText = 'Agree the auto-withdrawal' %}
+                        {% else %}
+                            {% set agreeAutoWithdrawalText = 'Disagree the auto-withdrawal' %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.allowAutoDraft) }}
+                        {{ form_widget(form.allowAutoDraft) }}
+                        {{ form_custom_errors.widget(form.allowAutoDraft) }}
+                    </div>
+                </div>
+                <div class="btn-holder">
+                    <input type="submit" value="Save" class="btn-circle">
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}

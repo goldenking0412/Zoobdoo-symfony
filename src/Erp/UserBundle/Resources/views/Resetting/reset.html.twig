@@ -1,0 +1,63 @@
+{% extends '::base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% block pageContent %}
+    {% block fos_user_content %}
+        {% trans_default_domain 'FOSUserBundle' %}
+
+        <div class="page-content">
+            <section id="login-form-managers" class="login-form reset-form">
+                <div class="container">
+                    <div class="row">
+                        <div class="login-block col-md-6 col-md-offset-3">
+                            <div class="row">
+                                <div class="col-md-12 reset-block">
+                                    <span class="login-block-title">Enter password:</span>
+                                </div>
+                            </div>
+                            <div class="row login-block-form reset-block">
+                                <div class="col-md-12 customer-login">
+                                    <form {{ form_enctype(form) }} action="{{ path('fos_user_resetting_reset', {'token': token}) }}" method="POST" class="form-horizontal">
+
+                                        <div class="form-group row">
+                                            <div class="col-xs-12">
+                                                {{ form_label(form.plainPassword.first, 'Password', {'label_attr': {'class': 'control-label required-label required'}}) }}
+                                                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_custom_errors.widget(form.plainPassword.first) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-xs-12">
+                                                {{ form_label(form.plainPassword.second, 'Repeat Password', {'label_attr': {'class': 'control-label required-label required'}}) }}
+                                                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_custom_errors.widget(form.plainPassword.second) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <div class="form-footer">
+                                                        <input class="btn-circle" type="submit" value="{{ 'Submit'|trans }}" />
+                                                        <div class="required-note"> * Required Fields</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hide">
+                                            {{ form_end(form) }}
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    {% endblock fos_user_content %}
+
+{% endblock %}

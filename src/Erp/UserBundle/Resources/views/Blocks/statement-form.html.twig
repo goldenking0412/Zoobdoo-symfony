@@ -1,0 +1,62 @@
+<div class="filter-area">    
+    <div class="container">
+        <div>
+            <form method="get" action="{{ path('erp_user_accounting_statement') }}" id="form-statement" name="erp_form_statement" role="form">
+                <div class="filter-options">
+                    <span class="lable">Show Statement for</span>
+                    <ul class="select-options">
+                        <li>
+                            <span class="fake-select">
+                                <select name="erp_form_statement_year" id="form-statement-year">
+                                    {% for i in range('now'|date('Y'), user.getCreatedDate|date('Y')) %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="fake-select">
+                                <select name="erp_form_statement_month" id="form-statement-month">
+                                    <option value="0">(Select a month)</option>
+                                    {% for i in range(1, 12) %}
+                                        <option value="{{ i }}">{{ mktime(0, 0, 0, i, 1)|date('F') }}</option>
+                                    {% endfor %}
+                                </select>
+                            </span>
+                        </li>
+                        {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+                            <li>
+                                <span class="fake-select">
+                                    <select name="erp_form_statement_landlord" id="form-statement-landlord">
+                                        <option value="0">(Select a landlord)</option>
+                                        {% for item in user.getLandlords() %}
+                                            <option value="{{ item.getId() }}">{{ item.__toString() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </span>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <span>
+                                <button class="btn-statement" type="submit">Show</button>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <button class="btn-statement" type="reset">Reset</button>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="alert alert-danger alert-dismissible hidden" role="alert" id="form-statement-error">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:
+            - ROLE_SONATA_ADMIN
+            - ROLE_SONATA_PAGE_ADMIN_ADMINISTRATORS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_ADMINISTRATORS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_ADMINISTRATORS_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_ADMINISTRATORS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_ADMINISTRATORS_EXPORT
+            - ROLE_SONATA_PAGE_ADMIN_MANAGERS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_MANAGERS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_MANAGERS_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_MANAGERS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_MANAGERS_DELETE
+            - ROLE_SONATA_PAGE_ADMIN_MANAGERS_EXPORT
+            - ROLE_SONATA_PAGE_ADMIN_MANAGERS_SHOW
+            - ROLE_SONATA_PAGE_ADMIN_LANDLORDS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_LANDLORDS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_LANDLORDS_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_LANDLORDS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_LANDLORDS_DELETE
+            - ROLE_SONATA_PAGE_ADMIN_LANDLORDS_EXPORT
+            - ROLE_SONATA_PAGE_ADMIN_LANDLORDS_SHOW
+            - ROLE_SONATA_PAGE_ADMIN_TENANTS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_TENANTS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_TENANTS_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_TENANTS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_TENANTS_DELETE
+            - ROLE_SONATA_PAGE_ADMIN_TENANTS_EXPORT
+            - ROLE_SONATA_PAGE_ADMIN_TENANTS_SHOW
+            - ROLE_SONATA_PAGE_ADMIN_INVITE_TENANT_LIST
+            - ROLE_SONATA_PAGE_ADMIN_INVITE_TENANT_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_INVITE_TENANT_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_INVITE_TENANT_DELETE
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTIES_LIST
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTIES_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTIES_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTIES_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTIES_DELETE
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTIES_EXPORT
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTIES_SHOW
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTY_REPOST_REQUESTS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTY_REPOST_REQUESTS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTY_REPOST_REQUESTS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_PROPERTY_REPOST_REQUESTS_DELETE
+            - ROLE_SONATA_PAGE_ADMIN_APPLICATION_FORMS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_FEES_LIST
+            - ROLE_SONATA_PAGE_ADMIN_FEES_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_FEES_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_EMAIL_NOTIFICATIONS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_EMAIL_NOTIFICATIONS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_EMAIL_NOTIFICATIONS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_UNIT_SETTINGS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_UNIT_SETTINGS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_UNIT_SETTINGS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_PROCONSULTANTS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_PROCONSULTANTS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_PROCONSULTANTS_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_PROCONSULTANTS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_PROREQUESTS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_PROREQUESTS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_PROREQUESTS_CREATE
+            - ROLE_SONATA_PAGE_ADMIN_PROREQUESTS_EDIT
+            - ROLE_SONATA_PAGE_ADMIN_PROREPORTS_LIST
+            - ROLE_SONATA_PAGE_ADMIN_PROREPORTS_VIEW
+            - ROLE_SONATA_PAGE_ADMIN_EVICTION_LIST
+            - ROLE_SONATA_PAGE_ADMIN_EVICTION_EDIT
+        ROLE_MANAGER:     ROLE_TENANT
+        ROLE_LANDLORD:    ROLE_MANAGER
+        ROLE_ADMIN:       ROLE_LANDLORD
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    # set access_strategy to unanimous, else you may have unexpected behaviors
+    access_decision_manager:
+        strategy: unanimous
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                always_use_default_target_path: true
+                login_path: /login
+                check_path: 'erp_check_path'
+                default_target_path: /
+                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                success_handler: authentication_handler
+                remember_me: true
+            logout:       true
+            anonymous:    true
+            remember_me:
+                key:      "%secret%"
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/payment/pay-rent, role: ROLE_TENANT }
+        - { path: ^/profile/.*, role: ROLE_TENANT }
+        - { path: ^/properties/available, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/listings, role: ROLE_MANAGER }
+        - { path: ^/application-form/.*/complete, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/application-form/.*, role: ROLE_MANAGER }
+        - { path: ^/contract-form/.*/fill, role: [ROLE_TENANT] }
+        - { path: ^/contract-form, role: [ROLE_MANAGER] }
+        - { path: ^/smart-move/report/.*, role: ROLE_MANAGER }
+        - { path: ^/smart-move.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/.*, role: ROLE_ADMIN }
+        - { path: ^/notification/.*, role: ROLE_MANAGER }
+        - { path: ^/eviction/.*, role: ROLE_MANAGER }

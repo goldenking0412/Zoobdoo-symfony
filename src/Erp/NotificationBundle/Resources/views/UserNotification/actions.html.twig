@@ -1,0 +1,13 @@
+<div class="notification-template-nav">
+    <div class="row">
+        <ul class="nav nav-tabs">
+            {%  if app.user.getTenants %}
+                <li role="presentation" class="{{ (currentRoute == 'erp_notification_user_notification_create') ? ' active' : ''}}"><a href="{{ path('erp_notification_user_notification_create') }}">Create alert</a></li>
+            {% else %}
+                <li role="presentation" title="Not available till tenant is not settled." class="disabled"><a href="javascript:void(0);">Create alert</a></li>
+            {% endif %}
+            <li role="presentation" class="{{ (currentRoute == 'erp_notification_user_notification_list') ? ' active' : ''}}"><a href="{{ path('erp_notification_user_notification_list') }}">List of alerts</a></li>
+            <li role="presentation" class="{{ (currentRoute == 'erp_notification_user_notification_history') ? ' active' : ''}}"><a href="{{ path('erp_notification_user_notification_history') }}">Alerts history</a></li>
+        </ul>
+    </div>
+</div>

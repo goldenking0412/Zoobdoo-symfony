@@ -1,0 +1,70 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-documentation"></i> Your Profile</h1>
+            <a href="#" class="search visible-mobile"><i class="icon icon-search"></i></a>
+        </div>
+    </div>
+
+
+    <main id="main">
+        <div class="tabs-area">
+            <div class="container" style="justify-content:left;">
+                <ul class="tabset style fake">
+                    <li>
+                        <a href="{{ path('erp_user_details') }}" class="{{ currentRoute == 'erp_user_details' ? 'active' : '' }}">Account Details</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('erp_user_email_options') }}" class="{{ currentRoute == 'erp_user_email_options' ? 'active' : '' }}">Email Options</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('erp_user_address_details')}}"  class="{{ currentRoute == 'erp_user_address_details' ? 'active' : '' }}">Address Details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="tab-content">
+            <div class="container">
+                <div id="tab1-0">
+                    <div class="form-area style">
+                        <div class="container">
+                            {{ form_start(form, { attr: {'class': 'form email-options-form', 'novalidate': 'novalidate', 'id': 'form-messages'}, 'enctype': form_enctype(form)}) }}    
+                                <div class="field-area">
+                                    <div class="lable">
+                                        <label for="title">Primary Email:</label>
+                                        <label for="title">{{ user.email }}</label>
+                                    </div>
+                                </div>
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="title">
+                                                {{ form_label(form.secondEmail) }}
+                                                (used for notifications)
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.secondEmail) }}
+                                            {{ form_custom_errors.widget(form.secondEmail) }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="btn-holder">
+                                    {{ form_widget(form.save, {'attr': {'class': 'blue'}}) }}
+                                </div>
+                            {{ form_end(form) }}                  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

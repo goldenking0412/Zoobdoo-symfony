@@ -1,0 +1,14 @@
+erp_user_profile_forum_index:
+    path: /forum
+    defaults: { _controller: ErpUserBundle:Forum:index }
+    methods: [GET, POST]
+
+erp_user_profile_forum_topic:
+    path: /forum/{topicId}
+    defaults: { _controller: ErpUserBundle:Forum:topic }
+    methods: [GET, POST]
+
+erp_user_profile_forum_create_comment:
+    path: /forum/{topicId}/create-comment
+    defaults: { _controller: ErpUserBundle:Forum:createComment }
+    methods: [POST]

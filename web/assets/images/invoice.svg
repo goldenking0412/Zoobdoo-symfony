@@ -1,0 +1,20 @@
+<svg id="invoice" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 30.748 34.764">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ee1621"/>
+      <stop offset="1" stop-color="#ff9300"/>
+    </linearGradient>
+  </defs>
+  <path id="Path_121" data-name="Path 121" class="cls-1" d="M6.976,10.167a1.415,1.415,0,0,0,.633.315v.685h1.44v-.685a1,1,0,0,0,.576-.316,1.434,1.434,0,0,0,.632-1.157A1.458,1.458,0,0,0,9.68,7.851,1.946,1.946,0,0,0,8.3,7.43a.516.516,0,0,1-.346-.105q-.173-.079-.173-.158c0-.053,0-.105.115-.158a.649.649,0,0,1,.749,0l.173.158V7.43h1.439V7.167a1.458,1.458,0,0,0-.574-1.16,1.414,1.414,0,0,0-.634-.316V4.9H7.609v.737a1.569,1.569,0,0,0-.576.316A1.434,1.434,0,0,0,6.4,7.112a1.458,1.458,0,0,0,.576,1.159,1.946,1.946,0,0,0,1.382.421A.516.516,0,0,1,8.7,8.8l.173.158c0,.053,0,.105-.173.158a.548.548,0,0,1-.4.158.871.871,0,0,1-.346-.105l-.173-.158V8.745H6.4V9.01A1.458,1.458,0,0,0,6.976,10.167Z" transform="translate(-2.715 -2.319)"/>
+  <path id="Path_122" data-name="Path 122" class="cls-1" d="M25.508,0H0V34.764H30.748V4.793Zm.4,4.372V2.212L28.27,4.372Zm3.4,1.37V33.447H1.44V1.317H24.471V5.741Z"/>
+  <rect id="Rectangle_69" data-name="Rectangle 69" class="cls-1" width="9.097" height="1.317" transform="translate(9.443 4.003)"/>
+  <rect id="Rectangle_70" data-name="Rectangle 70" class="cls-1" width="14.28" height="1.317" transform="translate(9.443 6.795)"/>
+  <rect id="Rectangle_71" data-name="Rectangle 71" class="cls-1" width="24.874" height="1.317" transform="translate(2.936 10.85)"/>
+  <rect id="Rectangle_72" data-name="Rectangle 72" class="cls-1" width="17.85" height="1.317" transform="translate(2.936 13.695)"/>
+  <path id="Path_123" data-name="Path 123" class="cls-1" d="M22.941,33.053H4.4V48.012H30.2V33H22.941ZM5.84,36.425V34.317H17.125v2.108Zm0,3.425V37.741H17.125v2.107Zm0,3.425V41.164H17.125v2.107Zm0,3.425V44.588H17.125v2.107ZM18.507,36.425V34.317h4.376v2.108Zm4.434,4.739v2.107H18.565V41.164Zm0,3.425V46.7H18.565V44.588Zm-4.376-4.742V37.741h4.376v2.107Zm5.815-3.422V34.317h4.376v2.108Zm0,3.425V37.741h4.376v2.107Zm0,3.425V41.164h4.376v2.107Zm0,3.425V44.588h4.376v2.107Z" transform="translate(-1.866 -15.618)"/>
+</svg>

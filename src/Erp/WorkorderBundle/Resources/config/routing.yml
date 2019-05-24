@@ -1,0 +1,27 @@
+erp_workorder_index:
+    path:     /workorder
+    defaults:
+        _controller: ErpWorkorderBundle:Workorder:index
+    methods: [GET]
+
+erp_workorder_show_workorder:
+    path:     /workorder/ledger.{_format}
+    defaults:
+        _controller: ErpWorkorderBundle:Workorder:showWorkoder
+        _format: 'html'
+    requirements:
+        _format: 'html|pdf'
+    methods: [GET, POST]
+
+erp_workorder_create:
+    path:     /workorder/create
+    defaults: { _controller: ErpWorkorderBundle:Workorder:create }
+    methods: [GET, POST]
+
+erp_workorder_update:
+    path:     /workorder/{workorderId}/update
+    defaults: { _controller: ErpWorkorderBundle:Workorder:update }
+    methods: [GET, POST]
+
+
+

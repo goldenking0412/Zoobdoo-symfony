@@ -1,0 +1,100 @@
+{% if xhr %}                
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/wizard.js') }}"></script>
+{% endif %}
+
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+<div class="form-area style">
+    <div class="container">
+        {{ form_start(form, { attr: {'id' : 'manager-form', 'class': 'form'} }) }}
+        <div class="errors">
+            {{ form_custom_errors.widget(form) }}
+        </div>
+        {% if xhr %}
+            <input type="hidden" value="1" name="xhr" />  
+        {% endif %}
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    Select an already existing Manager from the dropdown list below
+                </div>
+                <div class="field">
+                    <select name="filter_all_landlords" id="filter-all-landlords">
+                        <option></option>
+                        {% for item in allManagers %}
+                            {%
+                                set value = 'firstName=' ~ item.firstName ~ '&' ~
+                                        'lastName=' ~ item.lastName ~ '&' ~
+                                        'email=' ~ item.email ~ '&' ~
+                                        'phone=' ~ item.phone ~ '&' ~
+                                        'addressOne=' ~ item.addressOne
+                            %}
+                            <option value="{{ value }}">{{ item.__toString() }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <p>Or fill directly the below fields to invite a new Landlord</p>
+        <div class="field-area two">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.firstName) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.firstName) }}
+                </div>
+                {{ form_custom_errors.widget(form.firstName) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.lastName) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.lastName) }}
+                </div>
+                {{ form_custom_errors.widget(form.lastName) }}
+            </div>
+        </div> 
+
+        <div class="field-area three">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.email) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.email) }}
+                </div>
+                {{ form_custom_errors.widget(form.email) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.phone) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.phone) }}
+                </div>
+                {{ form_custom_errors.widget(form.phone) }}
+            </div>
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.addressOne) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.addressOne) }}
+                </div>
+                {{ form_custom_errors.widget(form.addressOne) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="reset" class="btn-circle" id="landlord-btn-reset">Reset</button>
+            </div>
+            <div class="col-md-6">
+                <button id="manager-btn" type="submit" class="btn-circle">{{buttonLabel}}</button>
+            </div>
+        </div>
+        <div class="hide">{{ form_end(form) }}</div>
+    </div>
+</div>

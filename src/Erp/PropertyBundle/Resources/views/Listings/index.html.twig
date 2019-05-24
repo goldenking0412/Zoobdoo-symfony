@@ -1,0 +1,101 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var baseRoute = decodeURI('{{ path('erp_core_get_cities_by_state_code', {'stateCode': '{stateCode}'}) }}');
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/file-validator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/account-details.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/properties-settings.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/property-details-form.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    {% set page = pagination is defined ? pagination.currentPageNumber : 1 %}
+
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1><i class="icon icon-property"></i> Properties</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="properties-wrap">
+            <div class="search-area">
+                <div class="container">
+                    <div class="pull-left">
+                        {{ form_start(searchBarForm, {'attr': {'class': 'form-search'} }) }}
+                        {{ form_widget(searchBarForm.keyword, {'attr': {'placeholder': 'Search Properties'} }) }}
+                        <button type="submit"><i class="icon icon-search"></i></button>
+                        {{ form_end(searchBarForm) }}
+                    </div>
+                    <div class="pull-right">
+                        {% if user.stripeCustomer %}
+                            <a href="{{ path('erp_property_listings_wizard') }}" class="btn-add">
+                                <span class="img">+</span>
+                                <span class="text">Add Property</span>
+                            </a>
+                            <a href="{{ path('erp_property_unit_buy') }}" class="btn-add">
+                                <span class="img">+</span>
+                                <span class="text">Buy Units</span>
+                        {% endif %}
+                        <a href="{{ path('erp_notification_user_notification_list') }}" class="btn-add">
+                            <span class="img">+</span>
+                            <span class="text">Add Alert</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {% if not user.stripeCustomer %}
+                <div class="alert">
+                    <div class="container">
+                        <div class="text-holder">
+                            <div class="image"><img src="{{ asset('assets/images/alert.svg') }}" alt="alert"></div>
+                            <strong class="text" style="font-size: 25px">
+                                To add properties you must first verify your bank account on the dashboard.
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="properties-block">
+                <div class="container">
+                    <h1 class="visible-mobile">Properties</h1>
+                    <div class="wrap">
+                        {% if pagination |length %}
+                            {% for property in pagination %}
+                                {% if loop.first %}
+                                    <div class="row">
+                                {% endif %}
+                                {% include 'ErpPropertyBundle:Listings/blocks:property-listing.html.twig' %}
+                                {% if loop.index % 3 == 0 %}
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                {% endif %}
+                                {% if loop.last %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            {{ knp_pagination_render(pagination) }}
+                        {% else %}
+                            <p class="text-center">
+                                You have no Properties yet.
+                                {% if not user.isReadOnlyUser() and not user.isPropertyCounterFree %} 
+                                    Number of available Properties that can be created: {{ user.propertyCounter }}. Fee for every additional Property: ${{ propertyFee }}.
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

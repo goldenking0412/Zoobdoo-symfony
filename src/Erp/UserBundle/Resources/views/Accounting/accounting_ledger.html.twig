@@ -1,0 +1,101 @@
+{% form_theme form _self %}
+
+{% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) or user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_LANDLORD')) %}
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+    
+    {{ form_start(form) }}
+    <input type="hidden" name="t" value="tab1-0">
+    <input type="hidden" name="f" value="ledger">
+    <div class="form-group form-accounting">
+        <div class="col-xs-12 col-md-7">
+            {{ form_label(form.keyword) }}
+            {{ form_widget(form.keyword, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.dateFrom) }}
+            {{ form_widget(form.dateFrom, {'attr': {'class': 'form-control date'}}) }}
+        </div>
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.dateTo) }}
+            {{ form_widget(form.dateTo, {'attr': {'class': 'form-control date'}}) }}
+        </div>
+        <div class="col-xs-12 col-md-1">
+            <label for="filter">&nbsp;</label><br/>
+            <button id="filter" class="btn-solid btn-filter-find" type="submit">Find</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Transaction</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Income</th>
+                <th>Balance</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if (pagination|length) %}
+                {% for item in pagination %}
+                    <tr>
+                        <td data-title="Date">
+                            {{ item.created|date('M d, Y') }}<br/>
+                            {{ item.created|date('h:i:s') }}
+                        </td>
+                        <td data-title="Transaction">
+                            {{ item.customer ? item.customer.user.fullName : '' }}<br/>
+                            {{ item.paymentMethodDescription }}
+                        </td>
+                        <td data-title ="Type">{{ item.internalType|internal_type }}</td>
+                        <td data-title="Description">
+                            {% if item.metadata is defined  %}
+                                {% if item.metadata.description is defined %}
+                                    <em>{{ item.metadata.description }}</em><br/>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td data-title="Status">{{ item.status|transaction_status }}</td>
+                        <td data-title="Income">
+                            {{ item.amount|stripe_money }}
+                        </td>
+                        <td data-title="Balance">{{ item.balance|stripe_money }}</td>
+                        <td>
+                            {% if item.internalType != 'refund' %}
+                                {% if item.refunded == 0 %}
+                                    <a href="{{ path('erp_stripe_transaction_confirm', {'transactionId': item.id}) }}" class="refund-btn ref-btn lightbox-ajax">Refund</a>
+                                {% else %}
+                                    <a href="#" class="refund-btn refunded-btn disabled">Refunded</a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">No matches.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% if (pagination|length) %}
+        {{ knp_pagination_render(pagination) }}
+    {% endif %}
+
+    <ul class="btns-list">
+        <li>
+            <a href="{{ pdf_link }}" class="btn-add red"><span class="img"></span> Export as PDF</a>
+        </li>
+
+        {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+            <li>
+                <a href="{{ path('erp_user_landlords_list') }}" class="btn-add green lightbox-ajax"><span class="img">$</span> Pay to Landlord</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}

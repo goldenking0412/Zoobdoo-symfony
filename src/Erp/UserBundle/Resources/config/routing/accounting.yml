@@ -1,0 +1,40 @@
+erp_user_accounting_index:
+    path:     /
+    defaults:
+        _controller: ErpUserBundle:Accounting:index
+    methods: [GET]
+
+erp_user_accounting_show_accounting_ledger:
+    path:     /accounting-ledger.{_format}
+    defaults:
+        _controller: ErpUserBundle:Accounting:showAccountingLedger
+        _format: 'html'
+    requirements:
+        _format: 'html|pdf'
+    methods: [GET, POST]
+
+erp_user_accounting_list_invoices:
+    path:     /invoices
+    defaults:
+        _controller: ErpUserBundle:Accounting:listInvoices
+    methods: [GET, POST]
+
+erp_user_accounting_show_invoice:
+    path:     /invoice/{invoiceId}/accounting-invoice.{_format}
+    defaults:
+        _controller: ErpUserBundle:Accounting:showAccountingInvoice
+        _format: 'html'
+    requirements:
+        _format: 'html|pdf'
+    methods: [GET, POST]
+
+erp_user_accounting_statement:
+    path:     /statement.{_format}
+    defaults:
+        _controller: ErpUserBundle:Statement:index
+        _format: 'html'
+    requirements:
+        _format: 'html|pdf'
+    methods: [GET, POST]
+    
+

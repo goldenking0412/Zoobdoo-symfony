@@ -1,0 +1,85 @@
+{% form_theme form _self %}
+
+{% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+    {{ form_start(form) }}
+    <input type="hidden" name="t" value="tab2-0">
+    <input type="hidden" name="f" value="invoices">
+    <div class="form-group form-accounting">
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.dateFrom) }}
+            {{ form_widget(form.dateFrom, {'attr': {'class': 'form-control date'}}) }}
+        </div>
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.dateTo) }}
+            {{ form_widget(form.dateTo, {'attr': {'class': 'form-control date'}}) }}
+        </div>
+        <div class="col-xs-12 col-md-1">
+            <label for="filter">&nbsp;</label><br/>
+            <button id="filter" class="btn-solid btn-filter-find" type="submit">Find</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date Created</th>
+                <th >Sent To</th>
+                <th >Description</th>
+                <th >Amount</th>
+                <th >Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if (pagination|length) %}
+                {% for item in pagination %}
+                    <tr>
+                        <td date-title="Date Created">
+                            {{ item.getCreatedAt()|date('M d, Y') }}<br/>
+                            {{ item.getCreatedAt()|date('h:i:s') }}
+                        </td>
+                        <td date-title="Sent To">
+                            {{ item.getReceiver().getEmail() }}
+                        </td>
+                        <td date-title="Description">
+                            {% if (item.description) %}
+                                <em>{{ item.getDescription() }}</em>
+                            {% endif %}
+                        </td>
+                        <td date-title="Amount">
+                            {{ item.getAmount()|stripe_money(false) }}
+                        </td>
+                        <td date-title="Status">
+                            <span class="invoice-status">{{ item.getStatus()|capitalize }}</span>
+                        </td>
+                        <td>
+                            <a class="details-btn det-btn lightbox-ajax" data-lightbox-width="800" data-lightbox-height="600" href="{{ path('erp_user_accounting_show_invoice', {'invoiceId': item.getId(), '_format': 'html'}) }}" data-toggle="modal" data-target="#modal-invoice">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No matches.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% if (pagination|length) %}
+        {{ knp_pagination_render(pagination) }}
+    {% endif %}
+
+    <ul class="btns-list">
+        <li>
+            <a href="{{ pdf_link }}" class="btn-add red"><span class="img"></span> Export as PDF</a>
+        </li>
+        <li>
+            <a href="{{ path('erp_user_landlords')}}" class="btn-add green lightbox-ajax" data-lightbox-width="1000" data-lightbox-height="800"><span class="img">$</span> Send new</a>
+        </li>
+    </ul>
+{% endif %}
+

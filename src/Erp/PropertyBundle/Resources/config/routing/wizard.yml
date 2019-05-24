@@ -1,0 +1,86 @@
+erp_property_listings_wizard_autocomplete:
+    path:     /wizard/autocomplete
+    defaults: { _controller: ErpPropertyBundle:Wizard:autocomplete }
+    methods: [GET, POST]    
+
+erp_property_listings_wizard_search:
+    path:     /wizard/search
+    defaults: { _controller: ErpPropertyBundle:Wizard:search }
+    methods: [GET, POST]    
+    
+erp_property_listings_wizard:
+    path:     /wizard
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizard, propertyId: null }
+    methods: [GET, POST]
+
+erp_property_listings_wizard_edit:
+    path:     /{propertyId}/wizard
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizard}
+    methods: [GET, POST]
+
+erp_property_listings_wizard_edit_xhr:
+    path:     /{propertyId}/wizard/xhr
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizard, xhr: true}
+    methods: [GET, POST]
+
+erp_property_listings_wizard_add:
+    path:     /wizard/add
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizard, propertyId: null }
+    methods: [GET, POST]
+
+erp_property_listings_wizard_payment_settings:
+    path:     /{propertyId}/wizard/payment-settings
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizardPaymentSettings }
+    options:
+        expose: true
+    methods: [GET, POST]    
+
+erp_property_listings_wizard_edit_images:
+    path:     /{propertyId}/wizard/edit-images
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizardEditImages }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_listings_wizard_manager:
+    path:     /{propertyId}/wizard/manager
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizardManager }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_listings_wizard_landlord:
+    path:     /{propertyId}/wizard/landlord
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizardLandlord }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+#erp_property_listings_wizard_tenant:
+#    path:     /{propertyId}/wizard/tenant
+#    defaults: { _controller: ErpPropertyBundle:Wizard:wizardTenant }
+#    methods: [GET, POST]
+#    requirements:
+#        propertyId: \d+
+
+erp_property_listings_wizard_invited_tenant:
+    path:     /{propertyId}/wizard/invitedtenant
+    defaults: { _controller: ErpPropertyBundle:Wizard:wizardInvitedTenant }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_listings_wizard_security_deposit:
+    path:     /{propertyId}/wizard/security-deposit
+    defaults: { _controller: ErpPropertyBundle:Wizard:securityDeposit }
+    methods: [GET, POST]
+    requirements:
+        propertyId: \d+
+
+erp_property_listings_wizard_remove_bank_account:
+    path:     /{propertyId}/wizard/remove/bank-account
+    defaults: { _controller: ErpPropertyBundle:Wizard:removeBankAccount }
+    methods: [GET, DELETE]
+    requirements:
+        propertyId: \d+
+

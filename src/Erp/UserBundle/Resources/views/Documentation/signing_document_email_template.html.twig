@@ -1,0 +1,79 @@
+{% extends "ErpUserBundle:Mail:layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .invoice-title h2, .invoice-title h3 {
+            display: inline-block;
+        }
+
+        .table > tbody > tr > .no-line {
+            border-top: none;
+        }
+
+        .table > thead > tr > .no-line {
+            border-bottom: none;
+        }
+
+        .table > tbody > tr > .thick-line {
+            border-top: 2px solid;
+        }
+
+        table.table-invoice-date {
+            font-size: 14px;
+            border-spacing: 5px;
+        }
+
+        table.table-invoice-date tr {
+            border-bottom: solid 1px #ddd;
+        }
+
+        table.table-invoice-date td {
+            padding: 2px;
+        }
+    </style>
+{% endblock %}
+{% block container %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="invoice-title">
+                <h2>
+                    <img src="{{ base_scheme ~ '/assets/images/logo_Zoobdoo.png' }}" class="img-responsive" style="width: 300px; max-width: 300px; height: auto;" />
+                </h2>
+                <h3 class="pull-right">
+                    A signed document is available
+                </h3>
+            </div>
+            <hr>
+            <div class="row">
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <address>
+                Dear <strong>{{ document.getToUser().getFullName() }}</strong>,
+                <br />
+                on {{ document.getCreatedDate()|date('M d, Y H:i:s') }} the manager {{ document.getFromUser().getFullNameWithEmail() }}
+                asked to sign a document through our Web portal.
+                <br />
+                Please, log in into <a href="http://www.zoobdoo.com" target="_blank" style="color: #00f;">Zoobdoo</a>, go to your private "Documentation" section and sign the document.
+                <br />
+                <br />
+            </address>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <address>
+                Thanks for your consideration,<br />
+                The team of <a href="http://www.zoobdoo.com" target="_blank" style="color: #00f;">Zoobdoo</a>
+                <br /><br />
+            </address>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+<div class="modal fade" id="e-invite-modal" tabindex="-1" role="dialog" aria-labelledby="e-invite-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <h1>Invite Your Property Manager to Join!</h1><br>
+
+            {{ form_start(form, { attr: {'class': 'form-horizontal'}, 'enctype': form_enctype(form)}) }}
+            <div class="row">
+                <div class="col-sm-6">
+                    {{ form_widget(form.managerFirstName) }}
+                    {{ form_custom_errors.widget(form.managerFirstName) }}
+                </div>
+                <div class="col-sm-6">
+                    {{ form_widget(form.managerLastName) }}
+                    {{ form_custom_errors.widget(form.managerLastName) }}
+                </div>
+            </div>
+            {{ form_widget(form.managerEmail) }}
+            {{ form_widget(form.tenantEmail) }}
+            {{ form_widget(form.message) }}
+            {{ form_widget(form.submit, {'attr': {'class': 'login loginmodal-submit'} }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

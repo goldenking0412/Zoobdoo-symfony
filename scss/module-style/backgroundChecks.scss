@@ -1,0 +1,22 @@
+.background-checks {
+    .widget-title-row {
+        margin-bottom: 30px;
+    }
+
+    .check-col {
+        margin-bottom: 10px;
+    }
+
+    .dropdown-col, input[type="text"], input[type="tel"], input[type="email"], input[type="search"], input[type="password"], input[type="url"], textarea {
+        margin-bottom: 15px;
+    }
+
+    .paid-report {
+        width: 100%;
+        font-size: 24px;
+        line-height: 28px;
+        border: 3px solid #23dd6b;
+        padding: 10px 15px;
+        border-radius: 30px;
+    }
+}

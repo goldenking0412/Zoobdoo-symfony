@@ -1,0 +1,45 @@
+{% set base_scheme = app.request.getSchemeAndHttpHost() %}
+{% set style_string = file_get_contents((kernel_root_dir ~ '/../web/assets/styles/style.min.css')) %}
+
+<!DOCTYPE html>
+{% block header %}
+    <html>
+        <head>
+            {% block stylesheets %}
+                <style>
+                    {{ style_string }}
+                </style>
+            {% endblock %}
+        </head>
+    {% endblock %}
+
+    {% block body %}
+        {% block bodyTagStart %}
+            <body>
+        {% endblock %}
+            {% block container %}
+                <section id="body" class="profile">
+                    <div class="container">
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-xs-12">
+                                <div class="invoice-title">
+                                    <h2>
+                                        <a href="{{ base_scheme }}">
+                                            <img src="{{ base_scheme ~ '/assets/images/logo_Zoobdoo.png' }}" style="width: 300px; max-width: 300px; height: auto;" />
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        {% block content %}{% endblock %}
+                    </div>
+                </section>
+            {% endblock %}
+            {% block footer %}{% include ':blocks:footer.pdf.twig' %}{% endblock %}
+        {% block bodyTagEnd %}
+            </body>
+        {% endblock %}
+    {% endblock %}
+{% block htmlEnd %}</html>{% endblock %}

@@ -1,0 +1,8 @@
+{% set options = field.data|json_decode %}
+<div class="field">
+    {% for key, name in options %}
+        <span class="radio-option{% if formData[field.type ~ '_' ~ field.id] is defined and formData[field.type ~ '_' ~ field.id] == field.type ~ '_' ~ field.id ~ '_' ~ key %} selected{% endif %}">
+            {{ name }}
+        </span>
+    {% endfor %}
+</div>

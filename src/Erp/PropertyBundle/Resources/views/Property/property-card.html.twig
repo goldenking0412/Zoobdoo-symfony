@@ -1,0 +1,56 @@
+{% if property is defined %}
+    {% set propertyImage = property.getImages()|length ? property.getImages()[0] : null %}
+    {% set imagePath = propertyImage ? propertyImage.getPath() ~ '/' ~ propertyImage.getName() : 'assets/images/homepage/shutterstock.png' %}
+    {% if isForSearch is defined %}
+        <div class="one-property-item" id="property-card-{{ property.getId() }}">
+            <div class="prop-picture">
+				<a href="{{ path('erp_property_page', {'stateCode': property.city.stateCode, 'cityName': property.city.name, 'name' : property.getName() }) }}" class="prop-name">
+                	<img src="{{ asset(imagePath) | imagine_filter('property_card_image') }}" width="260" height="245">
+				</a>
+            </div>
+
+            <div class="prop-description">
+
+                <div class="prop-info"><a href="{{ path('erp_property_page', {'stateCode': property.city.stateCode, 'cityName': property.city.name, 'name' : property.getName() }) }}" class="prop-name"> {{ property.getName() }} </a></div>
+                <div class="prop-info"><span class="prop-label">Street Address</span><span
+                class="prop-details"> {{ property.getFullAddress() }} </span></div>
+                <div class="prop-info"><span class="prop-label">City</span><span
+                class="prop-details"> {{ property.getCity() ? property.getCity().getName() : '' }} </span></div>
+                <div class="prop-info"><span class="prop-label">State</span><span
+                class="prop-details"> {{ property.getStateCode() }} </span></div>
+                <div class="prop-info"><span class="prop-label">Zip Code</span><span
+                class="prop-details"> {{ property.getZip() }} </span></div>
+                <div class="prop-info"><span class="prop-label">Price</span><span
+                class="prop-details prop-price"> {{ property.settings ? property.settings.paymentAmount|money : '' }} </span></div>
+                <div class="prop-info"><span class="prop-label">Bedrooms</span><span
+                class="prop-details"> {% if property.getOfBeds() %} {{ get_value_of_bed(property.getOfBeds()) }} Bed {% endif %} </span></div>
+                <div class="prop-info"><span class="prop-label">Bathrooms</span><span
+                class="prop-details"> {% if property.getOfBaths() %} {{ get_value_of_bath(property.getOfBaths()) }} Bath {% endif %} </span></div>
+                <div class="prop-info"><span class="prop-label">Square Footage</span><span
+                class="prop-details"> {{ property.getSquareFootage() }}+ Sq Ft </span></div>
+
+                <a role="popup" class="amenities" href="{{ path('erp_property_get_desc', {'propertyId' : property.getId()}) }}">Amenities</a>
+            </div>
+        </div>
+    {% elseif isForHome is defined %}
+        <div class="col-md-3" style="width:230px">
+            <div class="prop-picture"><a href="{{ path('erp_property_page', {'stateCode': property.city.stateCode, 'cityName': property.city.name, 'name' : property.getName() }) }}"><img src="{{ asset(imagePath) | imagine_filter('property_card_image') }}" width="260" height="245"></a></div>
+            <div class="prop-description">
+                <a href="{{ path('erp_property_page', {'stateCode': property.city.stateCode, 'cityName': property.city.name, 'name' : property.getName() }) }}" class="search-result-info property-title bold-text">{{ property.getName() }}</a>
+                <span class="prop-address search-result-info">{{ property.getFullAddress() }}</span>
+                <span class="search-result-info">{% if property.getOfBeds() %}{{ get_value_of_bed(property.getOfBeds()) }} Bed {% endif %}{% if property.getOfBaths() %}{{ get_value_of_bath(property.getOfBaths()) }} Bath {% endif %}{{ property.getSquareFootage() }}+ Sq Ft</span>
+                <span class="prop-price bold-text">{{ property.settings ? property.settings.paymentAmount|money : '' }}+ /mo</span>
+            </div>
+        </div>
+    {%  else %}
+        <div class="one-property-item" id="property-card-{{ property.getId() }}">
+            <div class="prop-picture"><a href="{{ path('erp_property_page', {'stateCode': property.city.stateCode, 'cityName': property.city.name, 'name' : property.getName() }) }}"><img src="{{ asset(imagePath) | imagine_filter('property_card_image') }}" width="260" height="245"></a></div>
+            <div class="prop-description">
+                <a class="search-result-info" href="{{ path('erp_property_page', {'stateCode': property.city.stateCode, 'cityName': property.city.name, 'name' : property.getName() }) }}"> {{ property.getName() }} </a>
+                <span class="prop-address search-result-info">{{ property.getFullAddress() }}</span>
+                <span class="prop-details search-result-info">{% if property.getOfBeds() %}{{ get_value_of_bed(property.getOfBeds()) }} Bed {% endif %}{% if property.getOfBaths() %}{{ get_value_of_bath(property.getOfBaths()) }} Bath {% endif %}{{ property.getSquareFootage() }}+ Sq Ft</span>
+                <span class="prop-price bold-text search-result-info"> {{ property.settings ? property.settings.paymentAmount|money : '' }}+ /mo </span>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

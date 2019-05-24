@@ -1,0 +1,78 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+
+{% block pageSubContent %}
+    {{ parent() }}
+    <br>
+    <br>
+    <div class="tab-content style fake">
+        <div id="tab1-0">
+            <div class="container">
+                {% include "ErpNotificationBundle:UserNotification:actions.html.twig" %}
+                {% if alerts is not empty %}
+                    <br>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>type</th>
+                                <th>Template</th>
+                                <th>Send Message</th>
+                                <th>Template Sms</th>
+                                <th>Send Sms</th>
+                                <th>Property</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for alert in alerts %}
+                                <tr>
+                                    <td data-title="type">
+                                        {{alert.template.type}}    
+                                    </td>
+                                    <td data-title="Template">
+                                        {{alert.template.title}}
+                                    </td>
+                                    <td data-title="Send Message">
+                                        {% if alert.sendNotificationAutomatically %}
+                                            Send Notification on Rent Due Date <br/>
+                                        {% endif %}
+                                        {% for alertItem in alert.alerts %}
+                                            {{alertItem.daysAfter}} days after <br/>
+                                        {% endfor %}
+                                        {% for notificationItem in alert.notifications %}
+                                            {{notificationItem.daysBefore}} days before <br/>
+                                        {% endfor %}
+                                    </td>
+                                    <td data-title="Template Sms">
+                                        {{alert.templateSms ? alert.templateSms.title : '-'}}
+                                    </td>
+                                    <td data-title="Send Sms">
+                                        {{alert.sendSms ? 'Yes' : ''}}
+                                    </td>
+                                    <td data-title="Property">
+                                        {% for property in alert.properties %}
+                                            {{property}} <br/>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {%  if app.user.getTenants %}
+                                        <a class="btn" href="{{ path('erp_notification_user_notification_update', {'id': alert.id}) }}">
+                                            Edit
+                                        </a>
+                                        {% else %}
+                                            <a title="Not available till tenant is not settled." class="btn disabled" href="javascript:void(0)">
+                                                Edit
+                                            </a>
+                                        {%  endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <br><br>
+                        <p>No alerts found</p>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

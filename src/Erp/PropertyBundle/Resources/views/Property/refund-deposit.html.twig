@@ -1,0 +1,76 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% form_theme form _self %}
+
+{%- block date_widget -%}
+    {% set type = 'text' %}
+    {{ block('form_widget_simple') }}
+{%- endblock date_widget -%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/erpcore/js/fine-uploader/fine-uploader-new.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/available-properties.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/city.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+    <div class="page-content">
+        <section id="managers-listings-edit" class="listings profile">
+            <div class="container">
+                <div class="row">
+                    <div class="title-block">
+                        <h1 class="bold-text">Refund Deposit</h1>
+                    </div>
+                </div>
+
+                {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+                <div class="row">
+                    {{ form_start(form, { attr: {'id' : 'property-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+                        <div class="col-md-10 col-md-offset-1 listings-block">
+                            <div class="listing-block">
+                                {{ form_custom_errors.widget(form) }}
+
+                                <div class="desc-block">
+                                    <div class="listing-form form-horizontal edit-prop-form">
+                                        <div class="prop-description form-group">
+                                            <div class="prop-info">
+                                                {{ form_label(form.amount) }}
+                                                {{ form_widget(form.amount) }}
+                                                {{ form_custom_errors.widget(form.amount) }}
+                                            </div>
+                                            <div class="prop-info" style="display:none">
+                                                {{ form_label(form.startPaymentAt) }}
+                                                {{ form_widget(form.startPaymentAt) }}
+                                                {{ form_custom_errors.widget(form.startPaymentAt) }}
+                                            </div>
+                                            <div class="prop-info">
+                                                {{ form_label(form.refund) }}
+                                                {{ form_widget(form.refund) }}
+                                                {{ form_custom_errors.widget(form.refund) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 submit-row">
+                            <a class="back-dashboard listings-back" href="{{ path('erp_property_listings_all', {'page': page}) }}">Back to Listings</a>
+                            {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                        </div>
+                    <div class="hide"> {{ form_end(form) }}</div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

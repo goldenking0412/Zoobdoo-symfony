@@ -1,0 +1,5 @@
+{% if property.getAmenities()|length %}
+    {{ property.getAmenities() }}
+{% else %}
+    <div class="text-center">No information available</div>
+{% endif %}

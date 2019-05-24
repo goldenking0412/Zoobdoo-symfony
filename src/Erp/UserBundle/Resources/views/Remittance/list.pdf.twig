@@ -1,0 +1,50 @@
+{% extends "::base.pdf.twig" %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="text-center">
+            <h2>
+                Remittances: {{user.fullName }}
+            </h2>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="col-xs-2">Date</th>
+                    <th class="col-xs-2">Payee</th>
+                    <th class="col-xs-2">Type</th>
+                    <th class="col-xs-2" nowrap>Property</th>
+                    <th class="col-xs-1">Amount</th>
+                    <th class="col-xs-2">Document</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pagination %}
+                    <tr>
+                        <td class="text-left">
+                            {{ item.createdAt|date('M d, Y') }}<br/>
+                            {{ item.createdAt|date('h:i:s') }}
+                        </td>
+                        <td class="text-left">
+                            {{ item.toUser ? item.toUser.fullName : '' }}
+                        </td>
+                        <td class="text-left">
+                            {{ item.type }}
+                        </td>
+                        <td class="text-left">
+                            <a href="{{ url('erp_property_listings_wizard_edit', {'propertyId': item.property.id}) }}" style="color: #00f;">{{ item.property.__toString() }}</a>
+                        </td>
+                        <td class="text-right" style="padding-right: 20px;">
+                            {{ item.currency|upper }} {{ item.amount|stripe_money }}
+                        </td>
+                        <td class="text-left">
+                            <a href="{{ absolute_url(item.document.getWebPath()) }}" target="_blank" download="{{ absolute_url(item.document.getWebPath()) }}" class="view-btn ref-btn">Download</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

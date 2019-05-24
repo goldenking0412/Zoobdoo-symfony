@@ -1,0 +1,189 @@
+{% extends '::base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/upload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/jasny-bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/application-complete.controller.js') }}"></script>
+    <script src="https://js.stripe.com/v2"></script>
+    <script>Stripe.setPublishableKey('{{ stripe_public_key }}');</script>
+{% endblock %}
+
+{% block headerBannerTitle %}
+    Application form
+{% endblock %}
+
+{% block pageContent %}
+
+    <!-- Application Form-->
+    <section id="rental-form" class="register-form rental-form">
+        <div class="container">
+            <div class="row">
+                <div class="title-block">
+                    <h1 class="bold-text">Online Rental Application</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'msg_error' : 'message_errors', 'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error' } %}
+
+                <div class="col-md-10 col-md-offset-1">
+
+                    <form action="{{ path('erp_property_application_complete_form', {'propertyId':property.id}) }}"
+                    class="form-horizontal" method="post" enctype="multipart/form-data" name="application-form">
+                        {% if property.applicationForm is defined %}
+                            {% set applicationSections = property.applicationForm.applicationSections %}
+                            {% if applicationSections %}
+
+                                <!-- Nav tabs -->
+                                <ul id="tabs" class="nav nav-tabs" role="tablist">
+                                    {% for key, applicationSection in applicationSections %}
+                                        <li role="presentation" {% if paymentData.error.section is not defined and key == 0 %}class="active"{% endif %}>
+                                            <a href="#section_{{ key }}" aria-controls="section_{{ key }}" role="tab" data-toggle="tab">{{ key + 1 }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    {% if property.applicationForm.isNoFee == false %}
+                                        <li role="presentation" {% if paymentData.error.section is defined %}class="active"{% endif %}><a href="#section_last" aria-controls="section_last" role="tab" data-toggle="tab">{{ applicationSections|length + 1 }}</a></li>
+                                    {% endif %}
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    {% for key, applicationSection in applicationSections %}
+                                        <div role="tabpanel" class="tab-pane{% if paymentData.error.section is not defined and key == 0 %} active{% endif %}" id="section_{{ key }}">
+                                            <div class="form-group section-block">
+                                                <div class="block-title">{{ applicationSection.name }}</div>
+                                                <div class="col-xs-12 block-fields">
+                                                    {% set fields = applicationSection.applicationFields %}
+                                                    {% for field in fields %}
+                                                        {% set field_id = field.type ~ '_' ~ field.id %}
+                                                        {% include 'ErpPropertyBundle:ApplicationForm/fields/complete:' ~ field.type ~ '-field.html.twig' with {'field_id': field_id} %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center">
+                                                {% if key %}
+                                                    <a href="#" class="btn submit-popup-btn tab-prev">Previous</a>
+                                                {% else %}
+                                                    {% if isManager %}
+                                                        <a href="{{ path('erp_property_application_form', {'propertyId':property.id}) }}" class="btn submit-popup-btn">Back to constructor</a>
+                                                    {% else %}
+                                                        <a href="{{ path('erp_property_page', {'stateCode': property.city.stateCode, 'cityName': property.city.name, 'name' : property.getName() }) }}" class="btn submit-popup-btn">Back to property</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                                {% if property.applicationForm.isNoFee and loop.last %}
+                                                    <button type="submit" class="btn-circle">Submit</button>
+                                                {% else %}
+                                                    <a href="#" class="btn-circle">Next</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    {% if property.applicationForm.isNoFee == false %}
+                                        <div role="tabpanel" class="tab-pane{% if paymentData.error.section is defined %} active{% endif %}" id="section_last">
+                                            <div class="form-group section-block">
+                                                <div class="block-title">Payment info</div>
+                                                <div class="col-xs-12 block-fields">
+                                                    {{ form_start(applicationCreditCardForm) }}
+                                                        <div class="form-group">
+                                                            <div class="col-xs-4">
+                                                                {{ form_label(applicationCreditCardForm.creditCard.firstName) }}
+                                                                {{ form_widget(applicationCreditCardForm.creditCard.firstName) }}
+                                                                {{ form_custom_errors.widget(applicationCreditCardForm.creditCard.firstName) }}
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                {{ form_label(applicationCreditCardForm.creditCard.lastName) }}
+                                                                {{ form_widget(applicationCreditCardForm.creditCard.lastName) }}
+                                                                {{ form_custom_errors.widget(applicationCreditCardForm.creditCard.lastName) }}
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                {{ form_label(applicationCreditCardForm.email) }}
+                                                                {{ form_widget(applicationCreditCardForm.email) }}
+                                                                {{ form_custom_errors.widget(applicationCreditCardForm.email) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-xs-12">
+                                                                {{ form_label(applicationCreditCardForm.creditCard.number) }}
+                                                                {{ form_widget(applicationCreditCardForm.creditCard.number) }}
+                                                                {{ form_custom_errors.widget(applicationCreditCardForm.creditCard.number) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-xs-4">
+                                                                {{ form_label(applicationCreditCardForm.creditCard.expMonth) }}
+                                                                {{ form_widget(applicationCreditCardForm.creditCard.expMonth) }}
+                                                                {{ form_custom_errors.widget(applicationCreditCardForm.creditCard.expMonth) }}
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                {{ form_label(applicationCreditCardForm.creditCard.expYear) }}
+                                                                {{ form_widget(applicationCreditCardForm.creditCard.expYear) }}
+                                                                {{ form_custom_errors.widget(applicationCreditCardForm.creditCard.expYear) }}
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                {{ form_label(applicationCreditCardForm.creditCard.cvc) }}
+                                                                {{ form_widget(applicationCreditCardForm.creditCard.cvc) }}
+                                                                {{ form_custom_errors.widget(applicationCreditCardForm.creditCard.cvc) }}
+                                                            </div>
+                                                        </div>
+                                                        {{ form_widget(applicationCreditCardForm.creditCard.token) }}
+                                                    {{ form_end(applicationCreditCardForm, {'render_rest': false}) }}
+                                                </div>
+
+                                                <div class="col-xs-12 block-fields agreement-block">
+                                                    <div class="agreement-group form-group col-xs-12">
+                                                        <input type="checkbox" name="agreement" class="form-control checkbox-btn"
+                                                               id="agreement-check" required="required">
+                                                        <label class="control-label agreement-check" for="agreement-check">I authorize the
+                                                            verification of the information provided on this form as to my credit and
+                                                            employment. I have received a copy of this application.</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <a href="#" class="btn submit-popup-btn tab-prev">Previous</a>
+                                                <button type="submit" class="btn submit-popup-btn application-submit">Submit</button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript_inline %}
+    {% if property.applicationForm.isNoFee == false %}
+    <script>
+        (function ($) {
+            var form = $('[name="application-form"]');
+
+            function stripeResponseHandler(status, response) {
+                if (status < 200 || status >= 300) {
+                    return false;
+                } else {
+                    $('#{{ applicationCreditCardForm.creditCard.token.vars.id }}').val(response['id']);
+                    form.get(0).submit();
+                }
+            }
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+                Stripe.card.createToken(form, stripeResponseHandler);
+
+                return false;
+            });
+        })(jQuery);
+    </script>
+    {% endif %}
+{% endblock %}

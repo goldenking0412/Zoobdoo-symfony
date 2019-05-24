@@ -1,0 +1,6 @@
+erp_user_user_allow_rent_payment:
+    path:     /late-rent-payment/allow/{userId}
+    defaults: { _controller: ErpUserBundle:User:allowRentPayment }
+    methods: [POST]
+    requirements:
+        userId: \d+

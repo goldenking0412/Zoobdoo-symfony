@@ -1,0 +1,77 @@
+{% form_theme form 'ErpUserBundle:Form:form_horizontal.html.twig' %}
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+<div class="form-area style">
+    <div class="container">
+        {{ form_start(form, {'attr': {'class': 'form'}, 'method': 'POST', 'action': path('erp_user_landlords_charge') }) }}
+        <div class="field-area">
+            <div class="lable">
+                <label for="title">
+                    Charge {{ emailsTo|join(', ') }}
+                </label>
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                {% for item in receivers %}
+                    <input type="hidden" name="receiverId[{{ loop.index0 }}]" value="{{ item.id }}"/>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    <label for="ammount">
+                        {{ form_label(form.amount) }}
+                    </label>
+                </div>
+                <div class="field">
+                    {{ form_widget(form.amount) }}
+                </div>
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    <label for="bath">
+                        {{ form_label(form.description) }}
+                    </label>
+                </div>
+                <div class="field">
+                    {{ form_widget(form.description) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    <label>
+                        {{ form_label(form.recurring)}}   
+                    </label>
+                </div>
+                <div class="field">
+                    {{ form_widget(form.recurring)}}
+                </div>
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.recurringDayOfMonth)}}
+                </div>
+                <div class="field">
+                    <span class="fake-select">
+                        {{ form_widget(form.recurringDayOfMonth)}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-holder text-center">
+            {{ form_widget(form.button, {'attr': {'style': 'display: inline-block;'} }) }}
+        </div>
+
+    </div>
+    {{ form_end(form) }}
+</div>

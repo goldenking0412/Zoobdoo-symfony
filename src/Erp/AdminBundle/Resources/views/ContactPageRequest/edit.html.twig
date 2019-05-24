@@ -1,0 +1,17 @@
+{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
+
+{% set sonata_breadcrumb_last = 'Contact page requests' %}
+{% block sonata_breadcrumb %}
+    {% include 'ErpAdminBundle:blocks:sonata_breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+{% endblock notice %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% block navbar_title %}
+    Edit {{ admin.label }}
+{% endblock %}

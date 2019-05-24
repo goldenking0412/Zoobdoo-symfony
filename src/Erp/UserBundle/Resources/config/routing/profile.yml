@@ -1,0 +1,54 @@
+erp_user_profile_dashboard:
+    path:     /
+    defaults: { _controller: ErpUserBundle:Profile:show }
+    methods: [GET]
+
+erp_user_details:
+    path:     /details/edit
+    defaults: { _controller: ErpUserBundle:Profile:details }
+    methods: [GET, POST]
+
+erp_user_address_details:
+    path:     /address-details/edit
+    defaults: { _controller: ErpUserBundle:Profile:addressDetails }
+    methods: [GET, POST]
+
+erp_user_contact_info:
+    path:     /contact-info/edit
+    defaults: { _controller: ErpUserBundle:Profile:contactInfo }
+    methods: [GET, POST]
+
+erp_user_email_options:
+    path:     /email-options/edit
+    defaults: { _controller: ErpUserBundle:Profile:emailOptions }
+    methods: [GET, POST]
+
+erp_user_confirm_email:
+    path:     /confirm-email/{email}/{token}
+    defaults: { _controller: ErpUserBundle:Profile:confirmEmail }
+    methods: [GET]
+
+erp_user_details_delete_photo:
+    path:     /details/delete/photo
+    defaults: { _controller: ErpUserBundle:Profile:deletePhoto }
+    methods: [GET, DELETE]
+
+erp_user_details_delete_logo:
+    path:     /details/delete/logo
+    defaults: { _controller: ErpUserBundle:Profile:deleteLogo }
+    methods: [GET, DELETE]
+
+erp_user_profile_ask_pro:
+    path:     /ask-pro
+    defaults: { _controller: ErpUserBundle:Profile:askPro }
+    methods: [POST]
+
+erp_user_profile_hint_content:
+    path:     /hint/{hintCode}
+    defaults: { _controller: ErpUserBundle:Profile:hintContent }
+    methods: [GET]
+
+erp_user_profile_read_only_popup:
+    path:     /read-only
+    defaults: { _controller: ErpUserBundle:Profile:readOnlyPopup }
+    methods: [GET]

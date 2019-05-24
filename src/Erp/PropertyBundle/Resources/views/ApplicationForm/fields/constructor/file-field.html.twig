@@ -1,0 +1,8 @@
+<div class="form-fields">
+    <div class="name-group upload-doc-col form-group col-xs-12">
+        <a href="#" data-href="{{ path('erp_property_application_remove_field', {'propertyId':propertyId, 'fieldId':field.id}) }}" class="close hide-field" aria-hidden="true">&times;</a>
+        <label class="control-label">{{ field.name }}:</label>
+        <span class='upload-type'>Only JPG, PNG, GIF formats will be correctly processed!</span>
+        <input type="file" name="{{ field.type }}_{{ field.id }}" class="form-control">
+    </div>
+</div>

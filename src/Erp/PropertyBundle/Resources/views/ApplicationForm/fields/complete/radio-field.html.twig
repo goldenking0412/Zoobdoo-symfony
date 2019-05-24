@@ -1,0 +1,9 @@
+{% set options = field.data|json_decode %}
+<div class="form-group col-xs-12">
+    {% for key, name in options %}
+        <div class="col-xs-3">
+            <input type="radio" name="{{ field_id }}" value="{{ field_id }}_{{ key }}" {% if data[field_id] is defined and data[field_id] == field_id ~ '_' ~ key %}checked="checked"{% endif %} class="form-control radio-btn" id="{{ field_id }}_{{ key }}">
+            <label class="control-label" for="{{ field_id }}_{{ key }}">{{ name }}</label>
+        </div>
+    {% endfor %}
+</div>

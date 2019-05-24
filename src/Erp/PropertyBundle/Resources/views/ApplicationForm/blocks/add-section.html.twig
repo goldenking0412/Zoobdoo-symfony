@@ -1,0 +1,15 @@
+{% set form = applicationSectionForm %}
+{{ form_start(form, { attr: {'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+<div class="form-group">
+    <div class="col-xs-12">
+        <div class="form-footer constructor-footer">
+            <a href="#" class="add-section btn btn-green">+ Add Section</a>
+            {{ form_widget(form.name) }}
+            <div class="col-xs-12 add-section-controls">
+                {{ form_widget(form.submit, {'attr': {'class': 'btn-circle btn-footer btn-small-green'} }) }}
+                <a href="#" class="cancel back-dashboard btn-footer btn-small-red">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

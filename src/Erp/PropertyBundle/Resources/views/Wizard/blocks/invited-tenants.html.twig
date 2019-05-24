@@ -1,0 +1,28 @@
+<div class="form-area style">
+    <div class="container">
+        {{ form_start(form, { attr: {'id' : 'tenant-form', 'class': 'form'} }) }}
+        <div class="errors">
+            {{ form_custom_errors.widget(form) }}
+        </div>
+        {% if xhr %}
+            <input type="hidden" value="1" name="xhr" />  
+        {% endif %}
+        <div class="form-horizontal">
+            <div class="form-group">                                        
+                {# render the task's only field: description #}
+                <ul class="tags"
+                    data-prototype="{% filter escape %}{{ include('ErpPropertyBundle:Wizard/blocks:prototype_tenants.html.twig', { 'form': form.invitedUsers.vars.prototype }) }}{% endfilter %}">
+                    {# iterate over each existing tag and render its only field: name #}
+                    {% for invitedUser in form.invitedUsers %}
+                        {{ include('ErpPropertyBundle:Wizard/blocks:prototype_tenants.html.twig', {'form': invitedUser }) }}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <button id="tenant-btn" type="submit" class="btn-circle">{{buttonLabel}}</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

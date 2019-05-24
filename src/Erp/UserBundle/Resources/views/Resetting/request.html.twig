@@ -1,0 +1,24 @@
+{% block fos_user_content %}
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+                <h1>Resetting Password</h1>
+                <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="form-horizontal">
+                    <div class="form-group">
+                        {% if invalid_username is defined %}
+                            <span class="field-validation-error">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</span>
+                        {% elseif user_disabled is defined %}
+                            <span class="field-validation-error">Account is disabled. Please contact site Administrator.</span>
+                        {% else %}
+                            <label class="control-label required-label">{{ 'Email'|trans }}<span class="required">*</span></label>
+                            <input type="text" id="username" name="username" required="required" class="form-control email" />
+                        {% endif %}
+                    </div>
+                    {% if (invalid_username is not defined) and (user_disabled is not defined) %}
+                        <input class="btn-circle" type="submit" value="{{ 'Submit'|trans }}" />
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock fos_user_content %}

@@ -1,0 +1,4 @@
+erp_user_dashboard_dashboard:
+    path: /dashboard
+    defaults: { _controller: ErpUserBundle:Dashboard:dashboard }
+    methods: [GET]

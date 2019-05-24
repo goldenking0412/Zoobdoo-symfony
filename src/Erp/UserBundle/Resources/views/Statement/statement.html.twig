@@ -1,0 +1,223 @@
+{% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+<section id="statement">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                    <div class="pull-left">
+                        <h2>
+                            {% if user.logo and user.logo.path %}
+                                <img src="{{ asset(user.logo.path ~ '/' ~ user.logo.name) }}" class="img-responsive" style="width: 200px; max-width: 200px; height: auto;" />
+                            {% endif %}
+                            <!-- <img src="http://www.zoobdoo.com/assets/images/logo_Zoobdoo.png" class="img-responsive" style="width: 300px; max-width: 300px; height: auto;" /> //-->
+                        </h2>
+                        <address>
+                            {{ user.getFullName() }}<br />
+                            {{ user.getAddressOne() }}<br />
+                            {% if (user.getAddressTwo() is not null) and (user.getAddressTwo() != '') %}{{ user.getAddressTwo() }}{% endif %}<br />
+                            {% if user.getCity() is not null %}{{ user.getCity().getName() }}, {{ user.getCity().getStateCode() }} {{ user.getCity().getZip() }}{% endif %}
+                        </address>
+                    </div>
+
+                    <div  class="pull-right">
+                        <h3>
+                            Income Statement
+                        </h3>
+                        Cash Basis, {{ period }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td colspan="2">
+                                        <h3><strong>Income</strong></h3>
+                                    </td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Rent Payments
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            {{ incomes['rentPayments']|stripe_money(false) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Late Payments
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            {{ incomes['lateRentPayments']|stripe_money(false) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Security Deposits
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            {{ incomes['securityDepositsIncome']|stripe_money(false) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Invoices
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            {{ incomes['invoices']|stripe_money(false) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            <strong>Total Income</strong>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <strong>{{ totalIncome|stripe_money(false) }}</strong>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td colspan="2">
+                                        <h3><strong>Expenses</strong></h3>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Software Fee
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            {{ expenses['softwareFee']|stripe_money(false) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Security Deposit
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            {{ expenses['securityDepositsExpenses']|stripe_money(false) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>
+                                        <div align="left">
+                                            Fees and Charges
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            $0.00
+                                        </div>
+                                    </td>
+                                </tr> //-->
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Landlord Payout
+                                        </div></td>
+                                    <td>
+                                        <div align="right">
+                                            {{ expenses['softwareFee']|stripe_money(false) }}
+                                        </div></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            Tenant Screening
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            {{ expenses['tenantScreening']|stripe_money(false) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            <strong>Total Expenses</strong>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <strong>{{ totalExpenses|stripe_money(false) }}</strong>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div align="left">
+                                            <h3>
+                                                <strong>NET INCOME</strong>
+                                            </h3>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <h3>
+                                                <strong>{{ (totalIncome - totalExpenses)|stripe_money(false) }}</strong>
+                                            </h3>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% if pdfLink is defined %}
+    {% include 'ErpUserBundle:Blocks/cross:saveaspdf.html.twig' %}
+{% endif %}

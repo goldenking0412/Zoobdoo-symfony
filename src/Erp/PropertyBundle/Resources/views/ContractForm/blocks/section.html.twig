@@ -1,0 +1,18 @@
+<div class="form-group section-block app-info-block contract-form" data-attribute="{{ contractSection.id }}">
+    <div class="block-title contract-title">
+        <a role="popup"
+           href="{{ path('erp_property_contract_remove_section', {'propertyId':property.id, 'sectionId':contractSection.id}) }}"
+           class="delete-btn lightbox-ajax" data-lightbox-height="200">×</a>
+        <div class="edit-row">
+            <a href="#" class="edit-block-btn"><span class="fa fa-pencil"></span>Edit Section Content</a>
+            <a href="#"
+               data-href="{{ path('erp_property_contract_update_section', {'propertyId':property.id, 'sectionId':contractSection.id}) }}"
+               class="save-block-btn save-section-content"><span class="fa fa-floppy-o"></span>Save Section Content</a>
+        </div>
+    </div>
+    <div class="block-fields">
+        <div class="form-fields contract-edit-form section-content editor">
+            {{ contractSection.content|raw }}
+        </div>
+    </div>
+</div>

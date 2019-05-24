@@ -1,0 +1,309 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+{% set propertyImages = property.getImages()|length ? property.getImages() : null %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/erpcore/js/fine-uploader/fine-uploader-new.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block paramsToJs %}
+    <input type="hidden" name="route__erp_core_get_cities_by_state_code" value="{{ path('erp_core_get_cities_by_state_code') }}"/>
+    <input type="hidden" id="image-count" value="{{ property.getId() ? property.getImages()|length : 1 }}"/>
+    <input type="hidden" id="document-count" value="{{ property.getId() ? property.getDocuments()|length : 1 }}"/>
+    {% set carouselID = 'article-photo-carousel' %}
+    <input type="hidden" id="carousel-id" value="{{ carouselID }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/available-properties.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/city.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="breadcrumbs-area">
+        <div class="container no-flex">
+            <div class="pull-left"><a href="{{ path('erp_property_listings_all') }}" class="btn-back">< Back</a></div>
+            <div class="pull-right"><a href="#" class="btn-search"><i class="icon icon-search"></i></a></div>
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="property-info">
+            <div class="container">
+                <div class="image-holder">
+                    <div class="slick-slider1">
+                        {% if propertyImages %}
+                            {% for image in propertyImages|slice(0, 6) %}
+                                <div class="slide">
+                                    <img src="{{asset(image.getPath() ~ '/' ~ image.getName()) | imagine_filter('listing_638_359')}}" alt="image description">
+                                    <a href="{{ path('erp_property_listings_wizard_edit_images', {'propertyId': property.id}) }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                </div>     
+                            {% endfor %}
+                        {% else %}
+                            <div class="slide">
+                                <img src="https://placehold.it/678x356" alt="image description">
+                                <a href="{{ path('erp_property_listings_wizard_edit_images', {'propertyId': property.id}) }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="text-holder">
+                    <strong class="title">{{ property.getName }}</strong>
+
+                    {% set additionalClass = '' %}
+                    {% if (property.getStatus() == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_RENTED')) %}
+                        {% set additionalClass = ' red' %}
+                    {% elseif (property.getStatus() == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_DRAFT')) %}
+                        {% set additionalClass = ' yellow' %}
+                    {% endif %}
+
+                    <a href="#" data-href="#" class="btn {{ additionalClass }}">{{ property.getStatus()|capitalize }}</a>
+
+                    <address> {{ property.getAddress() }} <br /> 
+                        {{ property.getCity() ? property.getCity().getName() : '' }}, {{ property.getStateCode }}
+                        <span class="hidden-mobile"><br />{{ property.getZip() }}  
+                            <span class="img"><img src="{{ asset('assets/images/location.svg')}}" alt="location">
+                            </span>
+                        </span>
+                    </address>
+
+                    {% if property.getTenantUser() %}
+                        <span class="owner">Tenant: <span class="color">{{ property.getTenantUser().getFirstName() }} {{ property.getTenantUser().getLastName() }}</span></span>
+                    {% endif %}
+                    <ul class="btns-add-holder hidden-mobile">
+                        <li>
+                            <a href="{{ path('erp_property_listings_all') }}" class="btn-add blue">
+                                <span class="img">+</span>
+                                <span class="text">List Property</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="property-details">
+            <div class="container">
+                <div class="row-holder">
+                    <div class="col">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Property Details</span>
+                                <a href="{{ path('erp_property_listings_wizard_edit', {'propertyId': property.id}) }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide">
+                                <ul class="list-holder">
+                                    <li><span class="color">Property:</span> {{ property.getName }}</li>
+                                    <li><span class="color">Address:</span> {{ property.getAddress() }} </li>
+                                    <li><span class="color">City:</span> {{ property.getCity() ? property.getCity().getName() : '' }} </li>
+                                    <li><span class="color">State:</span> {{ property.getStateCode }}</li>
+                                    <li><span class="color">Zip:</span> {{ property.getZip }}</li>
+                                    <li><span class="color">Monthly Rent:</span> {{ property.getPrice }}</li>
+                                    <li><span class="color"># of Beds:</span> {{ property.getOfBeds }}</li>
+                                    <li><span class="color"># of Baths:</span> {{ property.getOfBaths }}</li>
+                                    <li><span class="color">Availability:</span>
+                                        {{ property.getStatus }}
+
+                                        {% if (property.status == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_DRAFT')) %}
+                                            (saved, not published)
+                                        {% elseif (property.status == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_RENTED')) %}  
+                                            (not published)
+                                        {% elseif (property.status == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_AVAILABLE')) %}
+                                            (published on the website)
+                                        {% endif %}
+                                    </li>
+                                    <li><span class="color">Square Footage:</span> {{ property.getSquareFootage }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Edit Payment Settings</span>
+                                <a href="{{ path('erp_property_listings_wizard_payment_settings', {'propertyId': property.id}) }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide">
+                                <ul class="list-holder">
+                                    <li><span class="color">Rent Due Date:</span> 
+                                        {{ property.settings ? property.settings.dayUntilDue : '' }}
+                                    </li>
+                                    <li><span class="color">Move In Date:</span> 
+                                        {{ property.settings ? property.settings.moveInDate|date('m/d/Y') : '' }}
+                                    </li>
+                                    <li>
+                                        <span class="color">At Will:</span> {{ property.settings ? property.settings.atWill ? 'Yes' : 'No' : '' }}
+                                    </li>
+                                    <li>
+                                        <span class="color">Rent Amount:</span> 
+                                        {{ property.settings ? property.settings.paymentAmount|money : '' }}
+                                    </li>
+                                    <li>
+                                        <span class="color">Restrict Partial Payments:</span>
+                                        {{ property.settings ? property.settings.allowPartialPayments ? 'Yes' : 'No' : '' }}
+                                    </li>
+                                    <li>
+                                        <span class="color">Allow Credit Card Payments:</span> 
+                                        {{ property.settings ? property.settings.allowCreditCardPayments ? 'Yes' : 'No' : '' }}
+                                    </li>
+                                    <li>
+                                        <span class="color">Set auto-draft from tenant?:</span>
+                                        {{ property.settings ? property.settings.allowAutoDraft ? 'Yes' : 'No' : '' }}
+                                    </li>
+
+                                    {% if property.securityDeposit %}
+                                        <li>
+                                            <span class="color">Security Deposit:</span>
+                                            {% if property.securityDeposit.status == 'paid' %}
+                                                <a href="{{ path('erp_property_refund_deposit', {'propertyId' : property.id}) }}" cslass="btn">
+                                                    Manage
+                                                </a>
+                                            {% elseif property.securityDeposit.status == 'refunded_total' %}
+                                                Totally refunded
+                                            {% elseif property.securityDeposit.status == 'refunded_partial' %}
+                                                Partialy refunded
+                                            {% elseif property.securityDeposit.status == 'refunded_no' %}
+                                                No Refunded
+                                            {% else %}
+                                                Not paid yet
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                                <!-- <ul class="switcher">
+                                    <li>
+                                        <input type="radio" id="rad1" name="rad" {# (property.status == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_RENTED')) ? 'checked' :'' #}>
+                                        <label for="rad">Rented</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="rad" name="rad" {# (property.status == constant('Erp\\PropertyBundle\\Entity\\Property::STATUS_AVAILABLE')) ? 'checked' :'' #}>
+                                        <label for="rad1">Vacant</label>
+                                    </li>
+                                </ul> //-->
+                            </div>
+                        </div>
+                    </div>
+
+                    {% set tenant = property.getTenantUser() %}
+                    {% if tenant %}
+                        <div class="col">
+                            <div class="open-close1 active">
+                                <header class="head">
+                                    <span class="text">Tenant</span>
+                                    <a href="#" class="opener">[<span class="icon"></span>]</a>
+                                </header>
+                            </div>
+                            <div class="slide">
+                                {% include 'ErpPropertyBundle:Listings/blocks:property-listing-tenant.html.twig' with {'user': tenant, 'property': property, 'status': tenant.status, 'editButton': false} %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% set invTenants = property.getInvitedUsers() %}
+                    {% if invTenants|length > 0 %}
+                        <div class="col">
+                            <div class="open-close1 active">
+                                <header class="head">
+                                    <span class="text">Invited Tenants</span>
+                                    <a href="#" class="opener">[<span class="icon"></span>]</a>
+                                </header>
+                                <div class="slide">
+                                    {% for item in invTenants %}
+                                        {% include 'ErpPropertyBundle:Listings/blocks:property-listing-tenant.html.twig' with {'user': item, 'property': property, 'status': 'Pending', 'editButton': true} %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="col">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Documentation</span>
+                                <a href="{{ path('erp_property_listings_edit_documents', {'propertyId': property.id}) }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide text-center">
+                                <a href="{{ path('erp_property_listings_edit_documents', {'propertyId': property.id}) }}" class="add">
+                                    <span class="img">+</span>
+                                    <span class="text">Add Document</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Alerts</span>
+                                <a href="#" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide text-center">
+                                <a href="#" class="add">
+                                    <span class="img">+</span>
+                                    <span class="text">Add Alert</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+                                        <div class="col">
+                                            <div class="open-close1 active">
+                                                <header class="head">
+                                                    <span class="text">Notes</span>
+                                                    <a href="#" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                                    <a href="#" class="opener">[<span class="icon"></span>]</a>
+                                                </header>
+                                                <div class="slide text-center">
+                                                    <a href="#" class="add">
+                                                        <span class="img">+</span>
+                                                        <span class="text">Add Note</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="col">
+                                            <div class="open-close1 active">
+                                                <header class="head">
+                                                    <span class="text">Tasks</span>
+                                                    <a href="#" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                                    <a href="#" class="opener">[<span class="icon"></span>]</a>
+                                                </header>
+                                                <div class="slide text-center">
+                                                    <a href="#" class="add">
+                                                        <span class="img">+</span>
+                                                        <span class="text">Add Task</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                    //-->
+                </div>
+                <ul class="btns-add-holder visible-mobile">
+                    <li>
+                        <a href="#" class="btn-add red">
+                            <span class="img"><i class="icon icon-close"></i></span>
+                            <span class="text">Remove</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn-add blue">
+                            <span class="img">+</span>
+                            <span class="text">List Property</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+{% endblock %}

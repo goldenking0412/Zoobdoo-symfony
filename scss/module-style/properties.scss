@@ -1,0 +1,463 @@
+/* Available Properties */
+.available-properties {
+    padding-bottom: 280px;
+    .text-block {
+        font-family: NunitoRegular;
+    }
+    .property-form {
+        margin-bottom: 15px;
+        height: 100%;
+        display: inline-block;
+        width: 100%;
+        border-bottom: 2px solid #ca171b;
+        padding: 30px 0;
+        button {
+            margin-top: 28px;
+        }
+    }
+}
+
+/* Property Details */
+.property-details {
+    .carousel-wrapper {
+        padding-left: 0;
+        .carousel-indicators {
+            height: 120px;
+        }
+        .item {
+            .big-active-img {
+                height: 440px;
+                width: 100%;
+                min-height: 440px;
+                min-width: 600px;
+            }
+        }
+    }
+    .main-details {
+        span {
+            display: block;
+            font-family: NunitoRegular;
+            margin-bottom: 10px;
+            &.property-price {
+                color: #ca171b;
+                font-size: 30px;
+                padding-bottom: 5px;
+                border-bottom: 1px solid #e3e1e1;
+            }
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 38px;
+            font-family: LatoBold;
+        }
+        .btn-colored {
+            padding: 0 12px;
+            line-height: 2;
+            font-family: NunitoBold;
+            font-size: 24px;
+        }
+    }
+    .carousel-control {
+        background-image: none;
+        height: 75%;
+        text-shadow: none;
+    }
+    .slider-counter {
+        position: absolute;
+        top: 61%;
+        left: 42%;
+        z-index: 2;
+        width: 92px;
+        height: 28px;
+        text-align: center;
+        -webkit-border-radius: 14px;
+        -moz-border-radius: 14px;
+        border-radius: 14px;
+        background-color: rgba(46,42,42,.7);
+        span {
+            color: #fff;
+            &.counter-numbers {
+                vertical-align: middle;
+                span {
+                    padding: 5px;
+                }
+            }
+        }
+    }
+    .property-accordion {
+        background-color: #fff;
+        padding: 0;
+        .panel {
+            border-color: #e3e1e1;
+            border-left: none;
+            border-right: none;
+            box-shadow: none;
+            &:nth-child(odd) {
+                border-bottom: none;
+            }
+            &:nth-child(3n) {
+                border-top: none;
+            }
+            .doc-property {
+                .panel-body {
+                    padding: 15px 0;
+                }
+                .doc-col {
+                    padding: 0;
+                    &.app-online {
+                        a {
+                            color: #ca171b;
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+                .doc-property-item {
+                    display: inline-block;
+                    min-height: 60px;
+                    width: 48%;
+                    padding: 0;
+                    border: 1px solid #e3e1e1;
+                    border-left: none;
+                    border-right: none;
+                    &:nth-child(odd){
+                        margin-right: 40px;
+                    }
+                    &:nth-child(3n),
+                        &:nth-child(4n) {
+                        border-top: none;
+                    }
+                    .sign-button {
+                        float: right;
+                        color: #ca171b;
+                        padding: 10px 15px;
+                        margin-top: 10px;
+                        font-size: 12px;
+                        text-transform: uppercase;
+                        -webkit-border-radius: 5px;
+                        -moz-border-radius: 5px;
+                        border-radius: 5px;
+                        border: 1px solid #ca171b;
+                        &:hover {
+                            -webkit-box-shadow: inset 0 0 0 1px #ca171b;
+                            -moz-box-shadow: inset 0 0 0 1px #ca171b;
+                            box-shadow: inset 0 0 0 1px #ca171b;
+                        } 
+                    }
+                    .fa-file-o {
+                        padding: 15px;
+                    }
+                    .property-doc-info {
+                        display: inline-block;
+                        vertical-align: bottom;
+                        width: 80%;
+                        .property-doc-title {
+                            display: block;
+                            font-size: 16px;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                        .property-doc-details {
+                            color: #b2b2b2;
+                            line-height: 1;
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+            a {
+                .accordion-minus {
+                    display: none;
+                }
+                .accordion-plus {
+                    display: block;
+                }
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+            .accordion-title {
+                font-size: 30px;
+                font-family: LatoBold;
+                color: #555;
+            }
+            .accordion-plus,
+            .accordion-minus {
+                float: right;
+                color: #c9c9c9;
+            } 
+            .panel-heading {
+                padding: 24px 15px;
+                &:hover {
+                    .accordion-plus, 
+                    .accordion-minus {
+                        color: #555;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Properties Search */
+.prop-description {
+    line-height: 1.5;
+    .prop-label {
+        display: inline-block;
+        vertical-align: bottom;
+        font-family: LatoBold;
+        font-size: 13px;
+        width: 178px;
+        //width: 125px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .prop-details {
+        display: inline;
+        font-size: 13px;
+    }
+    .prop-info {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
+    }
+    .prop-status {
+        margin-bottom: 20px;
+    }
+    a {
+        font-size: 13px;
+        color: #555;
+        &:active,
+            &:hover,
+            &:focus {
+            color: #555;
+        }
+    }
+    .prop-details {
+        a {
+            color: #555;
+            &:active,
+                &:hover,
+                &:focus {
+                color: #555;
+            }
+        }
+    }
+    .prop-name {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+    .search-result-info {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+#available-properties-search {
+    min-height: 1080px;
+    .property-card {
+        .prop-info {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            &:first-child {
+                margin-bottom: 5px;
+            }
+            .prop-name {
+                display: inline;
+            }
+        }
+    }
+    .property-search-col {
+        padding: 0 20px;
+    }
+    .property-filters-form {
+        width: 100%;
+        float: left;
+        height: 100%;
+        padding-right: 0;
+        .filter-item {
+            margin-bottom: 15px;
+            .control-label {
+                text-align: left;
+            }
+            .price-filter {
+                padding: 0;
+                &.price-filter1 {
+                    padding-right: 10px;
+                }
+            }
+            input,
+            .select-container {
+                font-size: 14px;
+            }
+        }
+        .property-filters-form-title {
+            h4 {
+                text-transform: uppercase;
+                color: #ca171b;
+                font-size: 16px;
+                font-family: LatoBold;
+            }
+            .selected-filter {
+                background-color: #ededed;
+                padding: 5px;
+                display: inline-block;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                margin: 5px 0 15px 0;
+                span {
+                    padding: 0 5px;
+                    color: #454141;
+                    font-size: 12px;
+                }
+                button {
+                    line-height: 1.2;
+                }
+            }
+        }
+        form {
+            label {
+                display: block;
+            }
+            .form-control, 
+            .select-container {
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                &.half-input {
+                    display: inline-block;
+                    width: 70%;
+                }
+            }
+        }
+    }
+    .text-center {
+        padding: 0;
+        .pagination {
+            display: block;
+            padding-bottom: 200px;
+            li {
+                display: inline-block;
+                vertical-align: middle;
+                line-height: 2;
+                padding: 0 5px;
+                &:hover,
+                    &:active,
+                    &:focus {
+                    color: #010101;
+                    cursor: pointer;
+                }
+                &.previous {
+                    float: left;
+                    font-size: 30px;
+                    padding: 0;
+                }
+                &.next {
+                    float: right;
+                    font-size: 30px;
+                    padding: 0;
+                }
+                span {
+                    border: none;
+                    background-color: transparent;
+                    color: #c7c7c7;
+                    line-height: 1;
+                    padding: 0 12px;
+                    &:hover,
+                        &:active,
+                        &:focus {
+                        color: #010101;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.appointment-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.appointment-request {
+    padding: 0 11px;
+    .captcha-wrap {
+        .field-validation-error {
+            position: absolute;
+            left: 28%;
+            top: 52%;
+        }
+    }
+    .form-group {
+        // margin: 0 10px 20px 0;
+        .button-wrap {
+            text-align: center;
+            .captcha-submit {
+                width: 270px;
+            }
+        }
+        .security-label {
+            display: block;
+            text-align: left;
+        }
+        .captcha-img-wrapper {
+            display: inline-block;
+            width: 315px;
+            margin: 5px 10px 20px 0;
+            img {
+                border: 1px solid #e3e1e1;
+                width: 100%;
+            }
+        }
+        .captcha-wrap {
+            border-bottom: 1px solid #e3e1e1;
+            margin-bottom: 20px;
+            .captcha-pretext-wrap {
+                display: inline-block;
+                width: 53%;
+                vertical-align: top;
+                .captcha-pretext {
+                    vertical-align: top;
+                    display: inline-block;
+                    font-family: NunitoRegular;
+                    font-size: 14px;
+                    .bold-text {
+                        font-family: NunitoBold;
+                    }
+                }
+                .captcha-input {
+                    width: 69%;
+                    margin: 10px 0;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+
+.features {
+    &.property-tab {
+        .tab-btn {
+            width: 15%;
+            font-size: 15px;
+            margin: 0 10px 45px 0;
+            &:first-child {
+                margin: 0 10px 45px 0;
+            }
+            &:last-child {
+                margin: 0 0 45px 0;
+            }
+        }
+    }
+}

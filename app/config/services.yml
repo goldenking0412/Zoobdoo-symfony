@@ -1,0 +1,30 @@
+parameters:
+    phy_cache.class: PHY\CacheBundle\Cache\Redis
+    phy_cache.settings:
+        server: %redis_host%
+        port: %redis_port%
+        password: %redis_password%
+    phy_cache.prefix: phy_
+    phy_cache.expiration: 3600
+    phy_cache.compression: 0
+
+services:
+    salavert.twig.time_ago:
+        class: Salavert\Twig\Extension\TimeAgoExtension
+        arguments: [@translator]
+        tags:
+            - { name: twig.extension }
+
+    phy_cache.client:
+        class: %phy_cache.class%
+        arguments: [ %phy_cache.settings% ]
+    phy_cache:
+        class: PHY\CacheBundle\Cache
+        arguments: [ '@phy_cache.client' ]
+        calls:
+          - [ setExpiration, [ %phy_cache.expiration% ] ]
+          - [ setCompression, [ %phy_cache.compression% ] ]
+          - [ setPrefix, [ %phy_cache.prefix% ] ]
+
+    fos_user.doctrine_registry:
+        alias: doctrine

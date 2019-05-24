@@ -1,0 +1,48 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+
+{% block pageSubContent %}
+    {{ parent() }}
+    <br />
+    <br />
+    <div class="tab-content style">
+        <div id="tab1-0">
+            <div class="container">
+                {% include "ErpNotificationBundle:Template:actions.html.twig" %}
+                {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+                {% if templates is not empty %}
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Sms</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for template in templates %}
+                                <tr>
+                                    <td data-title="Title">{{ template.title }}</td>
+                                    <td data-title="Type">{{ template.type }}</td>
+                                    <td data-title="Sms">{{ template.isSms == 1 ? 'Yes' : 'No' }}</td>
+                                    <td>
+                                        <a class="btn" href="{{ path('erp_notification_template_update', {'id': template.id}) }}">
+                                            Edit
+                                        </a>
+                                        <a class="btn red" href="{{ path('erp_notification_template_print_pdf', {'id': template.id}) }}" target="_blank">
+                                            Get PDF
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}<br />
+                    There are no templates.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+    {% include "ErpPropertyBundle:Wizard/blocks:header.html.twig" %}
+
+    <main id="main">
+        {% include "ErpPropertyBundle:Wizard/blocks:tabs.html.twig" with {'property': property, 'currentTab': ''} %}
+
+        <div class="tab-content">
+            <div class="form-area style">
+                <div class="container">
+                    <form class="form">
+                        {% if properties|length > 0 %}
+                            <div class="field-area two">
+                                <div class="wrap">
+                                    <div class="lable">
+                                        type to search your properties...
+                                    </div>
+                                    <div class="field">
+                                        <select id="simple_select" class="form-control select-control" name="simple_select">
+                                            <option></option>
+                                            {% for item in properties %}
+                                                <option value="{{ item['id'] }}">{{ item['title'] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="wrap" style="padding-top: 25px;">
+                                    <a onclick="loadPropertyEdit()" class="btn-circle" style="cursor: pointer; bottom: 0px;">Edit</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="col-xs-12 text-center">
+                            <a href="{{path('erp_property_listings_wizard')}}" class="btn-circle">New</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function loadPropertyEdit() {
+            var value = $("[name='simple_select']").val();
+            var path = decodeURIComponent('{{ path('erp_property_listings_wizard_edit', {'propertyId': '{property-id}'}) }}');
+            if (value > 0) {
+                window.location.href = path.replace('{property-id}', value);
+            }
+        }
+    </script>
+{% endblock %}
+
+

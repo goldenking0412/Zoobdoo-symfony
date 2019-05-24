@@ -1,0 +1,4 @@
+<div class="form-group col-xs-6">
+    <label class="control-label">{{ field.name }}:</label>
+    <input type="text" name="{{ field_id }}" {% if data[field_id] is defined %}value="{{ data[field_id] }}"{% endif %} class="form-control">
+</div>

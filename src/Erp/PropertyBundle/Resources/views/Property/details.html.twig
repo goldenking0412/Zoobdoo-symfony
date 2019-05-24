@@ -1,0 +1,137 @@
+{% extends '::base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/popup.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/property-details.controller.js') }}"></script>
+{% endblock %}
+
+{% block headerBannerTitle %}
+    Available Properties
+{% endblock %}
+
+{% block pageContent %}
+
+    <div class="page-content">
+        <section id="property-details" class="property-details">
+            <div class="container">
+
+				{% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+                <div class="row">
+
+                    {% include 'ErpPropertyBundle:Property:details-carousel.html.twig' %}
+
+                    <div class="col-md-5 main-details">
+                        <h2>{{ property.getName() }}</h2>
+                        <span class="property-address">{{ property.getFullAddress() }}</span>
+                        <span class="property-price">{{ property.settings ? property.settings.paymentAmount|money : '' }}</span>
+                        <span class="property-details">
+                            {% if property.getOfBeds() %}{{ get_value_of_bed(property.getOfBeds()) }} Bed,{% endif %}
+                            {% if property.getOfBaths() %}{{ get_value_of_bath(property.getOfBaths()) }} Bath,{% endif %}
+                            {{ property.getSquareFootage() }}+sq Ft</span>
+                            {% if not currentUser or currentUser.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_TENANT')) %}
+                        
+                            <a href="{{ path('erp_property_appointment_request', {'propertyId' : property.getId()}) }}"
+                            class="btn btn-colored btn-rounded gradient-btn">
+                                Request an Appointment
+                            </a>
+                         {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 panel-group property-accordion" id="property-accordion">
+
+                        <div class="panel panel-default">
+                            <a data-toggle="collapse" data-parent="#property-accordion" href="#amenities" class="accordion-top collapsed">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">
+                                        <span class="accordion-title">Amenities<span class="accordion-plus">&plus;</span>
+                                        <span class="accordion-minus">&#8722;</span></span>
+                                    </h2>
+                                </div>
+                            </a>
+
+                            <div id="amenities" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        {{ property.getAmenities() }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <a data-toggle="collapse" data-parent="#property-accordion" href="#about-property" class="accordion-top collapsed">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">
+                                        <span class="accordion-title">About Property<span class="accordion-plus">&plus;</span>
+                                        <span class="accordion-minus">&#8722;</span></span>
+                                    </h2>
+                                </div>
+                            </a>
+
+                            <div id="about-property" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <p>{{ property.getAboutProperties() }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <a data-toggle="collapse" data-parent="#property-accordion" href="#doc-property" class="accordion-top collapsed">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">
+                                        <span class="accordion-title">Online Application (Apply Now)/Contracts<span class="accordion-plus">&plus;</span>
+                                        <span class="accordion-minus">&#8722;</span></span>
+                                    </h2>
+                                </div>
+                            </a>
+
+                            <div id="doc-property" class="panel-collapse collapse doc-property">
+                                <div class="panel-body">
+
+                                    {% include 'ErpPropertyBundle:Property:details-documents.html.twig' %}
+
+                                    {% if property.applicationForm and property.applicationForm.applicationSections|length %}
+                                    <div class="app-online col-md-12 doc-col">
+                                        <a href="{{ path('erp_property_application_complete_form', {'propertyId':property.id}) }}">
+                                        Complete a Rental Application Online &#187; </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <a data-toggle="collapse" data-parent="#property-accordion" href="#details-property" class="accordion-top collapsed">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">
+                                        <span class="accordion-title">Additional Details<span class="accordion-plus">&plus;</span>
+                                        <span class="accordion-minus">&#8722;</span></span>
+                                    </h2>
+                                </div>
+                            </a>
+
+                            <div id="details-property" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <p>{{ property.getAdditionalDetails() }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

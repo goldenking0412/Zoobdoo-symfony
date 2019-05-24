@@ -1,0 +1,31 @@
+.rental-form {
+    .form-horizontal {
+        .section-block {
+            &.contract-form {
+                .block-title {
+                    text-align: left;
+                    .delete-btn {
+                        text-align: center;
+                    }
+                    .edit-row {
+                        display: inline-block;
+                        float: right;
+                        .fa {
+                            margin-right: 5px;
+                        }
+                        .edit-section-btn,
+                        .edit-block-btn  {
+                            float: none;
+                            margin: 15px;
+                        }
+                        .save-block-btn {
+                            display: none;
+                            margin: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

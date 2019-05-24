@@ -1,0 +1,22 @@
+<div class="form-area style">
+    <div class="container">
+        <div class="field-area">
+            <div class="lable">
+                <label for="title">
+                    Emails with valid charges have been sent to {{ emailsTo['success']|join(', ') }}.
+                </label>
+            </div>
+        </div>
+        <div class="field-area">
+            <div class="wrap">
+                {% if emailsTo['error']|length > 0 %}
+                    <p>
+                        Problems incurred when generating charges / sending emails with the following users:
+                        {{ emailsTo['error']|join(', ') }}. Please, try later for these users.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+        <button type="button" class="blue" data-dismiss="modal" aria-hidden="true" onclick="javascript:window.location.reload();">OK</button>
+    </div>
+</div>

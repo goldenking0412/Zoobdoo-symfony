@@ -1,0 +1,486 @@
+.listings {
+  &#managers-listings {
+    margin-bottom: 300px;
+  }
+  .property-upload {
+    h2 {
+      margin-bottom: 15px;
+    }
+    .file-upload {
+      text-align: center;
+      .red-btn {
+        float: none;
+      }
+    }
+    .file-upload-wrapper {
+      .file-upload-input {
+      }
+    }
+  }
+  &#managers-listings-edit {
+    .select2-container {
+      width: 100% !important;
+    }
+    margin-bottom: 200px;
+    .submit-row {
+      text-align: center;
+      padding: 50px 0;
+    }
+    .prop-description {
+      padding: 10px;
+      .prop-details {
+        width: 70%;
+        margin: 0 0 15px 15px;
+        display: inline-block;
+        font-size: 16px;
+        .select2-selection__rendered {
+          line-height: 2.4;
+          font-size: 16px;
+        }
+      }
+      .control-label {
+        width: 15%;
+        vertical-align: top;
+        text-align: left;
+        padding-top: 0;
+      }
+    }
+    .listings-block {
+      .listing-block {
+        .image-add-block {
+          margin: 10px 16.5px 10px;
+          width: 75px;
+          height: 65px;
+          display: inline-block;
+          background-color: #d1d1d1;
+          position: relative;
+          z-index: 16;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          float: left;
+          .image-upload {
+            display: block;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            &:hover {
+              text-decoration: none;
+            }
+            span {
+              font-size: 18px;
+              line-height: 3.5;
+              &.image-add {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                line-height: 1;
+              }
+            }
+          }
+        }
+        .carousel {
+          overflow: hidden;
+          .article-photo {
+            width: 215px;
+            float: left;
+          }
+        }
+        .carousel-indicators {
+          height: 100px;
+          li {
+            position: relative;
+            img {
+              border: 2px solid #ca171b;
+            }
+            .image-delete {
+              position: absolute;
+              right: 0;
+              top: 0;
+              z-index: 10;
+              height: 20px;
+              width: 20px;
+              color: #fff;
+              text-indent: 0;
+              line-height: 1.2;
+              font-weight: bold;
+              background-color: #9191aa;
+              &:hover {
+                text-decoration: none;
+              }
+            }
+          }
+        }
+        .doc-property-item {
+          font-size: 16px;
+          position: relative;
+          display: inline-block;
+          .doc-delete-block {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            margin: 0;
+            display: inline-block;
+            .doc-delete {
+              font-size: 19px;
+              padding: 5px 20px;
+              line-height: 1;
+              top: 0;
+            }
+          }
+        }
+        .documentation-block {
+          padding: 20px 10px;
+          border-bottom: none;
+          .edit-row {
+            padding: 20px 0 0;
+            .apply-online {
+              color: #ca171b;
+              margin-left: 50px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .text-center {
+    //.red-btn {
+    //  width: 100%;
+    //  -webkit-border-radius: 5px;
+    //  -moz-border-radius: 5px;
+    //  border-radius: 5px;
+    //  text-align: left;
+    //  margin: 20px 0;
+    //  &:hover {
+    //    color: #fff;
+    //  }
+    //}
+  }
+  .upload-doc-col {
+    .upload-help-text {
+      font-size: 14px;
+      color: #74746e;
+      line-height: 1.7;
+    }
+    label {
+      a {
+        color: #555;
+        text-decoration: underline;
+      }
+    }
+  }
+  .listings-block {
+    padding: 0;
+    margin-bottom: 50px;
+    .listing-block {
+      margin: 0 30px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      .tenant-info-block {
+        padding: 20px 10px;
+        &.add-tenant-block {
+          border-bottom: 1px solid #d7d7d7;
+        }
+        .edit-row {
+          padding-top: 10px;
+          .edit-btn {
+            color: #fb872b;
+            font-size: 16px;
+            font-family: LatoRegular;
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+      .desc-block {
+        border: 1px solid #d7d7d7;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+      .carousel {
+        margin: 0 auto;
+        width: 325px;
+      }
+      .carousel-inner {
+        width: 325px;
+        height: auto;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        div.item {
+          img {
+            min-height: 300px;
+          }
+        }
+      }
+      .carousel-control {
+        height: 280px;
+        background-image: none;
+      }
+      .carousel-indicators {
+        margin-top: 10px;
+        li {
+          margin: 0 17px 10px;
+          width: 75px;
+          height: 65px;
+          img {
+            width: 75px;
+            height: 65px;
+          }
+        }
+      }
+      .article-photo {
+        height: 82px;
+      }
+      .listing-form {
+        padding: 0 20px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #fff;
+        &.edit-prop-form {
+          padding: 0 10px;
+        }
+        .property-name {
+          display: inline-block;
+        }
+        .edit-link {
+          float: right;
+          margin-top: 20px;
+          font-size: 18px;
+        }
+        .field-validation-error {
+          top: -17px;
+          position: relative;
+          left: 140px;
+          display: block;
+          width: 100%;
+        }
+        .documentation-block {
+          padding: 20px 0;
+          .doc-col {
+            .edit-btn {
+              margin-top: 10px;
+            }
+          }
+          .doc-property-item {
+            width: 100%;
+            font-size: 14px;
+            padding: 5px 0;
+            .doc-delete {
+              font-size: 19px;
+              line-height: 1;
+              padding: 5px 20px;
+              top: -5px;
+              position: relative;
+            }
+            .fa-file-o {
+              vertical-align: top;
+            }
+            &:first-child {
+              padding-top: 10px;
+            }
+            .property-doc-info {
+              display: inline-block;
+              vertical-align: bottom;
+              width: 80%;
+              a {
+                color: #555;
+                display: inline-block;
+                padding: 0 5px;
+                width: 80%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+              .doc-delete {
+                font-size: 18px;
+              }
+              .property-doc-title {
+                display: block;
+                font-size: 16px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+              .property-doc-details {
+                color: #b2b2b2;
+                line-height: 1;
+                display: inline-block;
+                font-size: 14px;
+                vertical-align: super;
+              }
+            }
+          }
+          .property-doc-details {
+            color: #b2b2b2;
+            line-height: 1;
+            font-size: 14px;
+          }
+        }
+        .prop-description {
+          padding: 10px 0;
+          width: 100%;
+          .delete-btn {
+            color: #ca171b;
+            float: right;
+          }
+          .tenant-email {
+            color: #ca171b;
+          }
+        }
+      }
+      .edit-block {
+        background-color: #9191aa;
+        height: 40px;
+        color: #fff;
+        -webkit-border-radius: 5px 5px 0 0;
+        -moz-border-radius: 5px 5px 0 0;
+        border-radius: 5px 5px 0 0;
+        border-bottom: 1px solid #d7d7d7;
+        text-align: right;
+        position: relative;
+        a {
+          padding: 10px;
+          width: 100%;
+          display: block;
+        }
+        .pencil {
+          position: absolute;
+          height: 16px;
+          width: 16px;
+          top: 12px;
+          left: -9px;
+          background: url(../images/pencil.png) no-repeat;
+        }
+        .listings-edit {
+          display: inline-block;
+          position: relative;
+        }
+        .separate-image {
+          margin: 0 20px 0 0;
+        }
+      }
+    }
+  }
+}
+
+.listing-block {
+  .link-col {
+    margin-top: 15px;
+    .red-link {
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.prop-description {
+  .prop-label {
+    &.note-details-label {
+      vertical-align: top;
+    }
+  }
+  .prop-details {
+    &.note-details {
+      white-space: normal;
+      display: inline-block;
+      font-size: 13px;
+      max-width: 49%;
+      vertical-align: bottom;
+    }
+  }
+}
+
+.modal-body {
+  input[type=checkbox], input[type=radio] {
+    margin: 0 5px;
+    cursor: pointer;
+    line-height: 30px;
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
+  }
+  label {
+    padding: 10px 5px 5px 0;
+  }
+  .btn {
+    //border: 0;
+    //padding-left: 0;
+  }
+}
+
+#properties-table .btn.edit-btn {
+  margin-right: 20px;
+}
+
+#properties-confirmation {
+
+  li {
+    margin: 5px 0;
+  }
+}
+
+.table_info {
+
+  margin: 10px 0 30px 0;
+  div {
+    margin: 8px 0;
+  }
+}
+
+#properties-confirmation {
+  .btn.edit-btn {
+    margin-right: 20px;
+  }
+}
+
+.register-form .title-block_units {
+  max-width: 450px;
+  margin: 0 auto 30px !important;
+  border: 0;
+  padding: 0 20px;
+
+  h1 {
+    color: #ca171b;
+    font-size: 32px !important;
+  }
+}
+
+.register-form .form-horizontal .form-group_units .control-label {
+  padding: 3px 0 0;
+  color: #777;
+  font-size: 20px;
+}
+
+html body .pricing_list {
+  margin-bottom: 10px;
+
+  li {
+    margin-bottom: 10px;
+    list-style-type: decimal;
+    list-style-position: inside;
+    font-size: 14px;
+  }
+}
+
+.pricing_info {
+  width: 200px;
+
+  h2 {
+    font-size: 24px;
+    margin-top: 0;
+  }
+}
+
+.form-group_units_label {
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group_units_form {
+  float: left;
+}

@@ -1,0 +1,40 @@
+{% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+{% if items|length %}
+    <section id="form-section">
+        <form id="form-copy" method="post" action="{{ path('erp_property_application_form_copy_complete', {'propertyId': currentProperty.id}) }}" role="form">
+            <div class="form-group">
+                <h3>Use current property Application Form as template</h3>
+                <p>Name: <strong>{{ currentProperty.name }}</strong></p>
+                <p>Address: <strong>{{ currentProperty.fullAddress }}</strong></p>
+            </div>
+            <table class="table table-striped">
+                <tbody>
+                {% for property in items %}
+                    <tr>
+                        <td class="col-xs-1">
+                            <div class="checkbox">
+                                <input type="checkbox" name="property[]" id="property{{ property.id }}"
+                                       value="{{ property.id }}"/>
+                            </div>
+                        </td>
+                        <td class="col-xs-11 text-left" nowrap><label
+                                    for="property{{ property.id }}">{{ property.name }}  {{ property.fullAddress }} </label>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="container-fluid text-right">
+                <button type="submit" value="Next" class="btn-circle" role="button">Next</button>
+            </div>
+        </form>
+    </section>
+{% else %}
+    <p class="text-center">
+        You have no properties yet.
+    </p>
+{% endif %}
+
+
+

@@ -1,0 +1,11 @@
+{% extends "::base.pdf.twig" %}
+
+{% block content %}
+    {{ include('ErpUserBundle:Statement:statement.html.twig') }}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <small>Provided by <a href="https://www.zoobdoo.com" style="color: #00f;">Zoobdoo.com</a></small>
+        </div>
+    </div>
+{% endblock %}

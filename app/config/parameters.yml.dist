@@ -1,0 +1,44 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     erentpay
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       ~
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_port: ~
+    mailer_encryption: ~
+    contact_email:     info@zoobdoo.com
+
+    siteUrl: 'http://erent.loc'
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    docusign_integrator_key:
+    docusign_email: dmitry.budnitski@oxagile.com
+    docusign_password: dmitry.budnitski
+    docusign_environment: demo
+    docusign_account_id: a73c6d27-004a-4dea-8fe0-872354443292
+
+    google_analytics_id: ~
+
+    hellosign_api_key: ~
+    hellosign_app_clientid: ~
+    hellosign_app_testenv: ~
+    redis_host: ~
+    redis_port: ~
+    redis_password: ~
+    application_version: ~
+    olark_api_id: ~
+    twilio_sid: ~
+    twilio_auth_token: ~
+    twilio_number: ~

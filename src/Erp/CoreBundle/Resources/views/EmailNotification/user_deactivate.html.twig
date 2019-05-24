@@ -1,0 +1,11 @@
+{% extends 'ErpCoreBundle::EmailNotification/common.html.twig' %}
+
+{% block title %}
+    Your account has been deactivated!
+{% endblock %}
+
+{% block buttons %}
+    <a href="{{ url }}" style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; color: rgb(255, 255, 255); font-size: 18px; text-decoration: none; font-weight: bold;" target="_blank">
+        Contact Administrator (if needed)
+    </a>
+{% endblock %}

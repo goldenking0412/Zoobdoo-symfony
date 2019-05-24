@@ -1,0 +1,11 @@
+{% block captcha_widget %}
+    {% spaceless %}
+            <div class="captcha-img-wrapper">
+                <img src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}" />
+            </div>
+            <div class="captcha-pretext-wrap">
+                <label class="captcha-pretext">Enter characters below</label>
+                {{ form_widget(form) }}
+            </div>
+    {% endspaceless %}
+{% endblock %}

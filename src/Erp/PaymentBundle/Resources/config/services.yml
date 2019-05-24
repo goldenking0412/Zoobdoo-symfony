@@ -1,0 +1,108 @@
+parameters:
+    paysimple.user_name: "APIUser44005"
+    paysimple.api_secret_code: "xdqRjXlXMJPfEJcl5MLOhzeIEcSd3l4F0QwbS3HNsbswZBxd6Nzw5sxi6nqkmsUIuLCylebvS4WhSlzukvhHEwEl3Rf1PYqcf0utNdKbe7spXxpXdW7ENW0Diczg7vZ0"
+
+    paysimple.api.endpoint.test: "https://sandbox-api.paysimple.com"
+    paysimple.api.endpoint.live: "https://api.paysimple.com"
+
+    paysimple.api.test_mode: false
+
+    stripe.public_key: '%stripe.public.key%'
+    stripe.secret_key: '%stripe.secret.key%'
+
+    plaid.client_id: '%plaid.client.id%'
+    plaid.public_key: '%plaid.public.key%'
+    plaid.secret_key: '%plaid.secret.key%'
+    plaid_env: '%plaid.env%'
+
+
+services:
+    erp.payment.service:
+        class: Erp\PaymentBundle\Service\Service
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@erp_stripe.entity.api_manager'
+            - '@erp.payment.plaid.service.item'
+            - '@erp.payment.plaid.service.processor'
+    
+    erp.payment.stripe.client:
+        class: Erp\PaymentBundle\Stripe\Client\Client
+        arguments:
+            - '%stripe.secret_key%'
+
+    erp.payment.stripe.manager.abstract_manager:
+        class: Erp\PaymentBundle\Stripe\Manager\AbstractManager
+        abstract:  true
+        arguments:
+            - '@erp.payment.stripe.client'
+            - '@doctrine.orm.entity_manager'
+
+    erp.payment.stripe.manager.customer_manager:
+        class: Erp\PaymentBundle\Stripe\Manager\CustomerManager
+        parent: erp.payment.stripe.manager.abstract_manager
+
+    erp.payment.stripe.manager.plan_manager:
+        class: Erp\PaymentBundle\Stripe\Manager\PlanManager
+        parent: erp.payment.stripe.manager.abstract_manager
+
+    erp.payment.stripe.manager.account_manager:
+        class: Erp\PaymentBundle\Stripe\Manager\AccountManager
+        parent: erp.payment.stripe.manager.abstract_manager
+
+    erp.payment.stripe.manager.token_manager:
+        class: Erp\PaymentBundle\Stripe\Manager\TokenManager
+        parent: erp.payment.stripe.manager.abstract_manager
+
+    erp.payment.stripe.manager.charge_manager:
+        class: Erp\PaymentBundle\Stripe\Manager\ChargeManager
+        parent: erp.payment.stripe.manager.abstract_manager
+
+    erp.payment.consumer.update_subscriptions:
+        class: Erp\PaymentBundle\Consumer\UpdateSubscriptionsConsumer
+        arguments:
+            - '@doctrine'
+            - '@erp_stripe.entity.api_manager'
+
+    erp.payment.stripe.provider.bank_account_payment_type_provider:
+        class: 'Erp\PaymentBundle\Stripe\Provider\BankAccountPaymentTypeProvider'
+        arguments:
+            - '@erp.payment.stripe.manager.customer_manager'
+
+    erp.payment.stripe.provider.credit_card_payment_type_provider:
+        class: 'Erp\PaymentBundle\Stripe\Provider\CreditCardPaymentTypeProvider'
+        arguments:
+            - '@erp.payment.stripe.manager.customer_manager'
+
+    erp.payment.stripe.provider.payment_type_registry:
+        class: 'Erp\PaymentBundle\Stripe\Provider\PaymentTypeRegistry'
+        arguments:
+            -
+                - '@erp.payment.stripe.provider.bank_account_payment_type_provider'
+                - '@erp.payment.stripe.provider.credit_card_payment_type_provider'
+
+    erp.payment.stripe.provider.payment_type_provider:
+        class: 'Erp\PaymentBundle\Stripe\Provider\PaymentTypeProvider'
+        arguments:
+            - '@erp.payment.stripe.provider.payment_type_registry'
+
+    erp.payment.plaid.service.abstract_service:
+        class: 'Erp\PaymentBundle\Plaid\Service\AbstractService'
+        arguments:
+            - '@erp.curl'
+        calls:
+            - [setEnvironment, ['%plaid_env%']]
+        abstract: true
+
+    erp.payment.plaid.service.item:
+        class: 'Erp\PaymentBundle\Plaid\Service\Item'
+        parent: 'erp.payment.plaid.service.abstract_service'
+        arguments:
+            - '%plaid.client_id%'
+            - '%plaid.secret_key%'
+
+    erp.payment.plaid.service.processor:
+        class: 'Erp\PaymentBundle\Plaid\Service\Processor'
+        parent: 'erp.payment.plaid.service.abstract_service'
+        arguments:
+            - '%plaid.client_id%'
+            - '%plaid.secret_key%'

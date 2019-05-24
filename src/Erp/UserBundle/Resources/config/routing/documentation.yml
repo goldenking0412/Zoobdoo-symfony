@@ -1,0 +1,18 @@
+erp_user_documentation:
+    path: /documentation/{toUserId}
+    defaults: { _controller: ErpUserBundle:Document:index, toUserId:null }
+    methods: [GET, POST]
+    requirements:
+        toUserId: \d+
+
+erp_user_document_delete:
+    path: /documentation/{documentId}/delete
+    defaults: { _controller: ErpUserBundle:Document:delete }
+    methods: [GET, DELETE]
+    requirements:
+        documentId: \d+
+
+erp_user_document_update_ajax:
+    path: /documentation/{documentId}/update
+    defaults: { _controller: ErpUserBundle:Document:update }
+    methods: [POST]

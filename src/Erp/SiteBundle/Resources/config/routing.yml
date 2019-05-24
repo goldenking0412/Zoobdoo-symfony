@@ -1,0 +1,22 @@
+erp_site_homepage:
+    path:     /
+    defaults: { _controller: ErpSiteBundle:Index:index }
+
+erp_site_send_invite_to_manager:
+    path:     /send-invite-manager
+    defaults: { _controller: ErpSiteBundle:Index:sendInviteToManager }
+    options:
+        expose: true
+    methods: [GET, POST]
+
+erp_site_contact_page:
+    path: /contact
+    defaults: { _controller: ErpSiteBundle:Index:contactPage }
+
+erp_site_static_page:
+    path: /{slug}
+    defaults: { _controller: ErpSiteBundle:Index:staticPage }
+
+erp_site_properties_page:
+    path: /properties
+    defaults: { _controller: ErpSiteBundle:Index:listingProperties }    

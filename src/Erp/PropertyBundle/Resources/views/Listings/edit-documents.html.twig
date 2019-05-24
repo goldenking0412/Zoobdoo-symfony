@@ -1,0 +1,133 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/erpcore/js/fine-uploader/fine-uploader-new.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block paramsToJs %}
+    <input type="hidden" id="document-count" value="{{ property.getId() ? property.getDocuments()|length : 1 }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/upload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/file-validator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/property-edit.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1><i class="icon icon-property"></i> Property ID {{ property.id }} &nbsp; <i class="fa fa-angle-right"></i> &nbsp; Documentation </h1>
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="row">
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+        </div>
+
+        <div class="form-area style">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a class="btn-add blue" href="{{ path('erp_property_application_form', {'propertyId':property.id}) }}" style="margin-top: 10px;">
+                            {% if property.applicationForm.id is defined %}
+                                Edit
+                            {% else %}
+                                Create
+                            {% endif %}
+                            Online Application Form
+                        </a>
+
+                        <a href="{{ path('erp_property_application_form_copy_list',{'propertyId':property.id}) }}" class="btn-add blue lightbox-ajax" style="margin-top: 10px;">Copy this Application Form to other properties</a>
+
+                        <a class="btn-add blue" href="{{ path('erp_property_contract_form', {'propertyId':property.id}) }}" style="margin-top: 10px;">
+                            {% if property.contractForm.id is defined %}
+                                Edit
+                            {% else %}
+                                Create
+                            {% endif %}
+                            Online Contract Form
+                        </a>
+                    </div>
+                </div>
+                <br /><br />
+                {% form_theme form '@ErpUser/Form/form_upload.html.twig' %}
+                {{ form_start(form, { attr: {'id' : 'property-edit-form', 'class': 'form'}, 'enctype': form_enctype(form)}) }}
+                <input type="hidden" id="document-data-prototype" class="file-input" value="{{ form_widget(form.documents.vars.prototype)|e }}"/>
+                <div class="col-xs-12">
+                    <div class="errors documentation-errors">{{ form_custom_errors.widget(form) }}</div>
+                    <table class="table">
+                        <tbody>
+                            {% if not property.getDocuments()|length %}
+                                <tr>
+                                    <td></td>
+                                    <td><span class="property-doc-details">No documents uploaded</span></td>
+                                </tr>
+                            {% endif %}
+
+                            {% for document in property.getDocuments() %}
+                                {% if document.id %}
+                                    <tr>
+                                        <td>
+                                            <span class="fa fa-file-o" style="margin-left:20px;"></span>
+                                            <a style="margin-left:20px;" target="_blank" href="{{ asset(document.getPath() ~ '/' ~ document.getName()) }}">{{ document.getOriginalName() }}</a>
+                                            <span class="property-doc-details" style="margin-left: 20px;">{{ document.getExtension() }}, {{ document.getFileSize(true) }}</span>
+                                            <span class="doc-delete"  style="margin-left: 20px; cursor: pointer" data-doc-attr-count="{{ loop.index - 1 }}"><i class="fa fa-trash" style="color:red;font-size:24px"></i></span>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}   
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="doc-col" id="document-fields-list">
+                            {% for documentField in form.documents %}
+                                {{ form_custom_errors.widget(documentField.file) }}
+                                {{ form_custom_errors.widget(documentField.originalName) }}
+                            {% endfor %}
+                        </ul>
+
+                        <br />
+
+                        <div class="clear-fix"></div>
+
+                        <br />
+
+                        <div class="edit-row">
+                            <a href="#" data-href="#" class="btn-add" id="add-another-document">
+                                <span class="img">+</span>
+                                <span class="text">Add</span>
+                            </a>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="hide">
+                            <ul>
+                                {% for documentField in form.documents %}
+                                    <li id="new-form-doc-field-{{ loop.index - 1 }}">
+                                        {{ form_widget(documentField) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                </div>
+                <div class="hide">
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

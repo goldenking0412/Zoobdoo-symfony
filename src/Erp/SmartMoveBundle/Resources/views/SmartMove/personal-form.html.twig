@@ -1,0 +1,168 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{{ form_start(form, { attr: {'class': 'form-horizontal personal-info-form'}, 'enctype': form_enctype(form)}) }}
+<div class="row">
+    <div class="form-group name-group">
+        <div class="col-xs-4">
+            {{ form_label(form.FirstName) }}
+            {{ form_widget(form.FirstName) }}
+            {{ form_custom_errors.widget(form.FirstName) }}
+        </div>
+        <div class="col-xs-4">
+            {{ form_label(form.LastName) }}
+            {{ form_widget(form.LastName) }}
+            {{ form_custom_errors.widget(form.LastName) }}
+        </div>
+        <div class="col-xs-4">
+            {{ form_label(form.MiddleName) }}
+            {{ form_widget(form.MiddleName) }}
+            {{ form_custom_errors.widget(form.MiddleName) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            {{ form_label(form.Email) }}
+            {{ form_widget(form.Email) }}
+            {{ form_custom_errors.widget(form.Email) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_label(form.DateOfBirth) }}
+            {{ form_widget(form.DateOfBirth) }}
+            {{ form_custom_errors.widget(form.DateOfBirth) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            {{ form_label(form.SocialSecurityNumber) }}
+            {{ form_widget(form.SocialSecurityNumber) }}
+            {{ form_custom_errors.widget(form.SocialSecurityNumber) }}
+        </div>
+        <div class="col-xs-6 dropdown-col">
+            {{ form_label(form.EmploymentStatus) }}
+            <div class="select-container">
+                {{ form_widget(form.EmploymentStatus) }}
+            </div>
+            {{ form_custom_errors.widget(form.EmploymentStatus) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            {{ form_label(form.StreetAddressLineOne) }}
+            {{ form_widget(form.StreetAddressLineOne) }}
+            {{ form_custom_errors.widget(form.StreetAddressLineOne) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_label(form.StreetAddressLineTwo) }}
+            {{ form_widget(form.StreetAddressLineTwo) }}
+            {{ form_custom_errors.widget(form.StreetAddressLineTwo) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            {{ form_label(form.City) }}
+            {{ form_widget(form.City) }}
+            {{ form_custom_errors.widget(form.City) }}
+        </div>
+        <div class="col-xs-3 dropdown-col">
+            {{ form_label(form.State) }}
+            <div class="select-container">
+                {{ form_widget(form.State) }}
+            </div>
+            {{ form_custom_errors.widget(form.State) }}
+        </div>
+        <div class="col-xs-3">
+            {{ form_label(form.Zip) }}
+            {{ form_widget(form.Zip) }}
+            {{ form_custom_errors.widget(form.Zip) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            {{ form_label(form.MobilePhoneNumber) }}
+            {{ form_widget(form.MobilePhoneNumber) }}
+            {{ form_custom_errors.widget(form.MobilePhoneNumber) }}
+        </div>
+        <div class="col-xs-6">
+            {{ form_label(form.HomePhoneNumber) }}
+            {{ form_widget(form.HomePhoneNumber) }}
+            {{ form_custom_errors.widget(form.HomePhoneNumber) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            {{ form_label(form.Income) }}
+            {{ form_widget(form.Income) }}
+            {{ form_custom_errors.widget(form.Income) }}
+        </div>
+        <div class="col-xs-6 dropdown-col">
+            {{ form_label(form.IncomeFrequency) }}
+            <div class="select-container">
+                {{ form_widget(form.IncomeFrequency) }}
+            </div>
+            {{ form_custom_errors.widget(form.IncomeFrequency) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group income-group">
+        <div class="col-xs-4">
+            {{ form_label(form.OtherIncome) }}
+            {{ form_widget(form.OtherIncome) }}
+            {{ form_custom_errors.widget(form.OtherIncome) }}
+        </div>
+        <div class="col-xs-4 dropdown-col">
+            {{ form_label(form.OtherIncomeFrequency) }}
+            <div class="select-container">
+                {{ form_widget(form.OtherIncomeFrequency) }}
+            </div>
+            {{ form_custom_errors.widget(form.OtherIncomeFrequency) }}
+        </div>
+        <div class="col-xs-4">
+            {{ form_label(form.AssetValue) }}
+            {{ form_widget(form.AssetValue) }}
+            {{ form_custom_errors.widget(form.AssetValue) }}
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-12">
+            <div class="checkbox">
+                <label>
+                    {{ form_widget(form.FcraAgreementAccepted) }}
+                    {{ form_label(form.FcraAgreementAccepted) }}
+                    {{ form_custom_errors.widget(form.FcraAgreementAccepted) }}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-12">
+            <input type="submit" value="Submit" class="btn-circle" id="sm-personal-form-submit" disabled="disabled"/>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

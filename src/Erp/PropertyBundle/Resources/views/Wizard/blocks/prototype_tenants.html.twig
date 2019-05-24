@@ -1,0 +1,30 @@
+<li>
+    <div class="field-area two">
+        <div class="wrap">
+            <div class="field">
+                {{ form_widget(form.firstName) }}
+            </div>
+            {{ form_custom_errors.widget(form.firstName) }}
+        </div>
+        <div class="wrap">
+            <div class="field">
+                {{ form_widget(form.lastName) }}
+            </div>
+            {{ form_custom_errors.widget(form.lastName) }}
+        </div>
+    </div>
+    <div class="field-area two">
+        <div class="wrap">
+            <div class="field">
+                {{ form_widget(form.invitedEmail) }}
+            </div>
+            {{ form_custom_errors.widget(form.invitedEmail) }}
+        </div>
+        <div class="wrap">
+            <div class="field">
+                {{ form_widget(form.birthdate, {'attr': {'placeholder': 'Birthday'} }) }}
+            </div>
+            {{ form_custom_errors.widget(form.birthdate) }}
+        </div>
+    </div>
+</li>

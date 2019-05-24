@@ -1,0 +1,12 @@
+<div class="profile-widget-item">
+    <div class="profile-widget-content">
+        <div class="widget-title-row">
+            <div class="login-block-title bold-text">Message Manager</div>
+        </div>
+        {% include "ErpUserBundle:Profile/Tenant/widgets:dashboard-messages-form.html.twig" %}
+        <hr>
+        <div class="question-mark">
+            <a role="popup" href="{{ path('erp_user_profile_hint_content', {'hintCode':'message_manager'}) }}">&#063;</a>
+        </div>
+    </div>
+</div>

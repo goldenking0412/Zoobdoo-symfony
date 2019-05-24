@@ -1,0 +1,16 @@
+{% form_theme form 'ErpUserBundle:Form:form_horizontal.html.twig' %}
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <section id="register-form-landlords" class="register-form">
+        <h1 class="text-center bold-text">Add landlord</h1>
+        <div class="row text-center">
+            <div class="col-md-8 col-md-offset-2">
+                {{ form_start(form,{'method': 'POST','action': path('erp_user_landlords_create') }) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+{% else %}
+    {% form_theme form 'ErpUserBundle:Form:form_compact.html.twig' %}
+    {% render controller("FOSUserBundle:Security:login") %}
+{% endif %}

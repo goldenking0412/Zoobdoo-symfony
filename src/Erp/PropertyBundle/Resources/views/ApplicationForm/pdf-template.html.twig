@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; color: #000;}
+    h2 { text-align: center; font-size: 24px; }
+
+    .block-title {
+        background: #505050;
+        color: #fff;
+        padding: 5px 10px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .block-fields .field {
+        padding: 5px 10px;
+        margin-top: -1px;
+        border: 1px #505050 solid;
+    }
+
+    .block-fields.footer { margin-top: 50px; }
+
+    .block-fields.footer .field { padding: 50px 5px }
+    .block-fields.footer .field span:first-child { margin-right: 700px; }
+
+    .block-fields .field img { width: 400px; }
+    .block-fields .field .radio-option { margin-right: 10px;}
+    .block-fields .field .radio-option.selected { text-decoration: underline; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h2>Rental Application</h2>
+<div class="block-title">Property</div>
+<div class="block-fields">
+    <div class="field">
+        <b>Name:</b> {{ property.name }}
+    </div>
+    <div class="field">
+        <b>Address:</b> {{ property.address }}, {{ property.city }}, {{ property.stateCode }} {{ property.zip }}
+    </div>
+</div>
+
+{% if property.applicationForm is defined %}
+    {% set applicationSections = property.getApplicationForm().getApplicationSections() %}
+    {% if applicationSections %}
+        {% for applicationSection in applicationSections %}
+            <div class="block-title">{{ applicationSection.name }}</div>
+            <div class="block-fields">
+                {% set fields = applicationSection.applicationFields %}
+                {% for field in fields %}
+                    {% include('ErpPropertyBundle:ApplicationForm/fields/pdf-template:' ~ field.type ~ '-field.html.twig') %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+<div class="block-fields footer">
+    {% if formData['agreement'] is defined %}
+        <p>I authorize the verification of the information provided on this form as to my credit and employment. I have received a copy of this application.</p>
+    {% endif %}
+    <div class="field"><span>Signature of applicant:</span><span class="date">Date:</span></div>
+</div>
+</body>
+</html>

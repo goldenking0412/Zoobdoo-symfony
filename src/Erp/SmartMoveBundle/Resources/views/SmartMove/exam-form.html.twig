@@ -1,0 +1,36 @@
+{% if form %}
+    {% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+    <section class="rental-form">
+        {{ form_start(form, { attr: {'class': 'form-horizontal exam-form'}, 'enctype': form_enctype(form)}) }}
+        {% for qField in form.children %}
+            {% if (qField.vars.name != '_token') %}
+                <div class="row">
+                    <div class="form-group section-block app-info-block">
+                        <div class="col-xs-12 block-fields">
+                            <div class="form-group col-xs-12">
+                                <div class="col-md-12">
+                                    {{ form_label(qField) }} <br/>
+                                    {% for answ in qField %}
+                                        <div class="col-xs-2 section-col">
+                                            {{ form_widget(answ) }}
+                                            {{ form_label(answ) }}
+                                            {{ form_custom_errors.widget(answ) }}
+                                        </div>
+                                    {% endfor %}
+                                    {{ form_custom_errors.widget(qField) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <div class="errors">You will not be able to submit this form unless you answer all questions!</div>
+        <input type="submit" value="Submit" class="btn-circle"/>
+        {{ form_end(form) }}
+    </section>
+{% endif %}
+
+
+

@@ -1,0 +1,152 @@
+{% extends '::base.html.twig' %}
+
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% set headerWhiteClass = true %}
+
+{% block headerBannerTitle %}
+    Confirm Charge
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpcore/js/select2.min.js') }}"></script>
+    <script src="https://js.stripe.com/v2"></script>
+    <script>Stripe.setPublishableKey('{{ stripe_public_key }}');</script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+    <section id="register-form-tenants" class="register-form cc-form-wrap">
+        <div class="container">
+            <div class="row">
+                {% if charge.isPaid %}
+                    <div class="title-block">
+                        <h1 class="bold-text">Paid</h1>
+                        {% if (charge.transaction) %}
+                            <p>Chosen link for charge payment was already paid in {{ charge.transaction.created|date('M d, Y') }} at {{ charge.transaction.created|date('h:i:s') }}.</p>
+                        {% else %}
+                            <p>Chosen link for charge payment was already paid.</p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="title-block">
+                        {% if charge.isRecurring %}
+                            <h1 class="bold-text">
+                                Recurring charge
+                            </h1>
+                            <p class="bold-text">Monthly repeatable</p>
+                        {% else %}
+                            <h1 class="bold-text">
+                                Charge
+                            </h1>
+                            <p class="bold-text">Single payment</p>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-push-3 col-md-pull-3">
+                            <table class="table">
+                                <tr>
+                                    <td class="text-right">From:<br/></td>
+                                    <td class="text-left bold-text">{{ charge.receiver.fullName }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">To:</td>
+                                    <td class="text-left bold-text">{{ charge.manager.fullName }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Amount:</td>
+                                    <td class="text-left bold-text">{{ charge.amount|money }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Description:</td>
+                                    <td class="text-left bold-text"><em>{{ charge.description }}</em></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+                            {{ form_start(form, {'action': path('erp_user_landlords_confirm_charge', {'type': 'cc', 'token': token}), 'attr': {'class': 'form-horizontal cc-form', 'novalidate': 'novalidate'}}) }}
+                            {{ form_widget(form.js_error_message) }}
+                            {{ form_widget(form._token) }}
+                            {{ form_widget(form.token) }}
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        {{ form_label(form.number) }}
+                                        {{ form_widget(form.number) }}
+                                        {{ form_custom_errors.widget(form.number) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-xs-4">
+                                        {{ form_label(form.expMonth) }}
+                                        <div class="select-container">
+                                            {{ form_widget(form.expMonth) }}
+                                        </div>
+                                        {{ form_custom_errors.widget(form.expMonth) }}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        {{ form_label(form.expYear) }}
+                                        <div class="select-container">
+                                            {{ form_widget(form.expYear) }}
+                                        </div>
+                                        {{ form_custom_errors.widget(form.expYear) }}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        {{ form_label(form.cvc) }}
+                                        <div class="select-container">
+                                            {{ form_widget(form.cvc) }}
+                                        </div>
+                                        {{ form_custom_errors.widget(form.cvc) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-xs-12 cc-form-footer">
+                                        <br/>
+                                        {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form_end(form, {'render_rest': false}) }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript_inline %}
+    <script>
+        (function ($) {
+            var form = $('[name="{{ form.vars.name }}"]');
+            $('#{{ form.js_error_message.vars.id }}').val('');//reset Stripe API JS error
+
+            function stripeResponseHandler(status, response) {
+                if (status < 200 || status >= 300) {
+                    $('#{{ form.js_error_message.vars.id }}').val(response['error']['message']); //set stripe response error message to form
+                } else {
+                    $('#{{ form.token.vars.id }}').val(response['id']);
+                }
+                form.get(0).submit();
+            }
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+                Stripe.card.createToken(form, stripeResponseHandler);
+
+                return false;
+            });
+        })(jQuery);
+    </script>
+{% endblock %}

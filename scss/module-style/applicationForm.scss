@@ -1,0 +1,32 @@
+#form-copy {
+    p {
+        margin: 10px 0 10px 0;
+        font-weight: normal;
+    }
+    ul {
+        list-style: decimal;
+        text-align: left;
+    }
+    .table {
+        height: 300px;
+        display: inherit;
+        overflow-y: auto;
+        border-bottom: solid 2px #e4e4e4;
+        border-top: solid 2px #e4e4e4;
+        tbody {
+            tr {
+                td {
+                    label {
+                        font-weight: 400;
+                        padding: 0;
+                        line-height: 1.9em;
+                        cursor: pointer;
+                        margin: 2px 0 0 0;
+                    }
+                }
+            }
+        }
+
+    }
+}
+

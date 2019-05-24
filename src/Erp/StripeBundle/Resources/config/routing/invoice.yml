@@ -1,0 +1,3 @@
+erp_stripe_invoice_index:
+    path: /invoices
+    defaults: { _controller: ErpStripeBundle:Invoice:index }

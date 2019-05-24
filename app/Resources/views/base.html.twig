@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="{{ metaDescription|default('Zoobdoo') }}">
+        {# <meta name="format-detection" content="telephone=no"> #}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ metaTitle|default('Zoobdoo') }}</title>
+        <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" />
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> 
+        
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('assets/styles/bootstrap.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/styles/bootstrap-datepicker.css') }}">
+        {% endblock %}
+
+        {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('assets/scripts/jquery-3.2.1.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/scripts/bootstrap.min.js') }}"></script> 
+            <script src="{{ asset('assets/scripts/jquery.main.js') }}" defer></script>
+        {% endblock %}
+    </head>
+
+    <body>
+        <div id="wrapper" class="home">
+            {% block headerBlock %}
+                {% include ':blocks:header.html.twig' %}
+            {% endblock %}
+
+            {% block bodyContent %}
+
+                {% block pageContent %}{% endblock %}
+
+            {% endblock %}
+
+            {% block footerBlock %}
+                {% include ':blocks:footer.html.twig' %}
+            {% endblock %}
+
+            <div class="hide">
+                {% block paramsToJs %}
+                {% endblock %}
+            </div>
+
+            {% block javascript_inline %}
+            {% endblock %}
+
+
+            {% if app.environment == 'prod' %}
+                <script>
+                    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                    ga('create', '{{ google_analytics_id }}', 'auto');
+                    ga('send', 'pageview');
+                </script>
+            {% endif %}
+            {{ render(controller('ErpOlarkBundle:Core:chatwindow')) }}
+        </div>
+    </body>
+</html>

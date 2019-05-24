@@ -1,0 +1,22 @@
+services:
+    erp_plaid.service.abstract_service:
+        class: 'Erp\PaymentBundle\Plaid\Service\AbstractService'
+        arguments:
+            - '@erp.curl'
+        calls:
+            - [setEnvironment, ['%plaid_env%']]
+        abstract: true
+
+    erp_plaid.service.item:
+        class: 'Erp\PaymentBundle\Plaid\Service\Item'
+        parent: 'erp_plaid.service.abstract_service'
+        arguments:
+            - '%plaid.client_id%'
+            - '%plaid.secret_key%'
+
+    erp_plaid.service.processor:
+        class: 'Erp\PaymentBundle\Plaid\Service\Processor'
+        parent: 'erp_plaid.service.abstract_service'
+        arguments:
+            - '%plaid.client_id%'
+            - '%plaid.secret_key%'

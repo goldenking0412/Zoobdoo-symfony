@@ -1,0 +1,4 @@
+<div class="form-group col-xs-12">
+    <input type="checkbox" id="{{ field_id }}" name="{{ field_id }}" {% if data[field_id] is defined %}checked="checked"{% endif %} class="form-control checkbox-btn">
+    <label class="control-label agreement-check" for="{{ field_id }}">{{ field.name }}</label>
+</div>

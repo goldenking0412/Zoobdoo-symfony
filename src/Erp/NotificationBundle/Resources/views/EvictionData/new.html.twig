@@ -1,0 +1,78 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+    <div class="form-area style" id="managers-profile">
+        <div class="container">
+            {% include "ErpNotificationBundle:EvictionData:actions.html.twig" %}
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+            <div class="field-area">
+                <div class="lable">
+                    {% set title = (entity.id) ? ('Template' ~ entity.title) : 'Send Eviction Template' %}
+                </div>
+            </div>
+
+            {{ form_start(form, {'action': path('erp_notification_user_eviction_create'), 'attr': {'class': 'form'} }) }}
+            <div class="field-area">
+                <div class="lable">
+                    {{ form_label(form.pickDate) }}
+                    <div class="field">
+                        {{ form_widget(form.pickDate, {'attr': {'class': 'form-control js-datepicker', 'autocomplete': 'off'} }) }}
+                        {{ form_errors(form.pickDate) }}
+                    </div>
+                </div>  
+
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.template) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.template, {'attr': {'class': 'form-control select-control'} }) }}
+                        {{ form_errors(form.template) }}
+                    </div>
+                </div> 
+                <br />
+                <br />
+                <br />
+                <button type="submit" id="add-eviction" class="btn-circle pull-right" style="margin-bottom: 50px;">
+                    Proceed to Next
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block javascript_inline %}
+        <script>
+            $(document).ready(function () {
+                $('.js-datepicker').datepicker({
+                    format: 'M dd, yyyy',
+                    startDate: '0'
+                }).on('changeDate', function (event) {
+                    $(this).datepicker('hide');
+
+                    var dateDiffInDays = function (date1, date2) {
+                        var dt1 = new Date(date1), dt2 = new Date(date2);
+                        return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+                    };
+
+                    $('input[type="hidden"]#erp_notificationbundle_evictiondata_days').val(dateDiffInDays(new Date(), event.date));
+                });
+
+                /** input number validation
+                 $('input[type="text"]#erp_notificationbundle_evictiondata_days').keydown(function (e) {
+                 // Allow: backspace, delete, tab, escape, enter and .
+                 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                 (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || // Allow: Ctrl+A, Command+A
+                 (e.keyCode >= 35 && e.keyCode <= 40)) { // Allow: home, end, left, right, down, up
+                 // let it happen, don't do anything
+                 return;
+                 }
+                 // Ensure that it is a number and stop the keypress
+                 if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                 e.preventDefault();
+                 }
+                 }); */
+            });
+        </script>
+    {% endblock %}

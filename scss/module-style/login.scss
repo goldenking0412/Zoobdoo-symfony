@@ -1,0 +1,124 @@
+/* Login */
+.login-form {
+    &.reset-form {
+        .login-block {
+            margin-top: 80px;
+            padding: 0;
+            .customer-login {
+                text-align: center;
+                .form-horizontal {
+                    .control-label {
+                        padding-left: 0;
+                        float: left;
+                    }
+                }
+            }
+            .reset-block {
+                .col-xs-4 {
+                    text-align: left;
+                }
+            }
+        }
+    }
+    .title-block {
+        text-align: center;
+        h1 {
+            font-size: 56px;
+            margin: 45px;
+        }
+    }
+    .login-block {
+        -webkit-border-radius: 5px/4px;
+        -moz-border-radius: 5px/4px;
+        border-radius: 5px/4px;
+        background-color: #fff;
+        margin-bottom: 100px;
+        -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.15);
+        -moz-box-shadow: 0 2px 6px rgba(0,0,0,.15);
+        box-shadow: 0 2px 6px rgba(0,0,0,.15);
+        .reset-block {
+            text-align: center;
+            padding: 30px;
+            font-family: LatoBold;
+            font-size: 18px;
+        }
+        .login-title-wrap {
+            padding: 0;
+            .login-block-title {
+                display: block;
+                text-align: center;
+                color: #fff;
+                border-radius: 4px;
+                background-color: #9191aa;
+                font-size: 18px;
+                line-height: 2.5;
+                margin-bottom: 60px;
+                vertical-align: middle;
+            }
+        }
+        .login-block-form {
+            padding: 0 65px 100px;
+        }
+    }
+    .customer-login {
+        padding-right: 40px;
+        .customer-title {
+            border-bottom: 1px solid #e3e1e1;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .customer-subtitle {
+            display: block;
+            font-family: NunitoRegular;
+        }
+        .form-horizontal {
+            text-align: right;
+            margin-top: 30px;
+            .form-control {
+                position: relative;
+                padding-right: 38px;
+            }
+            .control-label {
+                padding-left: 20px;
+                text-align: left;
+            }
+            .fa {
+                position: absolute;
+                top: 12px;
+                vertical-align: middle;
+                right: 28px;
+                color: #d6d6d6;
+                font-size: 15px;
+            }
+            .form-footer {
+                a, .required-note {
+                    color: #ca171b;
+                }
+                .red-btn {
+                    width: 190px;
+                    margin: 10px;
+                }
+            }
+        }
+    }
+    .new-member-login {
+        padding-left: 40px;
+        .new-member-title {
+            border-bottom: 1px solid #e3e1e1;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        p {
+            font-family: NunitoRegular;
+        }
+        .form-footer {
+            text-align: right;
+            .red-btn {
+                width: 190px;
+                margin: 10px;
+            }
+        }
+    }
+}

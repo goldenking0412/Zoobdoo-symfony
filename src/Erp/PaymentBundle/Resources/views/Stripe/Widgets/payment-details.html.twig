@@ -1,0 +1,176 @@
+{% set cc = constant('Erp\\PaymentBundle\\Entity\\StripeCustomer::CREDIT_CARD') %}
+{% set ba = constant('Erp\\PaymentBundle\\Entity\\StripeCustomer::BANK_ACCOUNT') %}
+
+<div class="col">
+    <div class="open-close1 active">
+        <header class="head">
+            <span class="text">Bank Information</span>
+            <a href="#" class="opener">[<span class="icon"></span>]</a>
+        </header>
+        <div class="slide">
+            <div class="bank-info">
+                <div class="image-holder">
+                    <img src="{{ asset('assets/images/bank.svg') }}" alt="bank">
+                </div>
+                <div class="text-holder">
+                    {% if app.user.hasRole('ROLE_TENANT') %}
+                        {% if creditCard or bankAccount %}
+                            {% if creditCard is null %}
+                                <div class="row">
+                                    Cards information is not added yet
+                                </div>
+                                <a type="submit" href="{{ path('erp_payment_stripe_save_credit_card') }}" class="btn-circle">Add card info</a>
+                            {% else %}
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="title">Credit Card Holder</span>
+                                        <span class="text">{{ creditCard.name }}</span>
+                                    </div>
+                                </div>
+                                <a type="submit" href="{{ path('erp_payment_stripe_save_credit_card') }}" class="btn-circle">Edit</a>
+                            {% endif %}
+                            {% if bankAccount is null %}
+                                <div class="row">
+                                    Bank information is not added yet
+                                </div>
+                                <button id="verify-ba" class="btn-circle">Verify bank account</button>
+                            {% else %}
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="title">Bank</span>
+                                        <span class="text">{{ bankAccount.bank_name }}</span>
+                                        <span class="title">Account Holder</span>
+                                        <span class="text">{{ bankAccount.account_holder_name }}</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="title">Routing #</span>
+                                        <span class="text">{{ bankAccount.routing_number }}</span>
+                                        <span class="title">Account#</span>
+                                        <span class="text">***************</span>
+                                    </div>
+                                </div>
+                                <button id="verify-ba" class="btn-circle">Change bank account</button>
+                            {% endif %}
+                        {% else %}
+                            <div class="row">
+                                Please add Bank or Cards information in order to pay rent.
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-xs-12">
+                                    <a type="submit" href="{{ path('erp_payment_stripe_save_credit_card') }}" class="btn-circle">Add card info</a>
+                                </div>
+                                <div class="col">
+                                    <button id="verify-ba" class="btn-circle">Verify bank account</button>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% elseif app.user.hasRole('ROLE_MANAGER') %}
+                        {% if bankAccount is null %}
+                            <div class="row">
+                                Bank information is not added yet
+                            </div>
+                            <button id="verify-ba" class="btn-circle">Verify bank account</button>
+                        {% else %}
+                            <div class="row">
+                                <div class="col">
+                                    <span class="title">Bank</span>
+                                    <span class="text">{{ bankAccount.bank_name }}</span>
+                                    <span class="title">Account Holder</span>
+                                    <span class="text">{{ bankAccount.account_holder_name }}</span>
+                                </div>
+                                <div class="col">
+                                    <span class="title">Routing #</span>
+                                    <span class="text">{{ bankAccount.routing_number }}</span>
+                                    <span class="title">Account#</span>
+                                    <span class="text">***************</span>
+                                </div>
+                            </div>
+                            <button id="verify-ba" class="btn-circle">Change bank account</button>
+                        {% endif %}
+
+                    {% else %}
+                        {% if bankAccount is null %}
+                            <div class="row">
+                                Bank information is not added yet
+                            </div>
+                            <button id="verify-ba" class="btn-circle" {% if app.session.flashBag.has('show_navigation_sign_after_register') %}style="position: relative"{% endif %}>
+                                {% if app.session.flashBag.has('show_navigation_sign_after_register') %}
+                                    {# TODO Refactoring #}
+                                    {{ app.session.flashBag.get('show_navigation_sign_after_register')[0] }}
+                                    <div class="tooltip_btn">Become a member<br> now and gain access <br>to all of our services!<br> Just verify your<br> bank information here.</div>
+                                {% endif %}
+                                Verify bank account
+                            </button>
+                        {% else %}
+                            <div class="row">
+                                <div class="col">
+                                    <span class="title">Bank</span>
+                                    <span class="text">{{ bankAccount.bank_name }}</span>
+                                    <span class="title">Account Holder</span>
+                                    <span class="text">{{ bankAccount.account_holder_name }}</span>
+                                </div>
+                                <div class="col">
+                                    <span class="title">Routing #</span>
+                                    <span class="text">{{ bankAccount.routing_number }}</span>
+                                    <span class="title">Account#</span>
+                                    <span class="text">***************</span>
+                                </div>
+                            </div>
+                            <button id="verify-ba" class="btn-circle">Change bank account</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var linkHandler = Plaid.create({
+            env: '{{ plaid_env }}',
+            clientName: 'Zoobdoo',
+            key: '{{ plaid_public_key }}',
+            product: ['auth'],
+            selectAccount: true,
+            onSuccess: function (public_token, metadata) {
+                $.blockUI({message: 'Account verifying... Please wait.'});
+                $.ajax({
+                    url: '{{ path('erp_payment_stripe_verify_bank_account') }}',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        publicToken: public_token,
+                        accountId: metadata.account_id
+                    },
+                    success: function (response) {
+                        if (response.redirect) {
+                            $.blockUI({message: 'Now you\'ll be redirected.'});
+                            setTimeout(function () {
+                                $.unblockUI();
+                                document.location = response.redirect;
+                            }, 1500);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $.unblockUI();
+                        $.blockUI({message: ('Error: ' + jqXHR.responseText)});
+                        setTimeout(function () {
+                            $.unblockUI();
+                        }, 5000);
+                    }
+                });
+            },
+            onExit: function (err, metadata) {
+                if (err !== null) {
+
+                }
+            }
+        });
+
+        $('#verify-ba').click(function () {
+            linkHandler.open();
+        });
+    });
+</script>

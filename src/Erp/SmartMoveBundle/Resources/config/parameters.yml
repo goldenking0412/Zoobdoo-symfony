@@ -1,0 +1,9 @@
+parameters:
+    smartmove.partner_id: 370
+    smartmove.api_secret_key: "iIJiJm9UnGU1oICoDxyt0WdRFNDzZAbPeoGZGRq+Jajlev9A+sG+VgjtUzH7Tv6Vvb028pJrUgY1NjupU7+phg=="
+    smartmove.api_application_id: 24674
+
+    smartmove.api.endpoint.test: "https://smlegacygateway-integration.mysmartmove.com"
+    smartmove.api.endpoint.live: "https://www.mysmgateway.com"
+
+    smartmove.api.test_mode: false

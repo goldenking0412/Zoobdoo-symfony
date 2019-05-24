@@ -1,0 +1,114 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+{% block pageContent %}
+    {{ parent() }}
+    <br />
+    <br />
+
+    <div class="form-area style">
+        <div class="container">
+            {% include "ErpNotificationBundle:EvictionData:actions.html.twig" %}
+            <br />
+            <br />
+                {{ form_start(form, {'action': path('erp_notification_user_eviction_choose_properties', {'attr': {'class': 'form'}}) }) }}
+                {% set title = (entity.id) ? ('Template' ~ entity.title) : 'Choose properties' %}
+                <h1 class="text-center">
+                    {{ title }}
+                </h1>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+                    </div>
+                </div>
+                <br />
+                    <div class="field-area">
+                        <div class="field">
+                            {{ form_widget(form.days)}}
+                        </div>
+                    </div>
+                    <div class="field-area">
+                        <div class="field">
+                            {{ form_widget(form.template)}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label required" for="erp_notificationbundle_evictiondata_template">Select Properties</label>
+                                <br />
+                                <br />
+                                {% if (properties) %}
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td><input type="checkbox" name="all_elements" id="all_elements"/></td>
+                                                <td>Property</td>
+                                                <td>Tenant</td>
+                                                <td>Days Rent Late</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for property in properties %}
+                                                <tr>
+                                                    <td data-title="checkbox"><input type="checkbox" name="idx[]" class="idx" value="{{ property.id }}" /></td>
+                                                    <td data-title="name">{{ property.name }}</td>
+                                                    <td data-title="tenant name">{{ property.tenantUser.fullName }}</td>
+                                                    <td date-title="date late payment">{{ property.tenantUser.rentPaymentBalance.dayLate }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <table class="table">
+                                        <tr>
+                                            <td>No Record Found</td>
+                                        </tr>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <button type="submit" id="add-eviction" class="btn-circle pull-right" disabled = "disabled" title="Please select at least 1 property">
+                            Send Out
+                        </button>
+                    </div>
+               {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_inline %}
+    <script>
+        $(document).ready(function () {
+            /** add multiple select / deselect functionality */
+
+            $("#all_elements").click(function () {
+                $('.idx').prop('checked', this.checked);
+                if (this.checked == true) {
+                    $("#add-eviction").removeAttr("disabled");
+                } else if ($(".idx:checked").length == '') {
+                    $("#add-eviction").prop("disabled", 'disabled');
+                }
+            });
+
+            /** if all checkbox are selected, check the select all checkbox and vice-versa */
+
+            $(".idx").click(function () {
+                if ($(".idx").length == $(".idx:checked").length) {
+                    $("#all_elements").prop("checked", "checked");
+                } else {
+                    $("#all_elements").removeAttr("checked");
+                }
+
+                if (this.checked == true) {
+                    $("#add-eviction").removeAttr("disabled");
+                } else if ($(".idx:checked").length == '') {
+                    $("#add-eviction").prop("disabled", 'disabled');
+                }
+
+            });
+        });
+    </script>
+{% endblock %}

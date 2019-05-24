@@ -1,0 +1,113 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1>
+                {% if user.image %}
+                    <img src="{{ asset(user.image.path ~ '/' ~ user.image.name) | imagine_filter('profile_image') }}"/>
+                {% else %}
+                    <i class="icon icon-user"></i>
+                {% endif %}
+
+                Your Profile
+            </h1>
+        </div>
+    </div>
+
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+    <main id="main">
+        <div class="property-details style"> 
+            <div class="container">
+
+                <div class="row-holder">
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Account Details</span>
+                                <a href="{{ path('erp_user_details') }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide">
+                                <div class="text-holder">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="address-info">
+                                                <span class="title">Username</span>
+                                                <span class="text">{{ user.firstName }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="address-info">
+                                                <span class="title">Password</span>
+                                                <span class="text">****</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Email Details</span>
+                                <a href="{{ path('erp_user_email_options') }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide">
+                                <div class="text-holder">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="address-info">
+                                                <span class="title"><i class="fa fa-envelope-o"></i> Primary, Email</span>
+                                                <span class="text">{{ user.email }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="address-info">
+                                                <span class="title"><i class="fa fa-envelope-o"></i> Secondary, Email</span>
+                                                <span class="text">{{ user.secondEmail }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="open-close1 active">
+                            <header class="head">
+                                <span class="text">Address Details</span>
+                                <a href="{{ path('erp_user_address_details') }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                                <a href="#" class="opener">[<span class="icon"></span>]</a>
+                            </header>
+                            <div class="slide">
+                                <div class="text-holder">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="address-info">
+                                                <span class="title">Primary, Billing Address</span>
+                                                <span class="text">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i> {{ user.addressOne }}<br />
+                                                    {{ user.addressTwo }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>                  
+
+    </main>
+{% endblock %}

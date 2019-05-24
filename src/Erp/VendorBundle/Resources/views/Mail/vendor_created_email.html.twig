@@ -1,0 +1,55 @@
+{% extends "ErpUserBundle:Mail:layout.html.twig" %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="invoice-title">
+                <h2>
+                    <img src="{{ base_scheme ~ '/assets/images/logo_Zoobdoo.png' }}" class="img-responsive" style="width: 300px; max-width: 300px; height: auto;" />
+                </h2>
+                <h3 class="pull-right">
+                    Vendor generation
+                </h3>
+            </div>
+            <hr>
+            <div class="row">
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <address>
+                Hello, <b>{{ vendor.name }}.</b>
+            </address>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            The Zoobdoo manager {{ creator.firstname }} {{ creator.lastname }} added you as a vendor of his / hers on our platform.
+            <br/><br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            If you have not asked for, please contact the manager {{ creator.firstname }} {{ creator.lastname }} at his / her email address
+            <a href="mailto:{{ creator.email }}">{{ creator.email }}</a> in order to be removed from our platform, or contact directly
+            our business unit at <a href="mailto:info@zoobdoo.com">info@zoobdoo.com</a> with the subject: "Remove my email address from vendors".
+            <br/><br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <address>
+                Thanks for your consideration,<br />
+                The team of <a href="http://www.zoobdoo.com" target="_blank" style="color: #00f;">Zoobdoo</a>
+                <br /><br />
+            </address>
+        </div>
+    </div>
+{% endblock %}

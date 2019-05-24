@@ -1,0 +1,19 @@
+erp_stripe_webhook:
+    resource: "@ErpStripeBundle/Resources/config/routing/webhook.yml"
+    prefix: /account/stripe
+
+erp_stripe_transaction:
+    resource: "@ErpStripeBundle/Resources/config/routing/transaction.yml"
+    prefix: /account/dashboard
+
+erp_stripe_invoice:
+    resource: "@ErpStripeBundle/Resources/config/routing/invoice.yml"
+    prefix: /account/dashboard
+
+erp_stripe_cashflow:
+    resource: "@ErpStripeBundle/Resources/config/routing/cashflow.yml"
+    prefix: /account/dashboard
+
+erp_stripe_transaction_refund:
+    resource: "@ErpStripeBundle/Resources/config/routing/refund.yml"
+    prefix: /account/dashboard

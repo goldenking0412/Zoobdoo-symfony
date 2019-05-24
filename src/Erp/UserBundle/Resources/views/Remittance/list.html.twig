@@ -1,0 +1,114 @@
+{% form_theme form _self %}
+<style>
+    .select2-selection {
+        border: 1px solid #aaa !important;
+        border-radius: 0px !important;
+        height: 32px !important;
+    }
+</style>
+
+{% block date_widget %}
+    {% set type = 'text' %}
+    {{ block('form_widget_simple') }}
+{% endblock date_widget %}
+
+{% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+    {{ form_start(form) }}
+    <input type="hidden" name="t" value="tab3-0">
+    <input type="hidden" name="f" value="remittances">
+    <div class="form-group form-accounting">
+        <div class="col-xs-12 col-md-3">
+            {{ form_label(form.keyword) }}
+            {{ form_widget(form.keyword, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.type) }}
+            <div class="select-container">
+                {{ form_widget(form.type, {'attr': {'class': 'select-control form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.property) }}
+            <div class="select-container">
+                {{ form_widget(form.property, {'attr': {'class': 'select-control form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.dateFrom) }}
+            {{ form_widget(form.dateFrom, {'attr': {'class': 'form-control date'} }) }}
+        </div>
+        <div class="col-xs-12 col-md-2">
+            {{ form_label(form.dateTo) }}
+            {{ form_widget(form.dateTo, {'attr': {'class': 'form-control date'} }) }}
+        </div>
+        <div class="col-xs-12 col-md-1">
+            <label for="filter">&nbsp;</label><br/>
+            <button id="filter" class="btn-solid btn-filter-find" type="submit">Find</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-xs-1">Date</th>
+                <th class="col-xs-2">Payee</th>
+                <th class="col-xs-2" nowrap>Type</th>
+                <th class="col-xs-2">Property</th>
+                <th class="col-xs-1">Amount</th>
+                <th class="col-xs-1" style="text-align: center !important;">Document</th>
+                <th class="col-xs-2" style="text-align: center !important;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if (pagination|length) %}
+                {% for item in pagination %}
+                    <tr>
+                        <td class="text-left">
+                            {{ item.createdAt|date('M d, Y') }}<br/>
+                            {{ item.createdAt|date('h:i:s') }}
+                        </td>
+                        <td class="text-left">
+                            {{ item.toUser ? item.toUser.fullName : '' }}
+                        </td>
+                        <td class="text-left" nowrap>
+                            {{ item.type }}
+                        </td>
+                        <td class="text-left">
+                            <a href="{{ path('erp_property_listings_wizard_edit', {'propertyId': item.property.id}) }}" style="color: #00f;">{{ item.property.__toString() }}</a>
+                        </td>
+                        <td class="text-right">
+                            {{ item.currency|upper }} {{ item.amount|stripe_money(false) }}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ asset(item.document.getWebPath()) }}" target="_blank" download="{{ asset(item.document.getWebPath()) }}" class="view-btn ref-btn">View</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('erp_user_remittances_edit', {'remittanceId': item.id}) }}" type="submit" class="action-remittance-btn ref-btn lightbox-ajax" data-lightbox-width="800" data-lightbox-height="600" >Edit</a>
+                            <a href="{{ path('erp_user_remittances_delete', {'remittanceId': item.id}) }}" type="submit" class="action-remittance-btn ref-btn lightbox-ajax" style="margin-left: 5px;">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">No matches.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% if (pagination|length) %}
+        {{ knp_pagination_render(pagination) }}
+    {% endif %}
+
+    <ul class="btns-list">
+        <li>
+            <a href="{{ pdf_link }}" class="btn-add red"><span class="img"></span> Export as PDF</a>
+        </li>
+
+        <li>
+            <a class="btn-add blue lightbox-ajax" href="{{ path('erp_user_remittances_create') }}"><span class="img">+</span> Add new remittance</a>
+        </li>
+    </ul>
+{% endif %}

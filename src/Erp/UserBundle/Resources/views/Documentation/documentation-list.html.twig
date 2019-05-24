@@ -1,0 +1,63 @@
+{% for userDocument in user_documents %}
+    <tr>
+        <td data-title="File">
+            <a href="{{ asset(userDocument.document.path ~ '/' ~ userDocument.document.name) }}" target="_blank">
+                {{ userDocument.document.originalName|e }}
+            </a>
+            <input class="file-name-input" name="name[]" value="{{ userDocument.document.originalName|e }}" data-document-id="{{ userDocument.document.id }}" type="text">
+        </td>
+        <td data-title="Date">
+            {{ userDocument.createdDate|date('m/d/Y') }}
+        </td>
+        <td data-title="Status">
+             <div class="dropdown">
+                <button class="btn btn-default btn-status dropdown-toggle disabled" data-file-id="{{ userDocument.id }}"
+                        data-selected-file-status="{{ userDocument.status }}" type="button" id="dropdownMenu2" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true">
+                    {% if userDocument.isSent %}
+                        {% set status = 'Sent' %}
+                    {% elseif userDocument.isSigned %}
+                        {% set status = 'Signed' %}
+                    {% else  %}
+                        {% set status = 'Pending' %}
+                    {% endif %}
+                    <li class="current">
+                        <span class="status"><i class="doc-status-icon"></i>{{ status }}</span>
+                    </li>
+                </button>
+                {% if app.user.hasRole(role_manager) %}
+                    <ul class="companions-list dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <li class="doc-accepted" data-status="{{ constant('Erp\\UserBundle\\Entity\\UserDocument::STATUS_PENDING') }}">
+                            <span class="status"><i class="doc-accepted-icon doc-status-icon"></i>Pending</span>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </td>
+        <td>
+            <div class="pull-left">
+                {% if ((user.hasRole(role_manager) and not userDocument.isSigned() and (userDocument.getNumOfSignatures() < userDocument.getMaxNumOfSignatures())) or (not user.hasRole(role_manager) and userDocument.isSent())) %}
+                    {% if (userDocument|is_sender_signing(user) and (userDocument.getNumOfSignatures() == 0)) %}
+                        <a href="{{ path('erp_signature_hellosign_manage_template', {'userDocumentId': userDocument.id}) }}" data-doc="{{ path('erp_signature_hellosign_remove_template', {'userDocumentId': userDocument.id}) }}" class="sign-btn signature-btn edit-btn" style="margin-right: 5px;">Edit</a>
+                    {% endif %}
+                    <a href="{{ path('erp_signature_hellosign_edit_envelop', {'userDocumentId': userDocument.id}) }}" data-doc="{{ path('erp_signature_hellosign_webhook_savesignature', {'userDocumentId': userDocument.id}) }}" class="sign-btn signature-btn signing-btn">Sign</a>
+                {% endif %}
+                {% if (userDocument.fromUser is null or user.id == userDocument.fromUser.id and status != constant('Erp\\UserBundle\\Entity\\UserDocument::STATUS_PENDING')) or user.hasRole(role_manager) %}
+                    <a role="popup" href="{{ path('erp_user_document_delete', {'documentId':userDocument.id}) }}" class="doc-delete">×</a>
+                {% endif %}
+                {% if (userDocument.isSigned() and isavailable_pdf_signed(userDocument)) %}
+                    <a href="{{ get_pdf_link_signed(userDocument) }}" class="doc-download" target="_blank" title="Download signed PDF">
+                        <i class="glyphicon glyphicon-download-alt"></i>
+                    </a>
+                {% endif %}
+            </div>
+            <div class="pull-left error-div alert hidden" role="alert">
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span class="error"></span>
+            </div>
+            
+        </td>
+    </tr>
+{% endfor %}

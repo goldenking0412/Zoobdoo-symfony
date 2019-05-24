@@ -1,0 +1,104 @@
+html {
+    .editor {
+        background: #fff;
+        margin: 20px 0;
+        padding: 0 20px !important;
+        a {
+            color: #333;
+            &:hover {
+                color: #333;
+            }
+        }
+        ol {
+            li {
+                list-style-type: decimal;
+                list-style: inside decimal;
+            }
+        }
+        ul {
+            li {
+                list-style-type: disc;
+                list-style: inside disc;
+            }
+        }
+        &.mce-content-body {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    }
+    table{
+        max-width: none;
+        border-color: #333;
+        background-color: transparent;
+        td {
+            font-size: 16px;
+        }
+    }
+}
+
+.mce-big-dialog {
+    width: 700px;
+    .mce-container {
+        width: 700px;
+    }
+}
+
+.register-form {
+    .editor {
+        p {
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        &.contract-ready {
+            padding: 20px 10px !important;
+            background: transparent;
+        }
+        &.section-content {
+            margin: 20px 0;
+            padding: 0 21px !important;
+            overflow-x: auto;
+        }
+    }
+}
+
+.contract-ready {
+    input[type=text] {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid #9e9e9e;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        outline: 0;
+        margin: 0;
+        padding: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        font-family: 'Times New Roman', Times, serif;
+    }
+}
+
+#rental-form-constructor {
+    .form-horizontal {
+        .constructor-footer {
+            text-align: center;
+            .red-btn {
+                margin: 0 5px;
+                &.constructor-btn {
+                    float: right;
+                }
+            }
+        }
+    }
+}
+
+.contract-ready {
+    .back-dashboard {
+        color: #ca171b;
+        &:hover {
+            color: #ca171b;
+        }
+    }
+}

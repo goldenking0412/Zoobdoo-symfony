@@ -1,0 +1,23 @@
+erp_user_registration_set_confirm:
+    path:     /set-confirm/{token}
+    defaults: { _controller: ErpUserBundle:Registration:setConfirmRegister }
+    options:
+        expose: true
+    methods: [GET]
+
+erp_user_tenant_registration:
+    path:     /as-tenant/{token}
+    defaults: { _controller: ErpUserBundle:Registration:registerTenant, token: null }
+    options:
+        expose: true
+    methods: [GET, POST]
+
+erp_user_term_of_use:
+    path:     /term-of-use
+    defaults: { _controller: ErpUserBundle:Registration:termOfUse}
+    methods: [GET, POST]
+
+erp_user_registration_manual:
+    path:     /createnewmanually
+    defaults: { _controller: ErpUserBundle:Registration:createUserManually }
+    methods: [GET]

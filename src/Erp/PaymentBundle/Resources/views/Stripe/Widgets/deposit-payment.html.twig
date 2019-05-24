@@ -1,0 +1,36 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% form_theme form _self %}
+
+{%- block date_widget -%}
+{% set type = 'text' %}
+{{ block('form_widget_simple') }}
+{%- endblock date_widget -%}
+
+<div class="col-md-3 col-xs-6 widget-first tenants-pay">
+    <div class="profile-widget-item">
+        <div class="widget-title-row">
+            <div class="login-block-title bold-text">Pay Deposit</div>
+        </div>
+        {{ form_start(form, {'action': path('erp_property_deposity_payment'), 'attr': {'class': 'pay-widget'}}) }}
+        <div class="form-group col-xs-12 date-col">
+            <div class="select-container">
+                {{ form_widget(form.category, {'attr': {'class': 'form-control select-control select2-hidden-accessible'}}) }}
+            </div>
+        </div>
+        <div class="form-footer col-xs-12">
+            <div class="row edit-row">
+                {% set attr = {'class': 'btn-circle'} %}
+
+                {% if manager.stripeAccount == false or user.stripeCustomer == false %}
+                    {% set attr = attr|merge({
+                        'disabled': 'disabled'
+                    }) %}
+                {% endif %}
+
+                {{ form_widget(form.submit, {'attr': attr}) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

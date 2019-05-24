@@ -1,0 +1,93 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/unit.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1><i class="icon icon-property"></i> Properties</h1>
+        </div>
+    </div>
+
+    {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+    <div class="breadcrumbs-area">
+        <div class="container no-flex">
+            <div class="pull-left"><a href="{{ path('erp_property_listings_all') }}" class="btn-back">< Back to property list</a></div>
+        </div>
+    </div>
+    
+    <main id="main">
+        <div class="property-details style">
+            <div class="container">
+                {% if errors is not null %}
+                    <h3>
+                        <span class="field-validation-error">{{ errors }}</span>
+                    </h3>
+                {% else %}
+                    <h2>
+                        Please enter the amount of units you'd like to add.
+                    </h2>
+                    <p style="margin-bottom: 60px;">
+                        Enter the number of properties you will manage below! You will not be charged until after the trial period!
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="current-annual-cost">
+                                <p>Current annual cost: $<span id="current-year-price">{{ current_year_price }}</span></p>
+                            </div>
+                            <div class="help-tip">
+                                <span>
+                                    <h4>Pricing</h4>
+                                    <p>Will only be charged after your 30 day trial expires.</p>
+                                    <ol class="pricing_list">
+                                        <li>1st unit: $99/ annual fee (includes all services)</li>
+                                        <li>2 - 29 Units: $20 each/ annual fee (includes all services)</li>
+                                        <li>30 Units and more: $15 each/ annual fee (includes all services)</li>
+                                    </ol>
+                                </span>
+                            </div>
+
+                            <p>Total New Annual Cost: $<span id="total-price">{{ total_price }}</span></p>
+                            <input type="hidden" id="existing-unit-count" value="{{ existing_unit_count }}">
+                            <input type="hidden" id="settings" value="{{ settings|json_encode }}">
+                            {{ form_start(form, { attr: {'class': 'form-horizontal cc-form', 'novalidate': 'novalidate', 'id': 'form-messages'}, 'enctype': form_enctype(form)}) }}
+                            <div class="row">
+                                <div class="form-group form-group_units">
+                                    <div class="col-xs-12">
+                                        {#<div class="form-group_units_label">
+                                            {{ form_label(form.quantity) }}
+                                        </div>#}
+                                        <div class="form-group_units_form">
+                                            {{ form_widget(form.quantity, {'id': 'unit-count'}) }}
+                                        </div>
+                                        {{ form_custom_errors.widget(form.quantity) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-xs-12 cc-form-footer">
+                                        <br/>
+                                        {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

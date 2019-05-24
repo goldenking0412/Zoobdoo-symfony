@@ -1,0 +1,179 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% set user = app.user %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-service"></i> Services</h1>
+            <a href="#" class="search visible-mobile"><i class="icon icon-search"></i></a>
+        </div>
+    </div>
+
+    <main id="main">
+        {% include "ErpUserBundle:ServiceRequests/blocks:menu.html.twig" %}
+
+        <div class="row">
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+        </div>
+
+        <div class="tab-content">
+            <div class="container">     
+                <div id="tab1-0">
+                    {% if not user.isReadOnlyUser() %}
+
+                        {% if companions is defined and companions|length %} 
+                            <div class="row messages-row">
+                                <div class="col-md-3 companions-col default-companions-col">
+                                    <ul class="companions-list">
+                                        {% for companion in companions %}
+                                            {% set totalMessages = companion['totalMessages'] %}
+                                            {% set companion = companion[0] %}
+                                            {% set unreadMessages = count_unread_messages(user, companion) %}
+
+                                            <li class="companion-name{% if currentCompanion.id == companion.id %} current{% endif %}">
+                                                <a href="{{ path('erp_user_service_request', {'toUserId':companion.id}) }}">{{ companion.firstName|e }} {{ companion.lastName|e }} 
+                                                    <span class="messages-total">({{ totalMessages }})</span>
+                                                </a>
+                                                {% if unreadMessages %}
+                                                    <div class="messages-count-icon">
+                                                        <span class="messages-unread-count messages-count">{{ unreadMessages }}</span>
+                                                    </div>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="col-xs-6 companions-col mobile-companions-col">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+                                                Select Tenant
+                                            {% else %}
+                                                Select Property Manager
+                                            {% endif %}
+                                            <span class="select-container"></span>
+                                        </button>
+                                        <ul class="companions-list dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            {% for companion in companions %}
+                                                {% set totalMessages = companion['totalMessages'] %}
+                                                {% set companion = companion[0] %}
+                                                {% set unreadMessages = count_unread_messages(user, companion) %}
+
+                                                <li class="companion-name{% if currentCompanion.id == companion.id %} current{% endif %}">
+                                                    <a href="{{ path('erp_user_service_request', {'toUserId':companion.id}) }}">{{ companion.firstName|e }} {{ companion.lastName|e }}
+                                                        <span class="messages-total">({{ totalMessages }})</span>
+                                                    </a>
+                                                    {% if unreadMessages %}
+                                                        <div class="messages-count-icon">
+                                                            <span class="messages-unread-count messages-count">{{ unreadMessages }}</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-9 messages-col request-messages">
+                                    <h4 class="companion-messages-name">{{ currentCompanion.firstName }} {{ currentCompanion.lastName }}</h4>
+                                    {% include "ErpUserBundle:ServiceRequests:service-requests-form.html.twig" %}
+
+                                    {% if groups %}
+                                        {% for key,messages in groups %}
+                                            {% set last_message = messages|last %}
+                                            {% set local_type_id = requestTypes[last_message.typeId] %}
+                                            <div class="open-close1 red-border">
+                                                <a href="#" class="opener">
+                                                    <span class="col">
+                                                        <span class="title">Subject</span>
+                                                        <span class="text">{{ key }}</span>
+                                                    </span>
+                                                    <span class="col">
+                                                        <span class="title">Type</span>
+                                                        <span class="text">{{ local_type_id }}</span>
+                                                    </span>
+                                                    <span class="col">
+                                                        <span class="title">Date</span>
+                                                        <span class="text">{{ last_message.createdDate|time_ago_in_words(false, true) }}</span>
+                                                    </span>
+                                                    <i class="icon icon-arrow-left"></i>
+                                                </a>
+                                                <div class="slide">
+                                                    <span class="title">Message </span>
+                                                    {% for message in messages %}
+                                                        <div class="container messages-history">
+                                                            <div class="col-md-6 col-xs-12">
+                                                                {# if user.id == message.fromUser.id %}sent-message{% else %} received-message{% endif #}
+                                                                <p class="messages-item{% if user.id == message.fromUser.id %} sent-message{% else %} received-message{% endif %}">
+                                                                    {{ message.createdDate|date('m/d/Y H:i:s') }}:
+                                                                    <br />
+                                                                    {{ message.text }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-6 col-xs-12">
+                                                                {% for attachment in message.documents %}
+                                                                    <p>
+                                                                        <a class="messages-text pull-right lightbox-ajax" href="/uploads/service_request/{{attachment.name}}"><span class="fa fa-file-o"></span>&nbsp;{{attachment.originalName}}</a>
+                                                                    </p>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn-circle btn-replay-msg" data-key="{{ key }}" data-localtype-id="{{ last_message.typeId }}">
+                                                            Reply
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="text-center">
+                                            You haven't received Messages from
+                                            {{ user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) ? ' this Tenant' : ' your Manager' }}
+                                            yet
+                                        </div>
+                                    {% endif %}
+                                    </ul>
+
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="text-center">
+                                You have no Tenants and no Messages yet.
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center">
+                            You have no Tenants and no Messages yet.<br/>
+                            In order to add Tenants you should have paid account activated by Administrator.
+                        </div>
+                    {% endif %}
+
+                </div>        
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascript_inline %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.btn-replay-msg').on('click', function (event) {
+                event.preventDefault();
+                var $form = $('#form-service-request');
+                if (!($form.hasClass('hidden'))) {
+                    $('#erp_users_form_service_request_date').datepicker('setStartDate', new Date());
+                    $('#erp_users_form_service_request_date').datepicker('setMinDate', new Date());
+                    $('#erp_users_form_service_request_subject').val(this.dataset.key || this.getAttribute('data-key'));
+                    $('#erp_users_form_service_request_typeId').val(this.dataset.localtypeId || this.getAttribute('data-localtype-id'));
+                    $('#erp_users_form_service_request_typeId').trigger('change');
+                    $('html, body').animate({scrollTop: 200}, 'slow');
+                }
+            });
+        });
+    </script>
+{% endblock %}

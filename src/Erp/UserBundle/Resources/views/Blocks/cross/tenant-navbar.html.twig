@@ -1,0 +1,93 @@
+<header id="header">
+    <div class="top-header">
+        <strong class="logo-box">
+            <a href="{{ path('erp_site_homepage') }}">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" class="logo">
+                <span class="slogan"><img src="{{ asset('assets/images/slogan.svg') }}" alt="zoobdoo"></span>
+            </a>
+        </strong>
+        <ul class="list-holder">
+            <li>
+                <a href="#" class="setting-opener">
+                    <i class="icon icon-settings"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="message-opener">
+                    <i class="icon icon-chat"></i>
+                    {% if count_unread_messages(app.user) > 0 %}
+                        <span class="val">{{ count_unread_messages(app.user) }}</span>
+                    {% endif %}
+                </a>
+            </li>
+            <li class="open-close">
+                <a href="#" class="opener profile-opener">
+                    {% if app.user.image %}
+                        <img class="img" src="{{ asset(app.user.image.path ~ '/' ~ app.user.image.name) | imagine_filter('profile_image') }}"/>
+                    {% else %}
+                        <span class="img"><i class="icon icon-user"></i></span>
+                        {% endif %}
+                    <span class="text">{{ app.user.firstName}}  {{ app.user.lastName }}</span>
+                </a>
+                <div class="slide">
+                    <ul class="slide-list">
+                        <li><a href="#" class="">Lorem</a></li>
+                        <li><a href="#">Ipsum</a></li>
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="sub-header">
+        <div class="container">
+            <div class="list-holder nav-slider">
+
+                <div class="list">
+                    <a href="{{ path('erp_user_profile_dashboard') }}" class="{{ currentRoute in routeTenant ? ' active' : ''}}">
+                        <span class="img"><i class="icon icon-dashboard"></i></span>
+                        <span class="text">Profile</span>
+                    </a>
+                </div>
+
+                <div class="list">
+                    <a href="{{ path('erp_user_contact_info') }}" class="{{ currentRoute == 'erp_user_contact_info' ? 'active' : '' }}">
+                        <span class="img"><i class="icon icon-chat"></i></span>
+                        <span class="text">Contact Info</span>
+                    </a>
+                </div>
+
+                <div class="list">
+                    <a href="{{ path('erp_user_documentation') }}" class="{{ currentRoute in routeDocumentation ? ' active' : ''}}">
+                        <span class="img"><i class="icon icon-documentation"></i></span>
+                        <span class="text">Documentation</span>
+                    </a>
+                </div> 
+
+                <div class="list">
+                    <a href="{{ path('erp_user_service_request') }}" class="{{ currentRoute in routeServiceRequests ? ' active' : ''}}">
+                        <span class="img"><i class="icon icon-service"></i></span>
+                        <span class="text">
+                            Services
+                            {% if count_unread_service_requests(app.user) > 0 %}
+                                <span class="num">{{ count_unread_service_requests(app.user) }}</span>
+                            {% endif %}
+                        </span>
+                    </a>
+                </div>
+                        
+                <div class="list">
+                    <a href="{{ path('erp_user_messages') }}" class="{{ currentRoute == 'erp_user_messages' ? ' active' : ''}}">
+                        <span class="img"><i class="icon icon-chat"></i></span>
+                        <span class="text">Messages</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- include slide here -->
+{% include 'ErpUserBundle:Blocks/cross/slides:message-slide.html.twig' %}
+{% include 'ErpUserBundle:Blocks/cross/slides:profile-slide.html.twig' %}
+{% include 'ErpUserBundle:Blocks/cross/slides:setting-slide.html.twig' %}

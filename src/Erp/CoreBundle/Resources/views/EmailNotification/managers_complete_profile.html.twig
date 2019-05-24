@@ -1,0 +1,17 @@
+{% extends 'ErpCoreBundle::EmailNotification/common.html.twig' %}
+
+{% block title %}
+    Please, update your profile!
+{% endblock %}
+
+{% block message %}
+    Your Manager account is not activated yet.<br>
+    Zoobdoo Admin has invited you to verify and update your profile.
+    <br><br>
+{% endblock %}
+
+{% block buttons %}
+    <a href="{{ url }}" style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; color: rgb(255, 255, 255); font-size: 18px; text-decoration: none; font-weight: bold;" target="_blank">
+        Complete Profile
+    </a>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+
+{% block pageContent %}
+
+    {{ parent() }}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-documentation"></i> Documentation</h1>
+            <a href="#" class="search visible-mobile"><i class="icon icon-search"></i></a>
+        </div>
+    </div>
+
+    {% if user.hasRole(role_manager) %}
+    <section id="documentation-page" class="profile documentation-section">
+    {% else %}
+    <section id="documentation-page" class="profile documentation-section tenant-documentation">
+    {% endif %}
+
+    <div class="container">
+        <br>
+        {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+        <div class="row messages-row">
+            <div class="col-md-3 companions-col default-companions-col">
+                {{ knp_menu_render(menu, {'template': 'ErpUserBundle:Documentation/Menu:menu.html.twig'}) }}
+            </div>
+
+            <div class="col-xs-6 companions-col mobile-companions-col">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                    Select {{ user.hasRole(role_manager) ? 'Tenant' : 'Manager' }}
+                    <span class="select-container"></span>
+                </button>
+                {{ knp_menu_render(menu, {'template': 'ErpUserBundle:Documentation/Menu:mobile-menu.html.twig'}) }}
+               </div>
+            </div>
+
+            <div class="col-md-9 col-xs-12 background-checks messages-col request-messages profile-widget-row">
+                {% render(controller('ErpSmartMoveBundle:SmartMove:backgroundCreditCheckWidget')) %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

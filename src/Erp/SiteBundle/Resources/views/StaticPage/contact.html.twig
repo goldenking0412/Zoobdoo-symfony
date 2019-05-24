@@ -1,0 +1,75 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% set metaTitle = 'Contact us | Zoobdoo' %}
+{% set metaDescription = 'Zoobdoo is where proparty managers and tenants connect. Manage all of your properties, post vacant spaces, and receive rent payments online. Sign up today!' %}
+
+{% block pageContent %}
+
+    <section class="top-block">
+        <div class="container">
+            <h1>Contact</h1>
+            <h2>Need to get in touch? <br>Email: <a href="mailto:info@zoobdoo.com">info@zoobdoo.com</a></h2>
+        </div>
+    </section>
+
+    <main id="main">
+        <section class="block-contact">
+            <div class="container">
+                <div class="text-box">
+                    <strong class="title">Address: </strong>
+                    <address>3009 Sunrise Bay Ave Las Vegas, NV 89031</address>
+                    <p><span class="text">Email:</span> <a href="mailto:info@zoobdoo.com">info@zoobdoo.com</a></p>
+                </div>
+                {{ form_start(form, { attr: {'class': 'form-submit', 'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+
+                <div class="field-area">
+                    <div class="field">
+                        {{ form_label(form.name) }} <label><span class="required">*</span></label>
+                        {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'id':'f-name'}}) }}
+                        <small class="form-text text-danger">{{ form_custom_errors.widget(form.name) }}</small>
+                    </div>
+                    <div class="field">
+                        {{ form_label(form.surname) }} <label><span class="required">*</span></label>
+                        {{ form_widget(form.surname, { 'attr': {'class': 'form-control', 'id':'f-name'}}) }}
+                        <small class="form-text text-danger">{{ form_custom_errors.widget(form.surname) }}</small>
+                    </div>
+                </div>
+
+                <div class="field-area">
+                    <div class="field">
+                        {{ form_label(form.email) }} <label><span class="required">*</span></label>
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'email' }}) }}
+                        <small class="form-text text-danger">{{ form_custom_errors.widget(form.email) }}</small>
+                    </div>
+                    <div class="field">
+                        {{ form_label(form.phone) }} <label><span class="required">*</span></label>
+                        {{ form_widget(form.phone, {'attr': {'class': 'form-control', 'id': 'phone' }}) }}
+                        <small class="form-text text-danger">{{ form_custom_errors.widget(form.phone) }}</small>
+                    </div>
+                </div>
+
+                <div class="field-area">
+                    <div class="field style">
+                        {{ form_label(form.subject) }} <label><span class="required">*</span></label>
+                        {{ form_widget(form.subject, {'attr': {'class': 'form-control', 'id': 'subject' }}) }}
+                        <small class="form-text text-danger">{{ form_custom_errors.widget(form.subject) }}</small>
+                    </div>
+                </div>
+
+                <div class="field-area">
+                    <div class="field style">
+                        {{ form_label(form.message) }} <label><span class="required">*</span></label>
+                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'id': 'message' }}) }}
+                        <small class="form-text text-danger">{{ form_custom_errors.widget(form.message) }}</small>
+                    </div>
+                </div>
+                <div class="field-area">
+                    <div class="field style">
+                        {{ form_widget(form.submit) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </section>
+    </main>
+{% endblock %}

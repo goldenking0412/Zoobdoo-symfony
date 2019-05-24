@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% set headerWhiteClass = true %}
+
+{% if page is defined %}
+    {% set metaTitle = page.metaTitle %}
+    {% set metaDescription = page.metaDescription %}
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/erpsite/js/login.js') }}" defer></script>
+{% endblock %}

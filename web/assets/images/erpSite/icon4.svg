@@ -1,0 +1,31 @@
+<svg id="icon4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 143.49 130.983">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ee1621"/>
+      <stop offset="0.591" stop-color="#fe3751"/>
+      <stop offset="1" stop-color="#ff9300"/>
+    </linearGradient>
+  </defs>
+  <path id="Rectangle_3" data-name="Rectangle 3" class="cls-1" d="M67.26,64.246h9.148v38.263H67.26Z"/>
+  <path id="Path_11" data-name="Path 11" class="cls-1" d="M81.25,59.8a3.774,3.774,0,0,0-3.765-3.737H66.005a3.738,3.738,0,0,0,0,7.475h11.48A3.664,3.664,0,0,0,81.251,59.8Z"/>
+  <path id="Path_12" data-name="Path 12" class="cls-1" d="M66.006,110.874h11.48a3.737,3.737,0,1,0,0-7.475H66.006a3.737,3.737,0,1,0,0,7.474Z"/>
+  <path id="Rectangle_4" data-name="Rectangle 4" class="cls-1" d="M114.792,64.246H124.3v38.263h-9.506Z"/>
+  <path id="Path_13" data-name="Path 13" class="cls-1" d="M129.14,59.8a3.774,3.774,0,0,0-3.766-3.737h-11.48a3.738,3.738,0,0,0,0,7.475h11.48A3.664,3.664,0,0,0,129.14,59.8Z"/>
+  <path id="Path_14" data-name="Path 14" class="cls-1" d="M113.895,110.874h11.48a3.737,3.737,0,1,0,0-7.475H113.9a3.737,3.737,0,0,0,0,7.474Z"/>
+  <path id="Rectangle_5" data-name="Rectangle 5" class="cls-1" d="M19.192,64.246H28.7v38.263H19.192Z"/>
+  <path id="Path_15" data-name="Path 15" class="cls-1" d="M33.36,59.8A3.774,3.774,0,0,0,29.6,56.06H18.115a3.738,3.738,0,0,0,0,7.475H29.6A3.664,3.664,0,0,0,33.361,59.8Z"/>
+  <path id="Path_16" data-name="Path 16" class="cls-1" d="M18.116,110.874H29.6a3.737,3.737,0,1,0,0-7.475H18.116a3.737,3.737,0,0,0,0,7.474Z"/>
+  <path id="Rectangle_6" data-name="Rectangle 6" class="cls-1" d="M9.506,45.382H133.8v3.737H9.506Z"/>
+  <path id="Rectangle_7" data-name="Rectangle 7" class="cls-1" d="M14.35,50.365H129.14V54.1H14.35Z"/>
+  <path id="Rectangle_8" data-name="Rectangle 8" class="cls-1" d="M9.506,117.636H133.8v3.737H9.506Z"/>
+  <path id="Rectangle_9" data-name="Rectangle 9" class="cls-1" d="M14.35,112.653H129.14v3.737H14.35Z"/>
+  <path id="Rectangle_10" data-name="Rectangle 10" class="cls-1" d="M4.484,122.263H138.826V126H4.484Z"/>
+  <path id="Rectangle_11" data-name="Rectangle 11" class="cls-1" d="M0,127.246H143.49v3.737H0Z"/>
+  <path id="Path_17" data-name="Path 17" class="cls-1" d="M71.924,0,0,40.4v3.025H143.49v-3.2Zm-.36,38.085A13.526,13.526,0,1,1,85.2,24.56,13.35,13.35,0,0,1,71.565,38.085Z"/>
+  <path id="Path_18" data-name="Path 18" class="cls-1" d="M71.027,21.178a1.353,1.353,0,0,1,.9-.178,2.692,2.692,0,0,1,1.794.534l.54.534,1.613-2.492-.538-.356a5.35,5.35,0,0,0-1.973-.712v-1.78h-2.87v1.96a3.506,3.506,0,0,0-2.69,3.38c0,1.424,1.256,2.67,3.587,3.737.537.178,1.613.712,1.613,1.424a.922.922,0,0,1-.36.71,2.607,2.607,0,0,1-1.255.357,2.873,2.873,0,0,1-2.152-.712l-.717-.534-1.44,2.315.54.356a6.314,6.314,0,0,0,2.51,1.07v1.78H73v-1.78a4.1,4.1,0,0,0,1.794-1.247,3.433,3.433,0,0,0,0-4.627,10.142,10.142,0,0,0-2.51-1.6c-1.8-.712-1.8-1.246-1.8-1.246a1.9,1.9,0,0,1,.537-.892Z"/>
+</svg>

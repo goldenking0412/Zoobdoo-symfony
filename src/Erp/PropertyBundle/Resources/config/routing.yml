@@ -1,0 +1,27 @@
+erp_property_rout:
+    resource: "@ErpPropertyBundle/Resources/config/routing/property.yml"
+    prefix:   /property/navigation
+
+erp_property_listings:
+    resource: "@ErpPropertyBundle/Resources/config/routing/listings.yml"
+    prefix:   /property/listings
+
+erp_property_wizard:
+    resource: "@ErpPropertyBundle/Resources/config/routing/wizard.yml"
+    prefix:   /property/listings
+
+erp_property_application_forms:
+    resource: "@ErpPropertyBundle/Resources/config/routing/application-forms.yml"
+    prefix:   /property/application-form
+
+erp_property_contract_forms:
+    resource: "@ErpPropertyBundle/Resources/config/routing/contract-forms.yml"
+    prefix:   /property/contract-form
+
+erp_property_unit:
+    resource: "@ErpPropertyBundle/Resources/config/routing/unit.yml"
+    prefix:   /property/unit
+
+erp_property_scheduled_rent_payment:
+    resource: "@ErpPropertyBundle/Resources/config/routing/scheduled_rent_payment.yml"
+    prefix:   /property

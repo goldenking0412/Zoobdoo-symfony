@@ -1,0 +1,59 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpproperty/js/properties-settings.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+    {% set page = pagination is defined ? pagination.currentPageNumber : 1 %}
+
+    <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-service"></i> Services</h1>
+            <a href="#" class="search visible-mobile"><i class="icon icon-search"></i></a>
+        </div>
+    </div>
+    <main id="main">
+        {% include "ErpUserBundle:ServiceRequests/blocks:menu.html.twig" %}
+        
+        <div class="row">
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+        </div>
+
+        <div class="tab-content">
+            <div class="container">
+                <div id="tab3-0">
+                    <div class="vendors-block">
+                        <div class="text-right btn-holder">
+                            <a href="{{ path('erp_vendor_create') }}" class="btn-add blue"><span class="img">+</span> Add Vendor | add Contractor</a>
+                        </div>
+                        <div class="row-holder">
+
+                            {% if pagination|length %}
+                                {% for vendor in pagination %}
+                                    {% include 'ErpVendorBundle::vendor_list.html.twig' with {'item': vendor} %}
+                                {% endfor %}
+                            {% else %}
+                            <div class="card">
+                                <div class="text-holder">
+                                    <ul class="list">
+                                        <li>
+                                            <span class="business">
+                                                You have no Contractors yet.
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+

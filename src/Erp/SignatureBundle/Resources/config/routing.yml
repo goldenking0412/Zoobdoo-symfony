@@ -1,0 +1,27 @@
+erp_signature_hellosign_edit_envelop:
+    path:     /esign/hellosign/envelop/edit/{userDocumentId}
+    defaults: { _controller: ErpSignatureBundle:Signature:editEnvelopHelloSign }
+    requirements:
+        userDocumentId: \d+
+    methods: [POST]
+
+erp_signature_hellosign_webhook_savesignature:
+    path:     /esign/hellosign/envelop/save/{userDocumentId}
+    defaults: { _controller: ErpSignatureBundle:Signature:saveEnvelopAfterHelloSign }
+    requirements:
+        userDocumentId: \d+
+    methods: [POST]
+
+erp_signature_hellosign_manage_template:
+    path:     /esign/hellosign/template/manage/{userDocumentId}
+    defaults: { _controller: ErpSignatureBundle:Signature:manageTemplateHelloSign }
+    requirements:
+        userDocumentId: \d+
+    methods: [POST]
+
+erp_signature_hellosign_remove_template:
+    path:     /esign/hellosign/template/remove/{userDocumentId}
+    defaults: { _controller: ErpSignatureBundle:Signature:removeTemplateHelloSign }
+    requirements:
+        userDocumentId: \d+
+    methods: [POST]

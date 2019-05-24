@@ -1,0 +1,41 @@
+<h1>Eviction Records</h1>
+<table border="1" cellpadding="7" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <td><strong>State</strong></td>
+            <td><strong>Eviction</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for key, record in report %}
+        {% set evLength = record['Eviction']|length %}
+
+        {% if evLength < 1 %}
+            <tr style="page-break-after: auto;">
+                <td>{{ record['State'] }}</td>
+                <td></td>
+            </tr>
+        {% else %}
+            <tr style="page-break-after: auto;">
+                <td>
+                    {{ record['State'] }}
+                </td>
+                <td>
+                    {% for eviction in record['Eviction'] %}
+                        Component Description: <i>{{ eviction['ComponentDescription'] }}</i><br/>
+                        Record Id:  <i>{{ eviction['RecordId'] }}</i><br/>
+                        File Number:  <i>{{ eviction['FileNumber'] }}</i><br/>
+                        County:  <i>{{ eviction['County'] }}</i><br/>
+                        Action Date:  <i>{{ eviction['ActionDate'] }}</i><br/>
+                        Case Type:  <i>{{ eviction['CaseType'] }}</i><br/>
+                        Plaintiff:  <i>{{ eviction['Plaintiff'] }}</i><br/>
+                        Judgement Amount:  <i>{{ eviction['JudgementAmount'] }}</i><br/>
+                        Comments:  <i>{{ eviction['Comments'] }}</i>
+                        <hr/>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>

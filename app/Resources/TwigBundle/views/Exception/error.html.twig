@@ -1,0 +1,27 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% set metaTitle = 'Error ' ~ status_code ~ ' | Zoobdoo' %}
+{% set metaDescription = 'Zoobdoo is where proparty managers and tenants connect. Manage all of your properties, post vacant spaces, and receive rent payments online. Sign up today!' %}
+
+{% block pageContent %}
+    
+    <section class="top-block">
+      <div class="container">
+        <h1>Ops! It seems that something goes wrong</h1>
+      </div>
+    </section>
+
+    <main id="main">
+        <section class="not-found-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12" style="margin: 50px;">
+                        <div class="page-not-found-text">Ops, an error occurred!</div>
+                        <p>{{ status_text }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

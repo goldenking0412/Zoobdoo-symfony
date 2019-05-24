@@ -1,0 +1,17 @@
+{% extends 'SonataAdminBundle:CRUD:list.html.twig' %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% set sonata_breadcrumb_last = 'Invited Tenants' %}
+{% block sonata_breadcrumb %}
+    {% include 'ErpAdminBundle:blocks:sonata_breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+{% endblock notice %}
+
+{% block navbar_title %}
+    {{ admin.label }}
+{% endblock %}

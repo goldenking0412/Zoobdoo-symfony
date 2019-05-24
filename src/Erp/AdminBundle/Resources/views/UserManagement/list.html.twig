@@ -1,0 +1,12 @@
+{% extends 'SonataAdminBundle:CRUD:list.html.twig' %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% block notice %}
+	{% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+{% endblock notice %}
+
+{% block navbar_title %}
+    {{ admin.label }}
+{% endblock %}

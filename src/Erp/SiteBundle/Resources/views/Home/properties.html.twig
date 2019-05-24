@@ -1,0 +1,144 @@
+{% extends 'ErpSiteBundle::base.html.twig' %}
+
+{% block pageContent %}
+    <main id="main">
+        <section class="block-listings">
+            <div class="container">
+                <h1>Search Listings</h1>
+            </div>
+            <div class="filters-area">
+                <div class="container">
+                    <div class="field search">
+                        <input type="search" placeholder="City, State" class="form-control">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="field">
+                        <span class="fake-select">
+                            <i class="fas fa-chevron-down"></i>
+                            <select>
+                                <option>Type</option>
+                                <option>Type1</option>
+                                <option>Type2</option>
+                                <option>Type3</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="field">
+                        <span class="fake-select">
+                            <i class="fas fa-chevron-down"></i>
+                            <select>
+                                <option>For Rent</option>
+                                <option>For Rent1</option>
+                                <option>For Rent2</option>
+                                <option>For Rent3</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="field">
+                        <span class="fake-select">
+                            <i class="fas fa-chevron-down"></i>
+                            <select>
+                                <option>0+ Beds</option>
+                                <option>1+ Beds</option>
+                                <option>2+ Beds</option>
+                                <option>3+ Beds</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="field">
+                        <span class="fake-select">
+                            <i class="fas fa-chevron-down"></i>
+                            <select>
+                                <option>0+ Baths</option>
+                                <option>1+ Baths</option>
+                                <option>2+ Baths</option>
+                                <option>3+ Baths</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="field">
+                        <span class="fake-select">
+                            <i class="fas fa-chevron-down"></i>
+                            <select>
+                                <option>Price</option>
+                                <option>Price1</option>
+                                <option>Price2</option>
+                                <option>Price3</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="listing-results">
+                <div class="container">
+
+                    {% if properties |length %}
+                        {% for property in properties %}
+                            {% if property.name and property.city and property.stateCode and property.address %}
+                                {% set propertyImages = property.getImages()|length ? property.getImages() : null %}	
+                                <article class="article">
+                                    <div class="image-holder">
+                                        {% if propertyImages %}
+                                            {% for image in propertyImages %}
+                                                {% if loop.first %}
+                                                    <img alt="" title="" src="{{asset(image.getPath() ~ '/' ~ image.getName()) | imagine_filter('listings_317_161')}}">
+                                                {% endif %}        
+                                            {% endfor %}
+                                        {% else %}
+                                            <img alt="" title="" src="https://placehold.it/317x161">
+                                        {% endif %}
+                                    </div>
+                                    <div class="text-holder">
+                                        <div class="top-box">
+                                            <div class="top-text">
+                                                <strong class="price">{{ property.settings ? property.settings.paymentAmount|money : '' }}</strong>
+                                                <span class="text">{{ property.getName() }}</span>
+                                            </div>
+                                            <ul class="resident-info list-inline">
+                                                <li>
+                                                    <span class="image">
+                                                        <img src="{{ asset('assets/images/erpSite/item1.svg')}}" alt="image">
+                                                    </span>
+                                                    <span class="text">{{ get_value_of_bed(property.getOfBeds()) }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="image">
+                                                        <img src="{{ asset('assets/images/erpSite/item1.svg')}}" alt="image">
+                                                    </span>
+                                                    <span class="text">{{ get_value_of_bath(property.getOfBaths()) }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="text">1,200sqft</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="bottom-text">
+                                            <address>
+                                                {{ property.getStateCode() }} 
+                                                {{ property.getCity() ? property.getCity().getName() : '' }} <br>
+                                                {{ property.getAddress() }}
+                                            </address>
+                                            <a href="listings-details.html" class="btn btn-primary">More Info</a>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endif %}
+                        {% endfor %}
+
+                        {{ knp_pagination_render(pagination) }}
+                    {% else %}
+                        <p class="text-center">
+                            You have no Properties yet.
+                            {% if not user.isReadOnlyUser() and not user.isPropertyCounterFree %} 
+                                Number of available Properties that can be created: {{ user.propertyCounter }}. Fee for every additional Property: ${{ propertyFee }}.
+                            {% endif %}
+                        </p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,18 @@
+<footer style="display: table; width: 100%;">
+    <div class="copyright-dark" style="display: table; width: 100%;">
+        <div class="container" style="display: table; width: 80%;">
+            <span class="copyright" title="{{ app_version }}">&copy; Copyright <span class="footer-date"></span> Zoobdoo 
+                {% if (app_version is defined) %}
+                    {% set app_version_array = app_version|split('-') %}
+                    {{ app_version_array.0 }}
+                {% endif %}
+            </span>
+
+            <ul class="copyright-links">
+                <li><a href="{{ url('erp_site_static_page', {'slug':'terms-of-service'}) }}">Terms of Service</a>&nbsp; | &nbsp;</li>
+                <li><a href="{{ url('erp_site_static_page', {'slug':'privacy-policy'}) }}">Privacy Policy</a>&nbsp; | &nbsp;</li>
+                <li><a href="{{ url('erp_site_static_page', {'slug':'sitemap'}) }}">Sitemap</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

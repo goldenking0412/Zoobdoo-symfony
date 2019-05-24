@@ -1,0 +1,44 @@
+<style>
+ul li {
+    list-style: disc inside;
+    padding: 0;
+}
+ol li {
+    padding: 0;
+    list-style: inside decimal;
+}
+body {
+    font-size: 16px;
+    line-height: 1.5;
+}
+input {
+    margin-bottom: 20px;
+}
+table {
+    border-spacing: 0;
+}
+.input-row-wrap {
+    border-bottom: 1px solid #000;
+    display: inline-block; 
+    position: relative;
+    line-height: 2;
+}
+.input-row {
+    border-bottom: 1px solid #000;
+    word-break: break-all;  
+    font-style: italic;
+    line-height: 1.4;
+    padding-bottom: 1px;
+}
+.value-wrap {
+    display: inline-block;
+    width: 5px;
+    height: 18px;
+    margin-bottom: -1px;
+}
+</style>
+{% if sections|length %}
+    {% for section in sections %}
+        {{ section|raw }}
+    {% endfor %}
+{% endif %}

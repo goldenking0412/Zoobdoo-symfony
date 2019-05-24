@@ -1,0 +1,154 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block paramsToJs %}
+    <input type="hidden" name="route__erp_core_get_cities_by_state_code" value="{{ path('erp_core_get_cities_by_state_code') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/erpuser/js/city.controller.js') }}"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+
+     <div class="heading-area">
+        <div class="container">
+            <h1><i class="icon icon-documentation"></i> Your Profile</h1>
+            <a href="#" class="search visible-mobile"><i class="icon icon-search"></i></a>
+        </div>
+    </div>
+
+
+
+    <main id="main">
+       
+        <div class="tabs-area">
+            <div class="container" style="justify-content:left;">
+                <ul class="tabset style fake">
+                     <li>
+                        <a href="{{ path('erp_user_details') }}" class="{{ currentRoute == 'erp_user_details' ? 'active' : '' }}">Account Details</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('erp_user_email_options') }}" class="{{ currentRoute == 'erp_user_email_options' ? 'active' : '' }}">Email Options</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('erp_user_address_details')}}" class="{{ currentRoute == 'erp_user_address_details' ? 'active' : '' }}">Address Details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="container">
+                <div id="tab1-0">
+                    <div class="form-area style">
+                        <div class="container">
+                            {{ form_start(form, { attr: {'class': 'form', 'novalidate': 'novalidate', 'id': 'form-messages'}, 'enctype': form_enctype(form)}) }}
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="title">
+                                            {{ form_label(form.addressOne) }}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.addressOne) }}
+                                            {{ form_custom_errors.widget(form.addressOne) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label for="">
+                                                {{ form_label(form.addressTwo)}}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.addressTwo) }}
+                                            {{ form_custom_errors.widget(form.addressTwo) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label>
+                                                {{ form_label(form.state) }}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            <div class="select-container dropdown">
+                                                {{ form_widget(form.state)}}
+                                                {{ form_custom_errors.widget(form.state) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label>
+                                                {{ form_label(form.city)}}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            <div class="select-container dropdown">
+                                                {{ form_widget(form.city)}}
+                                                {{ form_custom_errors.widget(form.city)}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label>
+                                                {{ form_label(form.postalCode)}}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.postalCode)}}
+                                            {{ form_custom_errors.widget(form.postalCode) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                            <label>
+                                                {{ form_label(form.phone)}}
+                                            </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.phone)}}
+                                            {{ form_custom_errors.widget(form.phone)}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-area">
+                                    <div class="wrap">
+                                        <div class="lable">
+                                             <label>
+                                                 {{ form_label(form.websiteUrl) }}
+                                             </label>
+                                        </div>
+                                        <div class="field">
+                                            {{ form_widget(form.websiteUrl)}}
+                                            {{ form_custom_errors.widget(form.websiteUrl)}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-holder">
+                                     {{ form_widget(form.save, {'attr': {'class': 'blue'}}) }}
+                                </div>
+                            {{ form_end(form)}}   
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+{% endblock %}

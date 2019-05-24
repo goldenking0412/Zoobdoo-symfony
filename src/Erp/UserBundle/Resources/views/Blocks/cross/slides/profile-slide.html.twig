@@ -1,0 +1,51 @@
+<div class="profile-slide right-box">
+    <header class="header">
+        <a href="#" class="profile-opener">
+            <span class="img"><i class="icon icon-user"></i></span>
+            <span class="text">Profile</span>
+            <i class="icon icon-arrow-right"></i>
+        </a>
+    </header>
+    <div class="property-details">
+        <div class="open-close1 active">
+            <header class="head">
+                <span class="text">Account Login Details</span>
+                <a href="{{ path('erp_user_details') }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                <a href="#" class="opener hidden">[<span class="icon"></span>]</a>
+            </header>
+            <div class="slide">
+                <ul class="list">
+                    <li><strong>Company Name:</strong> {{ app.user.companyName }}</li>
+                    <li><strong>Password:</strong> **************</li>
+                </ul>
+            </div>
+        </div>
+        <div class="open-close1 active">
+            <header class="head">
+                <span class="text">Address Details</span>
+                <a href="{{ path('erp_user_address_details') }}" class="btn-edit"><i class="icon icon-edit"></i></a>
+                <a href="#" class="opener hidden">[<span class="icon"></span>]</a>
+            </header>
+            <div class="slide">
+                <ul class="list">
+                    <li><strong>Address:</strong> {{ app.user.postalCode }} {{ app.user.addressOne }} {{ app.user.addressTwo }}</li>
+                    <li><span class="medium">Primary BIlling</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="open-close1 active">
+            <header class="head">
+                <span class="text">Email Options</span>
+                <a href="" class="btn-edit"><i class="icon icon-edit"></i></a>
+                <a href="#" class="opener hidden">[<span class="icon"></span>]</a>
+            </header>
+            <div class="slide">
+                <ul class="list">
+                    <li>{{ app.user.email }}</li>
+                    <li><span class="medium">Primary Email</span></li>
+                </ul>
+            </div>
+        </div>
+        <a href="{{ path('fos_user_security_logout') }}" class="btn-solid">Logout</a>
+    </div>
+</div>

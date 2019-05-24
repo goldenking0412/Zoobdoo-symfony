@@ -1,0 +1,46 @@
+{% set propertyImages = property.getImages()|length ? property.getImages() : null %}
+
+<div class="col-md-7 carousel-wrapper">
+    <div class="carousel slide article-slide" id="article-photo-carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner cont-slider" role="listbox">
+            {% if propertyImages|length %}
+                {% for image in propertyImages %}
+                    <div class="item {{ loop.first ? 'active' : ''}}">
+                        <img alt="" title="" class="big-active-img" src="{{ asset(image.getPath() ~ '/' ~ image.getName()) | imagine_filter('property_details_carousel_inner') }}">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="item active">
+                    <img alt="" title="" class="big-active-img" src="{{ asset('assets/images/homepage/shutterstock.png') | imagine_filter('property_details_carousel_inner') }}">
+                </div>
+            {% endif %}
+        </div>
+
+        {% if propertyImages|length %}
+            <div class="slider-counter">
+                <span class="counter-numbers"><span class="current-slide-num">{{ property.getImages()|length }}</span>of
+                <span class="slides-num">{{ property.getImages()|length }}</span></span>
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#article-photo-carousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#article-photo-carousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+            <!-- Indicators -->
+            <div class="article-photo details-carousel-indicators">
+                <ol class="carousel-indicators">
+                    {% for image in propertyImages %}
+                        <li class="active" data-slide-to="{{ loop.index - 1 }}" data-target="#article-photo-carousel">
+                            <img alt="" src="{{ asset(image.getPath() ~ '/' ~ image.getName()) | imagine_filter('property_details_carousel_indicators') }}">
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        {% endif %}
+    </div>
+</div>

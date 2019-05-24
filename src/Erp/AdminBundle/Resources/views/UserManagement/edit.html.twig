@@ -1,0 +1,39 @@
+{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
+
+{% block side_bar_after_nav %}
+{% endblock %}
+
+{% block sonata_header %}
+    {% block paramsToJs %}
+        <input type="hidden" name="route__erp_core_get_cities_by_state_code"
+               value="{{ path('erp_core_get_cities_by_state_code') }}"/>
+    {% endblock %}
+    {{ parent() }}
+{% endblock %}
+
+{% block notice %}
+    {% include 'ErpAdminBundle:blocks:sonata_message.html.twig' %}
+{% endblock notice %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/bundles/erpuser/js/city.controller.js') }}"></script>
+{% endblock %}
+
+{% block sonata_tab_content %}
+    {% if action != 'create' and (object.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_TENANT')) and object.isEnabled()) %}
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-body">
+                        To disable Tenant's account you have to remove/unlink this Tenant from the <a
+                                href="{{ path('admin_erpuserbundle_properties_edit', {'id':object.tenantProperty.id}) }}"
+                                target="_blank">property</a>.
+                        All postponed and recurring payments of this Tenant will be cancelled.
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

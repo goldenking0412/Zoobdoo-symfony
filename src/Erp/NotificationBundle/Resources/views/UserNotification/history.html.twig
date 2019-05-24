@@ -1,0 +1,60 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+
+{% block pageSubContent %}
+    {{ parent() }}
+    <br>
+    <br>
+    <div class="tab-content style" id="managers-profile">
+        <div id="tab1-0">
+            <div class="container">
+                {% include "ErpNotificationBundle:UserNotification:actions.html.twig" %}
+                {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+                {% if historyItems is not empty %}
+                    <br>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date Sent</th>
+                                <th>Property/Tenant</th>
+                                <th>Type</th>
+                                <th>Template</th>
+                                <th>Received Verification</th>
+                                <th>Automatic Alert?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in historyItems %}
+                                <tr>
+                                    <td>{{item.createdAt|date('M d, Y h:i')}}</td>
+                                    <td>
+                                        {{item.property}}<br/>{{item.tenantName}}
+                                    </td>
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.title}}</td>
+                                    <td>
+                                        {% if item.receivedAt %}
+                                            {{item.receivedAt|date('M d, Y h:i')}}
+                                        {% else %}
+                                            no
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.isSendAlertAutomatically %}
+                                            yes
+                                        {% else %}
+                                            no
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <br><br>
+                        <p>No history found</p>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

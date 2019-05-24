@@ -1,0 +1,43 @@
+{% set thisUser = app.user %}
+{% set secondEmail = (thisUser.getSecondEmail()) ? thisUser.getSecondEmail() : thisUser.getEmail() %}
+{% set settingsChoices = get_user_settings() %}
+{% set settings = thisUser.getSettings() %}
+
+<div class="setting-slide right-box">
+    <header class="header">
+        <a href="#" class="setting-opener">
+            <span class="img"><i class="icon icon-settings"></i></span>
+            <span class="text">Settings</span>
+            <i class="icon icon-arrow-right"></i>
+        </a>
+    </header>
+    {# jquery for submission is inside bundles/erpproperty/js/wizard.js #}
+    <form action="{{ path('erp_user_settings') }}" class="form-selection" name="form-settings" id="form-settings" method="POST">
+        <ul class="lable-list">
+            {% for key, item in settingsChoices %}
+                <li>
+                    <label for="{{ key }}">
+                        <input type="checkbox" id="{{ key }}" name="settings[{{ loop.index0 }}]" value="{{ key }}"{% if key in settings %} checked{% endif %}>
+                        <span class="text">{{ item }}</span>
+                        <label class="fake-lable" for="{{ key }}"></label>
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="field-area">
+            <div class="lable-holder">
+                <label for="email">Send Email Notifications To: </label>
+            </div>
+            <div class="field">
+                <input type="email" name="second_email" placeholder="{{ secondEmail }}">
+            </div>
+        </div>
+        <div class="btn-holder">
+            <input type="submit" value="Save" class="blue">
+        </div>
+        <div class="alert alert-danger alert-dismissible hidden" id="settings-error" style="margin: 0px 200px 20px 40px; font-size: 12px; padding: 5px;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="message"></span>
+        </div>
+    </form>
+</div>

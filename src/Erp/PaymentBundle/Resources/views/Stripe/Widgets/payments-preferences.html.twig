@@ -1,0 +1,85 @@
+
+<div class="col" id="change-payment-type-container">
+    <div class="open-close1 active">
+        <header class="head">
+            <span class="text">Payment Preferences</span>
+            <a href="#" class="opener">[<span class="icon"></span>]</a>
+        </header>
+        <div class="slide">
+        {% if customerCC or customerBA %}
+            <h4>How would you like to pay?</h4>
+            {% if user.primaryPaymentType == constant('Erp\\UserBundle\\Entity\\User::PRIMARY_PAYMENT_TYPE_BANK_ACCOUNT') %}
+                {% if customerCC.id is not null %}
+                    <a href="{{ path('erp_payment_user_change_primary_type', {'to': constant('Erp\\UserBundle\\Entity\\User::PRIMARY_PAYMENT_TYPE_CREDIT_CARD')}) }}" class="change-payment-type-button">
+                        Credit Card
+                    </a>
+                {% else %}
+                    <span class="non-active">Credit Card</span>
+                {% endif %}
+            {% endif %}
+            &nbsp; | &nbsp;
+            {% if user.primaryPaymentType == constant('Erp\\UserBundle\\Entity\\User::PRIMARY_PAYMENT_TYPE_CREDIT_CARD') %}
+                {% if customerBA.id is not null %}
+                    <a href="{{ path('erp_payment_user_change_primary_type', {'to': constant('Erp\\UserBundle\\Entity\\User::PRIMARY_PAYMENT_TYPE_BANK_ACCOUNT')}) }}" class="change-payment-type.button">
+                        Bank
+                    </a>
+                {% else %}
+                    <span class="non-active">Bank</span>
+                {% endif %}
+            {% endif %}
+
+            {% if user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_TENANT')) %}
+                {% if 
+                    user.primaryPaymentType == constant('Erp\\UserBundle\\Entity\\User::PRIMARY_PAYMENT_TYPE_BANK_ACCOUNT')
+                    and customerCC.id is not null
+                %}
+                    <br />
+                    <br />
+                    <span class="small non-active">By using Credit Card you agree for additional {{ ccTransactionFeePercent }}% fee</span>
+                {% endif %}
+
+                {% if 
+                    user.primaryPaymentType == constant('Erp\\UserBundle\\Entity\\User::PRIMARY_PAYMENT_TYPE_CREDIT_CARD')
+                    and customerBA.id is not null
+                %}
+                    <br />
+                    <br />
+                    <span class="small non-active">By using Bank Account you agree for additional {{ achTransactionFeeAmount }}USD fee</span>
+                {% endif %}
+            {% endif %}
+        {% else %}
+                <h4>Please, register your credit card and bank account credentials</h4>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $changeButtons = $(document).find('.change-payment-type-button');
+
+        $changeButtons.on('click', function (event) {
+            event.preventDefault();
+            $.blockUI({message: 'Changing payment preferences... Please wait.'});
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: this.href,
+                async: true,
+                dataType: 'html',
+                success: function (response) {
+                    $.unblockUI();
+                    $(document).find('#change-payment-type-container').replaceWith($(response).find('#change-payment-type-container'));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.unblockUI();
+                    $.blockUI({message: ('Error: ' + jqXHR.responseText)});
+                    setTimeout(function () {
+                        $.unblockUI();
+                    }, 5000);
+                    console.log(jqXHR.responseText);
+                }
+            });
+        });
+    });
+</script>

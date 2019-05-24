@@ -1,0 +1,25 @@
+<svg id="Group_117" data-name="Group 117" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 121.579 150">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ee1621"/>
+      <stop offset="1" stop-color="#ff9300"/>
+    </linearGradient>
+  </defs>
+  <path id="Path_119" data-name="Path 119" class="cls-1" d="M102.406,0H10.15V13.985H0V150H107.143v-9.7h14.436V19.173Zm1.8,17.143V11.5l5.639,5.639ZM100.376,140.3v2.932H6.767V20.752H10.15V140.3ZM114.812,23.91v109.4H16.917V6.767H97.669V23.91Z"/>
+  <rect id="Rectangle_59" data-name="Rectangle 59" class="cls-1" width="56.842" height="6.767" transform="translate(22.556 91.579)"/>
+  <rect id="Rectangle_60" data-name="Rectangle 60" class="cls-1" width="25.714" height="6.767" transform="translate(82.556 91.579)"/>
+  <rect id="Rectangle_61" data-name="Rectangle 61" class="cls-1" width="56.842" height="6.767" transform="translate(22.556 75.338)"/>
+  <rect id="Rectangle_62" data-name="Rectangle 62" class="cls-1" width="25.714" height="6.767" transform="translate(82.556 75.338)"/>
+  <rect id="Rectangle_63" data-name="Rectangle 63" class="cls-1" width="33.383" height="6.767" transform="translate(55.94 37.895)"/>
+  <rect id="Rectangle_64" data-name="Rectangle 64" class="cls-1" width="52.105" height="6.767" transform="translate(55.94 50.526)"/>
+  <rect id="Rectangle_65" data-name="Rectangle 65" class="cls-1" width="56.842" height="6.767" transform="translate(22.556 107.82)"/>
+  <rect id="Rectangle_66" data-name="Rectangle 66" class="cls-1" width="6.992" height="6.767" transform="translate(101.053 107.82)"/>
+  <rect id="Rectangle_67" data-name="Rectangle 67" class="cls-1" width="6.992" height="6.767" transform="translate(91.805 107.82)"/>
+  <rect id="Rectangle_68" data-name="Rectangle 68" class="cls-1" width="6.992" height="6.767" transform="translate(82.556 107.82)"/>
+  <path id="Path_120" data-name="Path 120" class="cls-1" d="M19.423,50.608v6.767h6.767V50.383a10.754,10.754,0,0,0,4.962-2.707,10.714,10.714,0,0,0,3.835-8.12,11.075,11.075,0,0,0-3.835-8.12,12.541,12.541,0,0,0-8.571-3.158,6.3,6.3,0,0,1-4.06-1.353,3.525,3.525,0,0,1-1.353-2.707,3.215,3.215,0,0,1,1.353-2.707,6.767,6.767,0,0,1,8.12,0,3.525,3.525,0,0,1,1.353,2.707v1.8h6.767v-1.8a11.075,11.075,0,0,0-3.835-8.12,10.754,10.754,0,0,0-4.962-2.707V7.3H19.2v6.767a10.754,10.754,0,0,0-4.962,2.707,10.714,10.714,0,0,0-3.835,8.12,11.075,11.075,0,0,0,3.835,8.12,12.541,12.541,0,0,0,8.571,3.158,6.3,6.3,0,0,1,4.06,1.353,3.525,3.525,0,0,1,1.353,2.707,3.215,3.215,0,0,1-1.353,2.707c-2.481,1.579-6.316,1.579-8.346-.226a3.525,3.525,0,0,1-1.353-2.707V38.2H10.4v1.8a11.075,11.075,0,0,0,3.835,8.12A15.706,15.706,0,0,0,19.423,50.608Z" transform="translate(13.059 9.166)"/>
+</svg>

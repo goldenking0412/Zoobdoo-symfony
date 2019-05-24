@@ -1,0 +1,11 @@
+erp_stripe_transaction_confirm:
+    path: /{transactionId}/refund/confirm
+    defaults:
+        _controller: ErpStripeBundle:Refund:confirm
+    methods: [GET]
+
+erp_stripe_transaction_apply:
+    path:  /{transactionId}/refund/apply
+    defaults:
+        _controller: ErpStripeBundle:Refund:apply
+    methods: [GET]

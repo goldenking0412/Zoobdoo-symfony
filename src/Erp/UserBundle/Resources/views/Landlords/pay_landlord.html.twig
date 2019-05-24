@@ -1,0 +1,119 @@
+{% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+{% if items|length %}
+    <style>
+        select#landlordId { font-family: FontAwesome, sans-serif; }
+        select#landlordId .verified, select#landlordId.verified {
+            font-family: FontAwesome, sans-serif;
+            color: green;
+        }
+        select#landlordId .un_verified, select#landlordId.un_verified {
+            font-family: FontAwesome, sans-serif;
+            color: #6c6c6c;
+        }
+        select#landlordId option.no_select { color: #555; }
+        select#landlordId optgroup { font-size: 12px; font-weight: 300; color: #898989; }
+        select#landlordId option { font-size: 15px; }
+    </style>
+    <section id="landlord-form-section">
+        <form id="select-landlord-form" method="post" action="{{ path('erp_user_landlords_pay_landlord') }}" role="form">
+            <div class="row text-center">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1 class="text-center bold-text">Step 1: </h1>
+                    <div class="form-group text-left">
+                        <label for="erp_user_landlords_create_firstname" class="required">
+                            Select landlord
+                            <span class="required" title="This field is required">*</span>
+                        </label>
+                        <span class="fake-select">
+                            <select name="landlordId" id="landlordId" class="form-control" style="width: 70% !important;">
+                                <option value="" class="no_select">----------   Select drop down list   --------</option>
+                                <optgroup label="Verified stripe accoun">
+                                    {% for landlord in items %}
+                                        {% if(stripeUserManager.stripeAccountInfo(landlord)) %}
+                                            <option value="{{ landlord.id }}" {% if(stripeUserManager.stripeAccountInfo(landlord)) %} class="verified" title="verified stripe account" {% else %} class="un_verified" title="un_verified stripe account" {% endif %}> {% if(stripeUserManager.stripeAccountInfo(landlord)) %} <i class="fa fa-check-circle"></i> {% else %} <i class="fa fa-times-circle"></i>  {% endif %} {{ landlord.firstname }} {{ landlord.lastname }} ({{ landlord.email }})</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </optgroup>
+                                <optgroup label="Un-verified stripe account">
+                                    {% for landlord in items %}
+                                        {% if(stripeUserManager.stripeAccountInfo(landlord)) == '' %}
+                                            <option value="{{ landlord.id }}" {% if(stripeUserManager.stripeAccountInfo(landlord)) %} class="verified" title="verified stripe account" {% else %} class="un_verified" title="un_verified stripe account" {% endif %}> {% if(stripeUserManager.stripeAccountInfo(landlord)) %} <i class="fa fa-check-circle"></i> {% else %} <i class="fa fa-times-circle"></i>  {% endif %} {{ landlord.firstname }} {{ landlord.lastname }} ({{ landlord.email }})</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </optgroup>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid text-center">
+                <button type="submit" value="Next" class="btn-circle" role="button" style="display: inline-block;">Next</button>
+            </div>
+        </form>
+    </section>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select#landlordId').on('change', function () {
+                var select_class = $('select[name="landlordId"] :selected').attr('class');
+                if (select_class) {
+                    $('select#landlordId').attr('class', select_class + ' form-control');
+                    $('select#landlordId').attr('title', select_class + ' stripe account id');
+                } else {
+                    $('select#landlordId').attr('class', 'form-control');
+                    $('select#landlordId').attr('title', '');
+                }
+            });
+
+            $('#select-landlord-form').on('submit', function (event) {
+                event.preventDefault();
+                $(this).find('button[type="submit"]').attr('disabled', 'disabled');
+                $.ajax({
+                    url: this.action,
+                    data: $(this).serialize(),
+                    dataType: 'html',
+                    method: this.method,
+                    success: function (response) {
+                        var $document = $(document), $landlordFormSection = $('#landlord-form-section');
+                        $landlordFormSection.html(response);
+                        $document.on('click', "#accepted", function () {
+                            $document.find("#erp_user_landlords_pay_landlord_button").attr("disabled", !this.checked);
+                        });
+                        $document.on('submit', '#pay-landlord-step-2', function (event) {
+                            event.preventDefault();
+                            $(this).find('button[type="submit"]').attr('disabled', 'disabled');
+                            $.ajax({
+                                url: this.action,
+                                data: $(this).serialize(),
+                                dataType: 'html',
+                                method: this.method,
+                                success: function (response) {
+                                    $landlordFormSection.html(response);
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log(jqXHR.responseText);
+                                }
+                            });
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        var response;
+                        try {
+                            response = JSON.parse(jqXHR.responseText);
+                        } catch (err) {
+                            response = jqXHR.responseText;
+                        }
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+{% else %}
+    <p class="text-center">
+        You have no landlords yet.
+    </p>
+{% endif %}
+
+
+

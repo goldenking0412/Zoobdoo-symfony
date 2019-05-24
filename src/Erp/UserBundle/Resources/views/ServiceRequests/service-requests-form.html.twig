@@ -1,0 +1,72 @@
+{% set formHidden = user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) ? ' hidden' : '' %}
+<div class="form-area style">
+    <div class="container">
+            {{ form_start(form, {attr: {'autocomplete': 'off', 'id': 'form-service-request', 'class': ('form-horizontal' ~ formHidden), 'style': 'margin-bottom:50px !important'}, 'enctype': form_enctype(form)}) }}
+
+            <div class="field-area two">
+                <div class="wrap">
+                    <div class="lable">
+                        <label for="title">{{ form_label(form.date) }}</label>
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.date)}}
+                        {{ form_custom_errors.widget(form.date)}}
+                    </div>
+                </div>
+                    
+                <div class="wrap">
+                    <div class="lable">
+                        <label for="title">{{ form_label(form.subject) }}</label>
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.subject)}}
+                        {{ form_custom_errors.widget(form.subject)}}
+                    </div>
+                </div>
+            </div>
+            <div class="field-area">
+                <div class="lable">
+                    <label for="title">{{ form_label(form.typeId) }}</label>
+                </div>
+                <div class="field">
+                    {{ form_widget(form.typeId)}}
+                    {{ form_custom_errors.widget(form.typeId)}}
+                </div>
+            </div>
+            <div class="field-area">
+                <div class="lable">
+                    <label for="title">{{ form_label(form.text) }}</label>
+                </div>
+                <div class="field">
+                    {{ form_widget(form.text)}}
+                    {{ form_custom_errors.widget(form.text)}}
+                </div>
+            </div>
+            <div class="field-area">
+                <div class="lable">
+                    <label for="title">{{ form_label(form.attachments) }}</label>
+                </div>
+                <div class="field">
+                    {{ form_widget(form.attachments)}}
+                    {{ form_custom_errors.widget(form.attachments)}}
+                </div>
+            </div>
+            {% if showSendSms %}
+                <div class="field-area">
+                    <div class="lable">
+                        <label for="title">{{ form_label(form.sendSms) }}</label>
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.sendSms)}}
+                        {{ form_custom_errors.widget(form.sendSms)}}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="btn-holder">
+                {{ form_widget(form.save, {'attr': {'value':'save'} }) }}
+            </div> 
+        {{ form_end(form) }}
+    </div>
+</div>
+

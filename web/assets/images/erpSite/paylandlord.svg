@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 93.75 150">
+  <defs>
+    <style>
+      .cls-1 {
+        fill-rule: evenodd;
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ee1621"/>
+      <stop offset="1" stop-color="#ff9300"/>
+    </linearGradient>
+  </defs>
+  <g id="noun_552161_cc" transform="translate(-15.962)">
+    <g id="Group_113" data-name="Group 113" transform="translate(15.961 0)">
+      <g id="Group_112" data-name="Group 112" transform="translate(0)">
+        <g id="Group_111" data-name="Group 111" transform="translate(0 0)">
+          <g id="Group_116" data-name="Group 116">
+            <g id="Group_115" data-name="Group 115">
+              <g id="Group_114" data-name="Group 114">
+                <path id="Path_147" data-name="Path 147" class="cls-1" d="M46.875,102.75A46.875,46.875,0,1,0,0,55.875,46.875,46.875,0,0,0,46.875,102.75Zm0-6.25A40.625,40.625,0,1,0,6.25,55.875,40.625,40.625,0,0,0,46.875,96.5Z" transform="translate(0 47.25)"/>
+                <path id="Path_148" data-name="Path 148" class="cls-1" d="M1.67,17.678,6.092,22.1,16.241,11.954v56.8l6.253-6.25V11.974L32.623,22.1l4.422-4.419L19.357,0Z" transform="translate(8.767 0)"/>
+                <path id="Path_149" data-name="Path 149" class="cls-1" d="M7.67,20.678,12.092,25.1,22.241,14.954v31.8L28.494,53V14.974L38.623,25.1l4.422-4.419L25.357,3Z" transform="translate(40.267 15.75)"/>
+              </g>
+            </g>
+          </g>
+          <path id="Path_150" data-name="Path 150" class="cls-1" d="M22.7,17.5V12H16.45v5.8C10.3,19.2,6.192,23.9,6.192,29.59,6.192,43.045,27.4,41,27.4,50.485c0,4.154-3.472,6.448-7.564,6.448-6.51,0-11.161-4.712-11.161-4.712L5.2,56.872A20.111,20.111,0,0,0,16.45,62.4V68.25H22.7V62.4c6.872-1.129,10.9-6.16,10.9-12.1,0-14.2-21.205-11.781-21.205-20.833,0-3.472,3.286-6.386,7.937-6.386a15.432,15.432,0,0,1,9.611,3.782l2.79-5.084A17.3,17.3,0,0,0,22.7,17.5Z" transform="translate(27.3 63)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

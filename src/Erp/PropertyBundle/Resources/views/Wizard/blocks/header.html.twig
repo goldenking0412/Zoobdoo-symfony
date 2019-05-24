@@ -1,0 +1,13 @@
+<div class="heading-area hidden-mobile">
+    <div class="container">
+        <h1><i class="icon icon-property"></i> Property ID {{ property.id }}</h1>
+    </div>
+</div>
+
+{% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+<div class="breadcrumbs-area">
+    <div class="container no-flex">
+        <div class="pull-left"><a href="{{ path('erp_property_listings_all') }}" class="btn-back">< Back to property list</a></div>
+    </div>
+</div>

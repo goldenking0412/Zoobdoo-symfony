@@ -1,0 +1,95 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+<div class="form-area style">
+    <div class="container">
+        {{ form_start(form, { attr: {'id' : 'property-edit-form', 'class': 'form'}, 'enctype': form_enctype(form)}) }}
+        <div class="errors">
+            {{ form_custom_errors.widget(form) }}
+        </div>
+        {% if xhr %}
+            <input type="hidden" value="1" name="xhr" />  
+        {% endif %}
+
+        <input type="hidden" id="accountId" name="accountId" value="" />
+        <input type="hidden" id="publicToken" name="publicToken" value="" />
+        <div class="field-area row">
+            <div class="wrap col-md-6">
+                <div class="lable">
+                    {{ form_label(form.notWantSecurityDeposit) }}
+                    {{ form_widget(form.notWantSecurityDeposit) }}
+                </div>
+                {{ form_custom_errors.widget(form.notWantSecurityDeposit) }}
+            </div>
+            <div class="wrap col-md-6">
+                <div class="lable">
+                    {{ form_label(form.yesWantSecurityDeposit) }}
+                    {{ form_widget(form.yesWantSecurityDeposit) }}
+                </div>
+                {{ form_custom_errors.widget(form.yesWantSecurityDeposit) }}
+            </div>
+        </div>
+        <div class="field-area two yes-want">
+            <div class="wrap">
+                <div class="lable">
+                    {{ form_label(form.amount) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.amount) }}
+                </div>
+                {{ form_custom_errors.widget(form.amount) }}
+            </div>
+            <div class="wrap">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="lable">
+                            {{ form_label(form.sendToMainAccount) }}
+                            {{ form_widget(form.sendToMainAccount) }}
+                            <br />
+                            {{ form_custom_errors.widget(form.sendToMainAccount) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="lable">
+                            {{ form_label(form.addBankAccount) }}
+                            {{ form_widget(form.addBankAccount) }}
+                            <br />
+                            {{ form_custom_errors.widget(form.addBankAccount) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if bankAccount.accountId and form.vars.value.sendToMainAccount != true %}
+            <div class="field-area yes-want property-details" style="padding-top: 0px; margin-top: 0px;">
+                <div class="col" style="width: 100%;">
+                    <div class="open-close1 active">
+                        <header class="head">
+                            <span class="text">Bank Information</span>
+                            <a style="right: 20px; top: 40%;" class="btn-edit lightbox-ajax" href="{{path('erp_property_listings_wizard_remove_bank_account', {'propertyId': property.id })}}">X</a>
+                        </header>
+                        <div class="slide">
+                            <div class="bank-info">
+                                <div class="image-holder">
+                                    <img src="{{ asset('assets/images/bank.svg') }}" alt="bank">
+                                </div>
+                                <div class="text-holder">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="title">Bank</span>
+                                            <span class="text">{{ bankAccount.bankName }}</span>
+                                            <span class="title">Account Holder</span>
+                                            <span class="text">{{ bankAccount.accountHolderName }}</span>
+                                            <span class="title">Routing #</span>
+                                            <span class="text">{{ bankAccount.routingNumber }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <button id="btn-security-deposit" type="submit" class="btn-circle">{{buttonLabel}}</button>
+    </div>
+    <div class="hide">{{ form_end(form) }}</div>
+</div>

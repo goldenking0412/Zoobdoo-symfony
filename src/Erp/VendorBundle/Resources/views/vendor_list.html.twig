@@ -1,0 +1,40 @@
+{% set edit = item.getLastVendorEdit() %}
+
+<div class="card">
+    <div class="image-holder">
+        <img src="{{ asset('assets/images/user-circle.jpg')}}" alt="image description">
+    </div>
+    <div class="text-holder">
+        <ul class="list">
+            <li>
+                <span class="business">{{ edit.businessType }}</span>
+            </li>
+            <li>
+                <span class="name">{{ item.name }}</span>
+            </li>
+            <li>
+                <a href="tel:{{ edit.contactPhone }}">{{ edit.contactPhone }}</a>
+            </li>
+            <li>
+                <a href="mailto:{{ edit.contactEmail }}">{{ edit.contactEmail }}</a>
+            </li>
+        </ul>
+
+        <br /><br />
+        <ul class="btns-add-holder hidden-mobile">
+            <li>
+                <a href="{{ path('erp_vendor_edit', {'vendorId' : item.getId()}) }}" class="btn-add">
+                    <span class="img">+</span>
+                    <span class="text">Edit</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ path('erp_vendor_delete', {'vendorId' : item.getId()}) }}" class="btn-add red lightbox-ajax">
+                    <span class="img"><i class="icon icon-close"></i></span>
+                    <span class="text">Remove</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

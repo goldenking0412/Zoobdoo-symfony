@@ -1,0 +1,35 @@
+<div class="tabs-area">
+    <div class="container" style="justify-content:left;">
+        <ul class="tabset style fake">
+            <li>
+                <a href="{{ path('erp_user_service_request') }}" class="{{ currentRoute == 'erp_user_service_request' ? ' active' : ''}}">
+                    Service Requests
+                    {% if count_unread_service_requests(app.user) > 0 %}
+                        <span class="val">
+                            {{ count_unread_service_requests(app.user) }}
+                        </span>
+                    {% endif %}
+                </a>
+            </li>
+            {% if app.user.hasRole(constant('Erp\\UserBundle\\Entity\\User::ROLE_MANAGER')) %}
+                <li>
+                    {% set routes = ['erp_workorder_index', 'erp_workorder_create'] %}
+                    <a href="{{ path('erp_workorder_index') }}" class="{{ currentRoute in routes ? ' active' : ''}}">
+                        Work Orders
+                        {% if count_uncompleted_workorders(app.user) > 0 %}
+                            <span class="val">
+                                {{ count_uncompleted_workorders(app.user) }}
+                            </span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    {% set routes = ['erp_vendor_index', 'erp_vendor_create', 'erp_vendor_edit'] %}
+                    <a href="{{ path('erp_vendor_index') }}" class="{{ currentRoute in routes ? ' active' : ''}}">
+                        Vendors
+                    </a>
+                </li>
+            {% endif %}    
+        </ul>
+    </div>
+</div>

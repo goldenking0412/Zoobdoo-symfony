@@ -1,0 +1,18 @@
+{% extends 'ErpCoreBundle::EmailNotification/common.html.twig' %}
+
+{% block title %}
+    You have been invited to register as Manager!
+{% endblock %}
+
+{% block message %}
+    Tenant email: {{ managerInvite['tenantEmail'] }}
+    <br>
+    Message: {{ managerInvite['message'] }}
+    <br><br>
+{% endblock %}
+
+{% block buttons %}
+    <a href="{{ url }}" style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; color: rgb(255, 255, 255); font-size: 18px; text-decoration: none; font-weight: bold;" target="_blank">
+        Sign Up!
+    </a>
+{% endblock %}

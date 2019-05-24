@@ -1,0 +1,16 @@
+{% set form = contractSectionForm %}
+{{ form_start(form, { attr: {'novalidate': 'novalidate'}, 'enctype': form_enctype(form)}) }}
+<div class="form-group">
+    <div class="col-xs-12 submit-row">
+        <div class="form-footer constructor-footer">
+            <div class="row">
+                <a href="{{ path('erp_property_listings_wizard_edit', {'propertyId': property.id}) }}" class="btn-circle edit-property float-right">Edit property</a>
+                <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+                <a href="{{ path('erp_property_contract_form_fill', {'propertyId': property.id}) }}" class="btn-circle preview float-right">Preview</a>
+
+                {{ form_widget(form.submit, {'attr': {'class': 'btn-circle add-section float-left'} }) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

@@ -1,0 +1,141 @@
+/* Modal */
+.modal {
+    .modal-dialog {
+        min-width: 600px;
+        max-width: 1000px;
+        margin: 30px auto;
+        display: table;
+    }
+    .modal-header {
+        background-color: #9191aa;
+        color: #fff;
+        min-height: 50px;
+        text-align: center;
+        .modal-title {
+            font-size: 26px;
+            font-family: LatoBold;
+        }
+        .close {
+            color: #fff;
+            opacity: 1;
+            text-shadow: none;
+        }
+    }
+    .modal-footer {
+        text-align: left;
+        border: none;
+        margin: 0 50px;
+        padding: 0 20px 30px;
+        .submit-popup-btn {
+            width: 80%;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            line-height: 1.5;
+            background-color: #9191aa;
+            -webkit-border-radius: 25px;
+            -moz-border-radius: 25px;
+            border-radius: 25px;
+            &:hover,
+            &:active {
+                background-color: #b00f13;
+            }
+        }
+    }
+    .modal-body {
+        padding: 0;
+        p {
+            margin: 15px 0 0 0;
+        }
+        label {
+            font-weight: normal;
+            padding:0;
+            line-height: 42px;
+            cursor: pointer;
+        }
+        .form-control {
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+        }
+        .control-label {
+            padding: 10px 5px 5px 0;
+            position: relative;
+        }
+        .form-group {
+            margin: 0 40px;
+            .required-label:after {
+                color: #c1262d;
+                margin-left: 2px;
+                content: '*';
+                display: inline-block;
+                height: 4px;
+                position: absolute;
+                top: 7px;
+                width: 4px;
+            }
+            textarea {
+                resize: none;
+            }
+        }
+        .appointment-request {
+            .captcha-wrap {
+                .field-validation-error {
+                    position: absolute;
+                    left: 39%;
+                    top: 57%;
+                }
+            }
+            .form-group {
+                margin: 0 10px;
+                .button-wrap {
+                    text-align: center;
+                    .captcha-submit {
+                        width: 270px;
+                    }
+                }
+                .security-label {
+                    display: block;
+                    text-align: left;
+                }
+                .captcha-img-wrapper {
+                    display: inline-block;
+                    width: 315px;
+                    margin: 5px 10px 20px 0;
+                    img {
+                        border: 1px solid #e3e1e1;
+                        width: 100%;
+                    }
+                }
+                .captcha-wrap {
+                    border-bottom: 1px solid #e3e1e1;
+                    margin-bottom: 20px;
+                    .captcha-pretext-wrap {
+                        display: inline-block;
+                        width: 53%;
+                        vertical-align: top;
+                        .captcha-pretext {
+                            vertical-align: top;
+                            display: inline-block;
+                            font-family: NunitoRegular;
+                            font-size: 14px;
+                            .bold-text {
+                                 font-family: NunitoBold;
+                            }
+                        }
+                        .captcha-input {
+                            width: 69%;
+                            margin: 10px 0;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .add-tenant-form {
+        .button-wrap {
+            text-align: center;
+        }
+    }
+}

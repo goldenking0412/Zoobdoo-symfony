@@ -1,0 +1,79 @@
+{% extends 'ErpNotificationBundle::base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+    <br />
+    <div class="form-area style">
+        <div class="container">
+            {% include "ErpNotificationBundle:Template:actions.html.twig" %}
+            {% include "ErpCoreBundle:crossBlocks:message.html.twig" with {'alert_ok' : 'alert_ok', 'alert_error' : 'alert_error'} %}
+
+            <br />
+            <div class="field-area">
+                <div class="lable">
+                    {% set title = (entity.id) ? ('Edit template: ' ~ entity.title) : ('Create template' ~ ((isSms == 1) ? ' for Sms' : '')) %}
+                    <h1 class="bold-text">{{ title }}</h1>
+                </div>
+            </div>
+
+            {% set action = (entity.id) ? path('erp_notification_template_update', {'id': entity.id}) : path('erp_notification_template_create') %}
+            {{ form_start(form, {'action': action, 'attr': {'class': 'form'} }) }}
+            <div class="field-area">
+                <div class="lable">
+                    {{ form_label(form.title) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.title,  {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {{ form_errors(form.title) }}
+            </div>    
+            <div class="field-area">
+                <div class="lable">
+                    {{ form_label(form.type) }}
+                </div>
+                <div class="field">
+                    {{ form_widget(form.type,  {'attr': {'class': 'form-control'} }) }}
+                </div>
+                {{ form_errors(form.type) }}
+            </div>
+
+            {% if isSms == 1 %}
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.descriptionSms) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.descriptionSms, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_errors(form.descriptionSms) }}
+                </div>
+
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.description) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '15'} }) }}
+                    </div>
+                    {{ form_errors(form.description) }}
+                </div>
+            {% else %}
+                <div class="field-area">
+                    <div class="lable">
+                        {{ form_label(form.description) }}
+                    </div>
+                    <div class="field">
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    {{ form_errors(form.description) }}
+                </div> 
+            {% endif %}
+            <br />
+            <br />
+            <br />
+            {{ form_widget(form.submit, {'attr': {'class': 'btn-circle'} }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

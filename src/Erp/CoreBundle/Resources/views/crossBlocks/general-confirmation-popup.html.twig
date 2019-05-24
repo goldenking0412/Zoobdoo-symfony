@@ -1,0 +1,10 @@
+<div class="popup-content">
+    <p>{{ askMsg|default('Are you sure?')|raw }}</p>
+    <form novalidate="novalidate" action="{{ actionUrl|default('') }}" class="form-horizontal adm-form" method="POST">
+        <input type="hidden" name="_method" value="{{ actionMethod|default('POST') }}">
+        {% if not hideActionBtn is defined %}
+            <button class="btn-solid" type="submit">{{ actionBtn|default('Submit') }}</button>
+        {% endif %}
+        <button type="button" class="btn-solid btn-solid-noborder" onclick="$.fancybox.close()">{{ cancelBtn|default('Cancel') }}</button>
+    </form>
+</div>

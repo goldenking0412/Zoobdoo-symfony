@@ -1,0 +1,39 @@
+{% extends 'ErpUserBundle:Profile:base.html.twig' %}
+
+{% block pageContent %}
+    {{ parent() }}
+
+
+    <div class="heading-area hidden-mobile">
+        <div class="container">
+            <h1><i class="icon icon-property"></i> Properties</h1>
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="tabs-area">
+            <div class="container">
+                <ul class="tabset fake">
+                    <li>
+                        {% set routes = ['erp_notification_template_list', 'erp_notification_template_create_sms', 'erp_notification_template_create', 'erp_notification_template_remove', 'erp_notification_template_update'] %}
+                        <a href="{{ path('erp_notification_template_list') }}" class="{{ (currentRoute in routes) ? ' active' : ''}}">Templates</a>
+                    </li>
+                    <li>
+                        {% set routes = ['erp_notification_user_notification_list', 'erp_notification_user_notification_history', 'erp_notification_user_notification_create', 'erp_notification_user_notification_update'] %}
+                        <a href="{{ path('erp_notification_user_notification_history') }}" class="{{ (currentRoute in routes) ? ' active' : ''}}">
+                            Set Alerts
+                        </a>
+                    </li> 
+                    <li>
+                        {% set routes = ['erp_notification_user_eviction','erp_notification_user_eviction_create'] %}
+                        <a href="{{ path('erp_notification_user_eviction') }}" class="{{ (currentRoute in routes) ? ' active' : ''}}">
+                            Eviction
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {% block pageSubContent %}{% endblock %}
+    </main>
+{% endblock %}

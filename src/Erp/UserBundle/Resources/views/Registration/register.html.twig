@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    {% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="{{ metaDescription|default('Zoobdoo') }}">
+        <meta name="format-detection" content="telephone=no">
+        <title>{{ metaTitle|default('Zoobdoo') }}</title>
+        {% block stylesheets %}
+            <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+            <link rel="stylesheet" href="{{ asset('assets/styles/signup.css') }}" media="screen">
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+            <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+            <script type="text/javascript" src="{{ asset('bundles/erpsite/js/register.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/erpuser/js/city.controller.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body>
+        <div class="row row-content-signup">
+            <div class="col-md-6 col-md-offset-3">
+                {{ form_start(form, { attr: {'id': 'msform', 'novalidate': 'novalidate', 'autocomplete': 'off'}, 'enctype': form_enctype(form)}) }}
+                {% block paramsToJs %}
+                    <input type="hidden" name="route__erp_core_get_cities_by_state_code" value="{{ path('erp_core_get_cities_by_state_code') }}"/>
+                {% endblock %}
+                <a href="{{ path('erp_site_homepage') }}">
+                    <span class="logo">
+                        <img src="{{ asset('assets/images/erpSite/logo.svg')}}" alt="logo" style="width:200px">
+                    </span>
+                    <span class="slogan">
+                        <img src="{{ asset('assets/images/erpSite/slogan.svg')}}" alt="zoobdoo" style="width:220px">
+                    </span>
+                </a>
+                <h1 style="color:#FFF;">Sign Up for an Account</h1>
+                <br /><br />
+                <!-- progressbar -->
+                <ul id="progressbar">
+                    <li class="active">Personal Details</li>
+                    <li>Social Profiles</li>
+                    <li>Account Setup</li>
+                </ul>
+                <!-- fieldsets -->
+                <fieldset>
+                    <h2 class="fs-title">Personal Details</h2>
+                    <h3 class="fs-subtitle">Enter Your Name & Number</h3>
+
+                    {{ form_custom_errors.widget(form.firstName) }}
+                    {{ form_custom_errors.widget(form.lastName) }}
+                    {{ form_custom_errors.widget(form.phone) }}
+                    {{ form_custom_errors.widget(form.addressOne) }}
+                    {{ form_custom_errors.widget(form.state) }}
+                    {{ form_custom_errors.widget(form.city) }}
+                    {{ form_custom_errors.widget(form.postalCode) }}
+                    {{ form_custom_errors.widget(form.role) }}
+                    {{ form_custom_errors.widget(form.stripeAccount.birthday.day) }}
+                    {{ form_custom_errors.widget(form.stripeAccount.birthday.month) }}
+                    {{ form_custom_errors.widget(form.stripeAccount.birthday.year) }}
+                    {{ form_custom_errors.widget(form.websiteUrl) }}
+                    {{ form_custom_errors.widget(form.stripeAccount.ssnLast4) }}
+                    {{ form_custom_errors.widget(form.email) }}
+                    {{ form_custom_errors.widget(form.plainPassword.first) }}
+                    {{ form_custom_errors.widget(form.plainPassword.second) }}
+                    {{ form_custom_errors.widget(form.isTermOfUse) }}
+
+
+                    {{ form_widget(form.firstName, {'attr': {'placeholder':'First Name'}}) }}
+                    {{ form_widget(form.lastName, {'attr': {'placeholder':'Last Name'}}) }}
+                    {{ form_widget(form.phone, {'attr': {'placeholder':'Phone'}}) }}
+                    <input type="button" name="next" class="next action-button" value="Next"/>
+                </fieldset>
+                <fieldset>
+                    <h2 class="fs-title">Address Details</h2>
+                    <h3 class="fs-subtitle">Enter Your Address Details</h3>
+                    {{ form_widget(form.addressOne, {'attr': {'placeholder': 'Street Address'}})}}
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-xs-3 dropdown-col">
+                                <label class="control-label required-label" for="erp_users_manager_form_registration_state">State</label>
+                                <div class="select-container">
+                                    {{ form_widget(form.state, {'attr': {'placeholder': 'State'}})}}
+                                </div>
+
+                            </div>
+
+                            <div class="col-xs-6 dropdown-col">
+                                <label class="control-label required-label required" for="erp_users_manager_form_registration_city">City</label>
+                                <div class="select-container">
+                                    {{ form_widget(form.city, {'attr': {'placeholder': 'City'}})}}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-3">
+                                <label class="control-label required-label required" for="erp_users_manager_form_registration_postalCode">ZIP</label>
+                                {{ form_widget(form.postalCode, {'attr': {'placeholder': 'Zip'}}) }}                            
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                    <input type="button" name="next" class="next action-button" value="Next"/>
+
+                </fieldset>
+                <fieldset>
+                    <h2 class="fs-title">Create your account</h2>
+                    <h3 class="fs-subtitle">Fill in your credentials</h3>
+                    <div class="form-group">
+                        <div class="col-xs-12 dropdown-col">
+                            <label class="control-label required-label required" for="erp_users_manager_form_registration_city">{{ form_label(form.role) }}</label>
+                            <div class="select-container">
+                                {{ form_widget(form.role) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="form-group">
+                        <div class="col-xs-4 dropdown-col" style="margin-bottom: 10px;">
+                            <label class="control-label required-label required" for="">
+                                {{ form_label(form.stripeAccount.birthday.day, 'Day of birth') }}
+                            </label>
+                            <div class="select-container">
+                                {{ form_widget(form.stripeAccount.birthday.day) }}
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 dropdown-col" style="margin-bottom: 10px;">
+                            <label class="control-label required-label required" for="">
+                                {{ form_label(form.stripeAccount.birthday.month, 'Month of birth') }}
+                            </label>
+                            <div class="select-container">
+                                {{ form_widget(form.stripeAccount.birthday.month) }}
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 dropdown-col" style="margin-bottom: 10px;">
+                            <label class="control-label required-label required" for="">
+                                {{ form_label(form.stripeAccount.birthday.year, 'Year of birth') }}
+                            </label>
+                            <div class="select-container">
+                                {{ form_widget(form.stripeAccount.birthday.year) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_widget(form.websiteUrl, {'attr':{'placeholder': 'Web Site'}})}}
+                    {{ form_widget(form.stripeAccount.ssnLast4, {'attr': {'placeholder':'SSN Last 4 digits'}}) }}
+                    {{ form_widget(form.email, {'attr': {'placeholder':'Email'}}) }}
+                    {{ form_widget(form.plainPassword.first, {'attr': {'placeholder':'Password'}}) }}
+                    {{ form_widget(form.plainPassword.second, {'attr': {'placeholder':'Confirm Password'}}) }}
+
+                    <div class="row">
+                        <div class="form-group terms-group">
+                            <div class="col-xs-12 terms-text">
+                                <h2>Terms of Use</h2>
+                                {% include 'ErpSiteBundle:StaticPage/blocks:terms-of-use.html.twig' %}
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="checkbox">
+                                    {{ form_widget(form.isTermOfUse) }}
+                                    <label class="control-label" for="erp_users_manager_form_registration_isTermOfUse">I have read and agree to</label>
+                                    <a href="javascript:void(0)" class="terms-link red-link">Zoobdoo Terms of Use</a>
+                                    {{ form_custom_errors.widget(form.isTermOfUse) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                    {{ form_widget(form.save, {'disabled': true}) }}
+                </fieldset>
+                </from>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <script type="text/javascript" src="{{ asset('assets/scripts/signup.js')}}" defer="defer"></script>
+    </body>
+</html>
+

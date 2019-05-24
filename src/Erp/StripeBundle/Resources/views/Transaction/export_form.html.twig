@@ -1,0 +1,36 @@
+{% import '::widgets/form_errors.html.twig' as form_custom_errors %}
+
+{% form_theme form _self %}
+
+{%- block date_widget -%}
+    {% set type = 'text' %}
+    {{ block('form_widget_simple') }}
+{%- endblock date_widget -%}
+
+{{ form_start(form, {'action': path('erp_stripe_transaction_export'), 'attr': {'class': 'payment-calendar'}}) }}
+    <div class="input-group date date-start">
+        <div class="form-group">
+            {{ form_label(form.dateFrom) }}
+            {{ form_widget(form.dateFrom) }}
+            {{ form_custom_errors.widget(form.dateFrom) }}
+            <span class="input-group-addon"></span>
+        </div>
+    </div>
+    <div class="input-group date date-end">
+        <div class="form-group">
+            {{ form_label(form.dateTo) }}
+            {{ form_widget(form.dateTo) }}
+            {{ form_custom_errors.widget(form.dateTo) }}
+            <span class="input-group-addon"></span>
+        </div>
+    </div>
+    <div class="edit-row">
+        {% if app.user.isReadOnlyUser() %}
+            <a class="btn edit-btn" href="{{ path('erp_user_profile_read_only_popup') }}" role="popup">export report</a>
+        {% else %}
+            {{ form_widget(form.pdf_submit) }}
+            {{ form_widget(form.csv_submit) }}
+        {% endif %}
+    </div>
+
+{{ form_end(form) }}

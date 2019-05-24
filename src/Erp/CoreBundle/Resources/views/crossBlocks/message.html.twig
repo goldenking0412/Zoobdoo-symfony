@@ -1,0 +1,26 @@
+{% if app.session.flashbag.has(alert_ok)|default(false)  %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="container">
+            {% for flashMessage in app.session.flashbag.get( alert_ok ) %}
+                <div class="text-holder">
+                    <strong class="text">{{ flashMessage }}</strong>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+{% if app.session.flashbag.has(alert_error)|default(false)  %}
+    {% for flashMessage in app.session.flashbag.get( alert_error ) %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="container">
+                <div class="text-holder">
+                    <div class="image"><img src="{{ asset('assets/images/alert.svg') }}" alt="alert"></div>
+                    <strong class="text">{{ flashMessage }}</strong>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}

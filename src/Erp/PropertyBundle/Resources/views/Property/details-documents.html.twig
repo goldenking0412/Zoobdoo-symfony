@@ -1,0 +1,63 @@
+{% set propertyDocs = property.getDocuments()|length ? property.getDocuments() : null %}
+<div class="prop-description tenant-info-block add-tenant-block">
+    {% if forListings is defined and forListings == true %}
+        <div class="documentation-block">
+            <div class="doc-title bold-text">Documentation</div>
+            <ul class="doc-col">
+                {% if not propertyDocs %}
+                    <span class="property-doc-details">No documents uploaded</span>
+                {% else %}
+                    {% for document in propertyDocs %}
+                        <li class="doc-property-item">
+                            <span class="fa fa-file-o"></span>
+
+                            <div class="property-doc-info">
+                                <a target="_blank"
+                                   href="{{ asset(document.getPath() ~ '/' ~ document.getName()) }}">{{ document.getOriginalName() }}</a>
+                                <span class="property-doc-details">{{ document.getExtension() }}
+                                    , {{ document.getFileSize(true) }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                <div class="edit-row">
+                    {% if property.applicationForm and property.status != propertyStatusRented %}
+                        {% set applicationFormUrl = path('erp_property_application_complete_form', {'propertyId':property.id}) %}
+                        <br/><a href="{{ applicationFormUrl }}" class="red-link" target="_blank">Link to Application <span>Form</span> >></a>
+                    {% endif %}
+                    <a class="btn edit-btn"
+                       href="{{ path('erp_property_listings_edit_documents', {'propertyId':property.id, 'page':page}) }}">Manage
+                        docs</a>
+                        {% if currentRoute != 'erp_property_listings_all' %}
+                            {% if user.contractFormCounter == 0 and not property.contractForm %}
+                                {% set contractFormUrl = path('erp_property_contract_form_charge', {'propertyId':property.id}) %}
+                            {% else %}
+                                {% set contractFormUrl = path('erp_property_contract_form', {'propertyId':property.id}) %}
+                            {% endif %}
+                        &nbsp;<a href="{{ contractFormUrl }}"
+                                 {% if user.contractFormCounter == 0 and not property.contractForm %}role="popup"{% endif %}
+                                 class="btn edit-btn application-btn">{% if property.contractForm %}Edit{% else %}Create{% endif %}
+                            online Contract <span>Form</span></a>
+                        {% endif %}
+                </div>
+            </ul>
+        </div>
+    {% else %}
+        <ul class="col-md-12 doc-col">
+            {% for document in propertyDocs %}
+                <li class="col-md-6 doc-property-item">
+                    <span class="fa fa-file-o"></span>
+
+                    <div class="property-doc-info">
+                        <a style="color: #000000" href="{{ asset(document.getPath() ~ '/' ~ document.getName()) }}"
+                           target="_blank">
+                            <span class="property-doc-title">{{ document.getOriginalName() }}</span>
+                        </a>
+                        <span class="property-doc-details">{{ document.getExtension() }}
+                            , {{ document.getFileSize(true) }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
